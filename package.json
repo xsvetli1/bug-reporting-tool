@@ -1,7 +1,7 @@
 {
   "name": "@xsvetli1/bug-reporting-tool",
   "publishConfig": {
-    "registry": "https://gitlab.com/api/v4/projects/27325/packages/npm/"
+    "registry": "https://npm.pkg.github.com/xsvetli1"
   },
   "version": "1.0.0",
   "description": "Universal component for bug reporting on websites",
