@@ -7,17 +7,29 @@ export interface OptionsModalProps {
 }
 
 const OptionsModal = (props: OptionsModalProps) => {
-    const closeModal = () => {
+    const computeDisplayProperty = () => {
+        // TODO: "flex" value in display should be injected, not hardcoded
+        return props.isToolOpen ? "flex" : "none";
+    }
+
+    const onCloseClick = () => {
         props.setIsToolOpen(false);
     }
 
+    const onReportBugClick = () => {
+
+    }
+
+    const onSuggestIdeaClick = () => {
+
+    }
+
     return (
-        // TODO: "flex" value in display should be injected, not hardcoded
-        <div className="modal-wrapper" style={{display: (props.isToolOpen ? "flex" : "none")}}>
+        <div className="modal-wrapper" style={{display: computeDisplayProperty()}}>
             <div className="modal" id="options-modal">
-                <button>Report a bug</button>
-                <button>Suggest new idea</button>
-                <button onClick={closeModal}>Close</button>
+                <button onClick={onReportBugClick}>Report a bug</button>
+                <button onClick={onSuggestIdeaClick}>Suggest new idea</button>
+                <button onClick={onCloseClick}>Close</button>
             </div>
         </div>
     );
