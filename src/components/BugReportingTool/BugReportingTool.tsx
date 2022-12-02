@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import OptionsModal from "../OptionsModal";
 import ReportBugButton from "../ReportBugButton";
 
 export interface BugReportingToolProps {
@@ -6,7 +7,15 @@ export interface BugReportingToolProps {
 }
 
 const BugReportingTool = (props: BugReportingToolProps) => {
-    return <ReportBugButton></ReportBugButton>;
+    const [isOpen, setIsOpen] = useState(false);
+
+    return (
+        <>
+            <ReportBugButton isToolOpen={isOpen} setIsToolOpen={setIsOpen}></ReportBugButton>
+            <OptionsModal isToolOpen={isOpen} setIsToolOpen={setIsOpen}></OptionsModal>
+        </>
+    );
+
 };
 
 export default BugReportingTool;

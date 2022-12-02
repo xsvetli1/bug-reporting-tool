@@ -1,5 +1,9 @@
 button {
-    float: right;
-    position: absolute;
-    top: 80%;
+    
+}
+
+#report-bug-button {
+    position:fixed;
+    bottom:50px;
+    right:50px;
 }
