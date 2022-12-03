@@ -1,1 +1,1 @@
-export { default } from "./BugReportingTool";
+export { default, BoolUseStateSetter } from "./BugReportingTool";

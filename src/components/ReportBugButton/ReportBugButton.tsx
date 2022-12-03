@@ -1,23 +1,18 @@
 import React from "react";
+import { BoolUseStateSetter } from "../BugReportingTool";
 import "./ReportBugButton.css";
 
 export interface ReportBugButtonProps {
-    isToolOpen: boolean,
-    setIsToolOpen: React.Dispatch<React.SetStateAction<boolean>>
+    setIsToolOpen: BoolUseStateSetter
 }
 
 const ReportBugButton = (props: ReportBugButtonProps) => {
-    const computeDisplayProperty = () => {
-        // TODO: "block" value in display should be injected, not hardcoded
-        return props.isToolOpen ? "none" : "block";
-    }
-
     const handleClick = () => {
         props.setIsToolOpen(true);
     }
 
     return (
-        <button id="report-bug-button" onClick={handleClick} style={{display: computeDisplayProperty()}}>
+        <button id="report-bug-button" onClick={handleClick}>
             Report a bug!
         </button>
     );

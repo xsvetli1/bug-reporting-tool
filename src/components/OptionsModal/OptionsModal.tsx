@@ -1,23 +1,14 @@
 import React from "react";
+import { BoolUseStateSetter } from "../BugReportingTool";
 import "./OptionsModal.css";
 
 export interface OptionsModalProps {
-    isToolOpen: boolean,
-    setIsToolOpen: React.Dispatch<React.SetStateAction<boolean>>,
-    isBugAnnotationOpen: boolean,
-    setIsBugAnnotationOpen: React.Dispatch<React.SetStateAction<boolean>>,
-    isIdeaAmmptatopmOpen: boolean,
-    setIsIdeaAnnotationOpen: React.Dispatch<React.SetStateAction<boolean>>
+    setIsToolOpen: BoolUseStateSetter,
+    setIsBugAnnotationOpen: BoolUseStateSetter,
+    setIsIdeaAnnotationOpen: BoolUseStateSetter
 }
 
 const OptionsModal = (props: OptionsModalProps) => {
-    const computeDisplayProperty = () => {
-        // TODO: "flex" value in display should be injected, not hardcoded
-        return props.isToolOpen && !props.isBugAnnotationOpen && !props.isIdeaAmmptatopmOpen
-            ? "flex"
-            : "none";
-    }
-
     const onCloseClick = () => {
         props.setIsToolOpen(false);
         props.setIsBugAnnotationOpen(false); // Should be unnecessary
@@ -33,7 +24,7 @@ const OptionsModal = (props: OptionsModalProps) => {
     }
 
     return (
-        <div className="modal-wrapper" style={{display: computeDisplayProperty()}}>
+        <div className="modal-wrapper">
             <div className="modal" id="options-modal">
                 <button onClick={onReportBugClick}>Report a bug</button>
                 <button onClick={onSuggestIdeaClick}>Suggest new idea</button>
