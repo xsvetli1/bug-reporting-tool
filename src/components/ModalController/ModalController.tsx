@@ -1,8 +1,8 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText } from "@mui/material";
 import React from "react";
+import IssueType from "../../common/IssueType";
 import { BoolUseStateSetter } from "../BugReportingTool";
 import FormModalContent from "../FormModalContent";
-import { IssueType } from "../FormModalContent";
 import OptionsModalContent from "../OptionsModalContent";
 
 export interface ModalControllerProps {

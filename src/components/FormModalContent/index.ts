@@ -1,1 +1,1 @@
-export { default, IssueType } from "./FormModalContent";
+export { default } from "./FormModalContent";

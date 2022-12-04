@@ -1,5 +1,6 @@
 import React from "react";
 import { DialogContent, DialogTitle, TextField } from "@mui/material";
+import IssueType from "../../common/IssueType";
 
 export interface FormModalContentProps {
     type: IssueType
@@ -8,7 +9,7 @@ export interface FormModalContentProps {
 const FormModalContent = (props: FormModalContentProps) => {
     return (
         <div>
-            <DialogTitle>{props.type.toString()}</DialogTitle>
+            <DialogTitle>{props.type.getTitle()}</DialogTitle>
             <DialogContent>
                 What is your issue about?
                 <TextField
@@ -40,10 +41,5 @@ const FormModalContent = (props: FormModalContentProps) => {
         </div>
     );
 };
-
-export enum IssueType {
-    Bug,
-    Idea
-}
 
 export default FormModalContent;
