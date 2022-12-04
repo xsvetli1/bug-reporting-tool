@@ -1,4 +1,4 @@
-import { Button, DialogActions, DialogContent, DialogContentText } from "@mui/material";
+import { Button, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import React from "react";
 import { BoolUseStateSetter } from "../BugReportingTool";
 
@@ -19,12 +19,10 @@ const OptionsModalContent = (props: OptionsModalContentProps) => {
 
     return (
         <div>
+            <DialogTitle>Bug Reporting Tool</DialogTitle>
             <DialogContent>
-                <DialogContentText>
-                    Bug Reporting Tool
-                </DialogContentText>
-                <Button onClick={onReportBugClick} variant="text">Report a bug</Button>
-                <Button onClick={onSuggestIdeaClick} variant="text">Suggest new idea</Button>
+                <Button onClick={onReportBugClick} variant="text" fullWidth>Report a bug</Button>
+                <Button onClick={onSuggestIdeaClick} variant="text" fullWidth>Suggest new idea</Button>
             </DialogContent>
             <DialogActions>
                 <Button onClick={props.handleClose}>Cancel</Button>

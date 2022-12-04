@@ -1,5 +1,5 @@
 import React from "react";
-import { DialogContent, DialogTitle, TextField } from "@mui/material";
+import { Button, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
 import IssueType from "../../common/IssueType";
 
 export interface FormModalContentProps {
@@ -11,7 +11,6 @@ const FormModalContent = (props: FormModalContentProps) => {
         <div>
             <DialogTitle>{props.type.getTitle()}</DialogTitle>
             <DialogContent>
-                What is your issue about?
                 <TextField
                     margin="dense"
                     id="email"
@@ -34,10 +33,15 @@ const FormModalContent = (props: FormModalContentProps) => {
                     label="Description"
                     type="text"
                     multiline
+                    rows={8}
                     fullWidth
                     variant="standard"
                 />
             </DialogContent>
+            <DialogActions>
+                <Button>Annotate</Button>
+                <Button>Send</Button>
+            </DialogActions>
         </div>
     );
 };
