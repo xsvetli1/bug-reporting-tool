@@ -1,6 +1,6 @@
+import { Fab } from "@mui/material";
 import React from "react";
 import { BoolUseStateSetter } from "../BugReportingTool";
-import "./ReportBugButton.css";
 
 export interface ReportBugButtonProps {
     setIsToolOpen: BoolUseStateSetter
@@ -12,9 +12,18 @@ const ReportBugButton = (props: ReportBugButtonProps) => {
     }
 
     return (
-        <button id="report-bug-button" onClick={handleClick}>
-            Report a bug!
-        </button>
+        <Fab
+            variant="extended"
+            onClick={handleClick}
+            sx={{
+                position: "fixed",
+                top: "50%",
+                right: 0,
+                transform: "rotate(-0.25turn)"
+            }}
+        >
+            Feedback
+        </Fab>
     );
 };
 
