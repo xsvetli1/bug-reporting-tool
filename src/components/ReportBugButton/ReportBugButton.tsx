@@ -15,11 +15,15 @@ const ReportBugButton = (props: ReportBugButtonProps) => {
         <Fab
             variant="extended"
             onClick={handleClick}
+            size="small"
             sx={{
                 position: "fixed",
-                top: "50%",
-                right: 0,
-                transform: "rotate(-0.25turn)"
+                width: "100px",
+                top: "calc(50% - 33px)", // TODO: deal with magic constants + check alignment
+                right: "-33px",
+                transform: "rotate(-0.25turn)",
+                borderBottomLeftRadius: 0,
+                borderBottomRightRadius: 0
             }}
         >
             Feedback
