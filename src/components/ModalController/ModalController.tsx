@@ -1,6 +1,7 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText } from "@mui/material";
+import { Dialog } from "@mui/material";
 import React from "react";
 import IssueType from "../../common/IssueType";
+import { IssueInfo } from "../../integration/IssueInfo";
 import { BoolUseStateSetter } from "../BugReportingTool";
 import FormModalContent from "../FormModalContent";
 import OptionsModalContent from "../OptionsModalContent";
@@ -11,7 +12,8 @@ export interface ModalControllerProps {
     isBugAnnotationOpen: boolean,
     setIsBugAnnotationOpen: BoolUseStateSetter,
     isIdeaAnnotationOpen: boolean,
-    setIsIdeaAnnotationOpen: BoolUseStateSetter
+    setIsIdeaAnnotationOpen: BoolUseStateSetter,
+    newIssue: (issueInfo: IssueInfo) => Promise<void>;
 }
 
 const ModalController = (props: ModalControllerProps) => {
@@ -33,7 +35,7 @@ const ModalController = (props: ModalControllerProps) => {
 
     const formModal = (isFormOpen: boolean, type: IssueType) => {
         if (props.isToolOpen && isFormOpen) {
-            return <FormModalContent type={type}/>;
+            return <FormModalContent type={type} newIssue={props.newIssue}/>;
         }
     }
 
