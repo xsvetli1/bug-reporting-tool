@@ -2,10 +2,14 @@ import React, { useRef } from "react";
 import { Button, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
 import IssueType from "../../common/IssueType";
 import { IssueInfo } from "../../integration/IssueInfo";
+import { BoolUseStateSetter } from "../BugReportingTool";
 
 export interface FormModalContentProps {
     type: IssueType,
-    newIssue: (issueInfo: IssueInfo) => Awaited<void>
+    newIssue: (issueInfo: IssueInfo) => Promise<boolean>,
+    setSnackbarShown: BoolUseStateSetter,
+    setSnackbarSuccess: BoolUseStateSetter,
+    handleClose: () => void
 }
 
 const FormModalContent = (props: FormModalContentProps) => {
@@ -13,13 +17,16 @@ const FormModalContent = (props: FormModalContentProps) => {
     const titleRef = useRef<HTMLInputElement>(null);
     const descriptionRef = useRef<HTMLInputElement>(null);
     
-    const sendHandler = () => {
-        props.newIssue({
+    const sendHandler = async () => {
+        let success = await props.newIssue({
             email: emailRef.current?.value ?? '',
             title: titleRef.current?.value ?? '',
             description: descriptionRef.current?.value ?? '',
             type: props.type
         });
+        props.handleClose();
+        props.setSnackbarSuccess(success);
+        props.setSnackbarShown(true);
     };
 
     return (

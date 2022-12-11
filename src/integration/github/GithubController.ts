@@ -9,7 +9,7 @@ class GithubController implements IIssueController {
         this.props = props;
     }
     
-    async newIssue(issueInfo: IssueInfo): Promise<void> {
+    async newIssue(issueInfo: IssueInfo): Promise<boolean> {
         const response = await fetch(`https://api.github.com/repos/${this.props.owner}/${this.props.repository}/issues`, {
             method: 'POST',
             headers: {
@@ -28,9 +28,7 @@ class GithubController implements IIssueController {
             })
         });
 
-        if (!response.ok) {
-            throw new Error(`Error! status: ${response.status}`);
-          }
+        return response.ok;
     }
 }
 

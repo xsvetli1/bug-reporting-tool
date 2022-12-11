@@ -1,5 +1,7 @@
 import GithubController from "./github/GithubController";
 import { GithubProps } from "./github/GithubProps";
+import GitlabController from "./gitlab/GitlabController";
+import { GitlabProps } from "./gitlab/GitlabProps";
 import IIssueController from "./IIssueController";
 import Platform from "./Platform";
 import { PlatformProps } from "./PlatformProps";
@@ -9,7 +11,7 @@ class IssueControllerFactory {
         if (platform == Platform.Github) {
             return new GithubController(props as GithubProps);
         } else if (platform == Platform.Gitlab) {
-            throw new Error('Not implemented yet!');
+            return new GitlabController(props as GitlabProps);
         }
 
         throw new Error('Platform not supported!');
