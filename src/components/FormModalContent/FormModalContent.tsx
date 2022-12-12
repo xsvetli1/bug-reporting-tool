@@ -18,13 +18,13 @@ const FormModalContent = (props: FormModalContentProps) => {
     const descriptionRef = useRef<HTMLInputElement>(null);
     
     const sendHandler = async () => {
+        props.handleClose();
         let success = await props.newIssue({
             email: emailRef.current?.value ?? '',
             title: titleRef.current?.value ?? '',
             description: descriptionRef.current?.value ?? '',
             type: props.type
         });
-        props.handleClose();
         props.setSnackbarSuccess(success);
         props.setSnackbarShown(true);
     };
