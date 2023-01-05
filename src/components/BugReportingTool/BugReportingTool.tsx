@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { GitlabProps } from "../../integration/gitlab/GitlabProps";
+import React, { ReactNode, useState } from "react";
 import IssueControllerFactory from "../../integration/IssueControllerFactory";
 import { IssueInfo } from "../../integration/IssueInfo";
 import Platform from "../../integration/Platform";
@@ -11,7 +10,8 @@ export type BoolUseStateSetter = React.Dispatch<React.SetStateAction<boolean>>
 
 export interface BugReportingToolProps {
     platform: Platform,
-    props: PlatformProps
+    props: PlatformProps,
+    children?: ReactNode
 }
 
 const BugReportingTool = (props: BugReportingToolProps) => {
@@ -38,6 +38,7 @@ const BugReportingTool = (props: BugReportingToolProps) => {
                 setIsIdeaAnnotationOpen={setIsIdeaAnnotationOpen}
                 newIssue={(issueInfo: IssueInfo) => issueController.newIssue(issueInfo)}
             />
+            {props.children}
         </>
     );
 };
