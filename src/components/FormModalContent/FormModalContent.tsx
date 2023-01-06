@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { Button, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
-import IssueType from "../../common/IssueType";
+import IssueType from "../../models/IssueType";
 import { IssueInfo } from "../../integration/IssueInfo";
 import { BoolUseStateSetter } from "../BugReportingTool";
 

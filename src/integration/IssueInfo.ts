@@ -1,4 +1,4 @@
-import IssueType from "../common/IssueType";
+import IssueType from "../models/IssueType";
 
 export type IssueInfo = {
     email: string;

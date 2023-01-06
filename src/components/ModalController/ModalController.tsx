@@ -1,6 +1,6 @@
 import { Alert, Dialog, Snackbar, SnackbarOrigin} from "@mui/material";
 import React, { useState } from "react";
-import IssueType from "../../common/IssueType";
+import IssueType from "../../models/IssueType";
 import { IssueInfo } from "../../integration/IssueInfo";
 import { BoolUseStateSetter } from "../BugReportingTool";
 import FormModalContent from "../FormModalContent";
@@ -52,7 +52,10 @@ const ModalController = (props: ModalControllerProps) => {
         const anchor = {vertical: 'bottom', horizontal: 'right'} as SnackbarOrigin;
         return <Snackbar anchorOrigin={anchor} open={snackbarShown} autoHideDuration={5000} onClose={handleSnackbarClose}>
             <Alert onClose={handleSnackbarClose} severity={snackbarSuccess ? "success" : "error"} sx={{ width: '100%' }}>
-                {snackbarSuccess ? "Your feedback has been succesfully submitted!" : "Error occured during feedback submission!"}
+                {snackbarSuccess
+                    ? "Your feedback has been succesfully submitted!"
+                    : "Error occured during feedback submission!"
+                }
             </Alert>
         </Snackbar>
     };
