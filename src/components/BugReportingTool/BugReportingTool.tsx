@@ -3,6 +3,8 @@ import IssueControllerFactory from "../../integration/IssueControllerFactory";
 import { IssueInfo } from "../../integration/IssueInfo";
 import Platform from "../../integration/Platform";
 import { PlatformProps } from "../../integration/PlatformProps";
+import IssueType from "../../models/IssueType";
+import AnnotationTool from "../AnnotationTool/AnnotationTool";
 import ModalController from "../ModalController";
 import ReportBugButton from "../ReportBugButton";
 
@@ -18,13 +20,21 @@ const BugReportingTool = (props: BugReportingToolProps) => {
     const [isToolOpen, setIsToolOpen] = useState(false);
     const [isBugAnnotationOpen, setIsBugAnnotationOpen] = useState(false);
     const [isIdeaAnnotationOpen, setIsIdeaAnnotationOpen] = useState(false);
+    const [isOngoingAnnotation, setIsOngoingAnnotation] = useState(false);
     const issueController = IssueControllerFactory.get(props.platform, props.props);
 
     const mainButton = () => {
         if (!isToolOpen) {
-            return <ReportBugButton setIsToolOpen={setIsToolOpen}></ReportBugButton>
+            return <ReportBugButton setIsToolOpen={setIsToolOpen}></ReportBugButton>;
         }
-    }
+    };
+
+    const annotationTool = () => {
+        return <AnnotationTool
+            issueType={isBugAnnotationOpen ? IssueType.Bug : IssueType.Idea}
+            isOngoingAnnotation={isOngoingAnnotation}
+            handleClose={() => setIsOngoingAnnotation(false)}></AnnotationTool>
+    };
 
     return (
         <>
@@ -36,8 +46,11 @@ const BugReportingTool = (props: BugReportingToolProps) => {
                 setIsBugAnnotationOpen={setIsBugAnnotationOpen}
                 isIdeaAnnotationOpen={isIdeaAnnotationOpen}
                 setIsIdeaAnnotationOpen={setIsIdeaAnnotationOpen}
+                isOngoingAnnotation={isOngoingAnnotation}
+                setIsOngoingAnnotation={setIsOngoingAnnotation}
                 newIssue={(issueInfo: IssueInfo) => issueController.newIssue(issueInfo)}
             />
+            {annotationTool()}
             {props.children}
         </>
     );

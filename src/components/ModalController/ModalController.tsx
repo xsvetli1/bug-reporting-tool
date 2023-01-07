@@ -5,6 +5,7 @@ import { IssueInfo } from "../../integration/IssueInfo";
 import { BoolUseStateSetter } from "../BugReportingTool";
 import FormModalContent from "../FormModalContent";
 import OptionsModalContent from "../OptionsModalContent";
+import { FormProps } from "../../models/FormProps";
 
 export interface ModalControllerProps {
     isToolOpen: boolean,
@@ -13,16 +14,21 @@ export interface ModalControllerProps {
     setIsBugAnnotationOpen: BoolUseStateSetter,
     isIdeaAnnotationOpen: boolean,
     setIsIdeaAnnotationOpen: BoolUseStateSetter,
+    isOngoingAnnotation: boolean,
+    setIsOngoingAnnotation: BoolUseStateSetter,
     newIssue: (issueInfo: IssueInfo) => Promise<boolean>;
 }
 
 const ModalController = (props: ModalControllerProps) => {
+    const [formState, setFormState] = useState<FormProps>({});
     const [snackbarShown, setSnackbarShown] = useState(false);
     const [snackbarSuccess, setSnackbarSuccess] = useState(false);
+
     const handleClose = () => {
         props.setIsToolOpen(false);
         props.setIsBugAnnotationOpen(false);
         props.setIsIdeaAnnotationOpen(false);
+        setFormState({});
     };
 
     const optionsModal = () => {
@@ -38,10 +44,13 @@ const ModalController = (props: ModalControllerProps) => {
     const formModal = (isFormOpen: boolean, type: IssueType) => {
         if (props.isToolOpen && isFormOpen) {
             return <FormModalContent
+                formState={formState}
+                setFormState={setFormState}
                 type={type}
                 newIssue={props.newIssue}
                 setSnackbarShown={setSnackbarShown}
                 setSnackbarSuccess={setSnackbarSuccess}
+                handleAnnotate={() => props.setIsOngoingAnnotation(true)}
                 handleClose={handleClose}
             />;
         }
@@ -62,7 +71,7 @@ const ModalController = (props: ModalControllerProps) => {
 
     return (
         <div>
-            <Dialog open={props.isToolOpen} onClose={handleClose}>
+            <Dialog open={props.isToolOpen && !props.isOngoingAnnotation} onClose={handleClose}>
                 {optionsModal()}
                 {formModal(props.isBugAnnotationOpen, IssueType.Bug)}
                 {formModal(props.isIdeaAnnotationOpen, IssueType.Idea)}
