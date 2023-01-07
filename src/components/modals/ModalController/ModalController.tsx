@@ -1,11 +1,11 @@
 import { Alert, Dialog, Snackbar, SnackbarOrigin} from "@mui/material";
 import React, { useState } from "react";
-import IssueType from "../../models/IssueType";
-import { IssueInfo } from "../../integration/IssueInfo";
-import { BoolUseStateSetter } from "../BugReportingTool";
+import IssueType from "../../../models/IssueType";
+import { IssueInfo } from "../../../integration/IssueInfo";
+import { BoolUseStateSetter } from "../../BugReportingTool";
 import FormModalContent from "../FormModalContent";
 import OptionsModalContent from "../OptionsModalContent";
-import { FormProps } from "../../models/FormProps";
+import { FormProps } from "../../../models/FormProps";
 
 export interface ModalControllerProps {
     isToolOpen: boolean,

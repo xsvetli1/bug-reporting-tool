@@ -1,6 +1,6 @@
-import { Button, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
+import { Button, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import React from "react";
-import { BoolUseStateSetter } from "../BugReportingTool";
+import { BoolUseStateSetter } from "../../BugReportingTool";
 
 export interface OptionsModalContentProps {
     setIsBugAnnotationOpen: BoolUseStateSetter,

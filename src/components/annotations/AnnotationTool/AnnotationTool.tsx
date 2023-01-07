@@ -1,6 +1,7 @@
 import React from "react";
 import { Modal } from "@mui/material";
-import IssueType from "../../models/IssueType";
+import IssueType from "../../../models/IssueType";
+import Canvas from "../Canvas";
 
 export interface AnnotationToolProps {
     issueType: IssueType;
@@ -10,13 +11,16 @@ export interface AnnotationToolProps {
 
 const AnnotationTool = (props: AnnotationToolProps) => {
 
+    const canvas = () => {
+        if (props.isOngoingAnnotation) {
+            return <Canvas/>;
+        }
+    };
+
     return (
-        <Modal
-            open={props.isOngoingAnnotation}
-            onClose={props.handleClose}
-        >
-            <>{props.issueType.getLabel()}</>
-        </Modal>
+        <div>
+            {canvas()}
+        </div>
     );
 };
 

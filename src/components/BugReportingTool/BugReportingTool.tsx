@@ -4,8 +4,8 @@ import { IssueInfo } from "../../integration/IssueInfo";
 import Platform from "../../integration/Platform";
 import { PlatformProps } from "../../integration/PlatformProps";
 import IssueType from "../../models/IssueType";
-import AnnotationTool from "../AnnotationTool/AnnotationTool";
-import ModalController from "../ModalController";
+import AnnotationTool from "../annotations/AnnotationTool";
+import ModalController from "../modals/ModalController";
 import ReportBugButton from "../ReportBugButton";
 
 export type BoolUseStateSetter = React.Dispatch<React.SetStateAction<boolean>>
