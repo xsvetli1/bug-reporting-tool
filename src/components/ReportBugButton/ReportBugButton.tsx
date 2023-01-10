@@ -1,9 +1,9 @@
 import { Fab } from "@mui/material";
 import React from "react";
-import { BoolUseStateSetter } from "../BugReportingTool";
+import { UseStateSetter } from "../../models/UseStateSetter";
 
 export interface ReportBugButtonProps {
-    setIsToolOpen: BoolUseStateSetter
+    setIsToolOpen: UseStateSetter<boolean>
 }
 
 const ReportBugButton = (props: ReportBugButtonProps) => {

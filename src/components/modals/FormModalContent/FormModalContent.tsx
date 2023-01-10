@@ -2,16 +2,16 @@ import React, { RefObject, useRef } from "react";
 import { Button, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
 import IssueType from "../../../models/IssueType";
 import { IssueInfo } from "../../../integration/IssueInfo";
-import { BoolUseStateSetter } from "../../BugReportingTool";
 import { FormFields, FormProps } from "../../../models/FormProps";
+import { UseStateSetter } from "../../../models/UseStateSetter";
 
 export interface FormModalContentProps {
     formState: FormProps,
     setFormState: React.Dispatch<React.SetStateAction<FormProps>>,
     type: IssueType,
     newIssue: (issueInfo: IssueInfo) => Promise<boolean>,
-    setSnackbarShown: BoolUseStateSetter,
-    setSnackbarSuccess: BoolUseStateSetter,
+    setSnackbarShown: UseStateSetter<boolean>,
+    setSnackbarSuccess: UseStateSetter<boolean>,
     handleAnnotate: () => void,
     handleClose: () => void
 }

@@ -2,21 +2,21 @@ import { Alert, Dialog, Snackbar, SnackbarOrigin} from "@mui/material";
 import React, { useState } from "react";
 import IssueType from "../../../models/IssueType";
 import { IssueInfo } from "../../../integration/IssueInfo";
-import { BoolUseStateSetter, StringUseStateSetter } from "../../BugReportingTool";
 import FormModalContent from "../FormModalContent";
 import OptionsModalContent from "../OptionsModalContent";
 import { FormProps } from "../../../models/FormProps";
+import { UseStateSetter } from "../../../models/UseStateSetter";
 
 export interface ModalControllerProps {
     isToolOpen: boolean,
-    setIsToolOpen: BoolUseStateSetter,
+    setIsToolOpen: UseStateSetter<boolean>,
     isBugAnnotationOpen: boolean,
-    setIsBugAnnotationOpen: BoolUseStateSetter,
+    setIsBugAnnotationOpen: UseStateSetter<boolean>,
     isIdeaAnnotationOpen: boolean,
-    setIsIdeaAnnotationOpen: BoolUseStateSetter,
+    setIsIdeaAnnotationOpen: UseStateSetter<boolean>,
     isOngoingAnnotation: boolean,
-    setIsOngoingAnnotation: BoolUseStateSetter,
-    setTheme: StringUseStateSetter,
+    setIsOngoingAnnotation: UseStateSetter<boolean>,
+    setTheme: UseStateSetter<string>,
     newIssue: (issueInfo: IssueInfo) => Promise<boolean>;
 }
 
@@ -45,7 +45,7 @@ const ModalController = (props: ModalControllerProps) => {
     const formModal = (isFormOpen: boolean, type: IssueType) => {
         if (props.isToolOpen && isFormOpen) {
             props.setTheme(type.getLabel());
-            
+
             return <FormModalContent
                 formState={formState}
                 setFormState={setFormState}

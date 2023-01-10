@@ -9,9 +9,6 @@ import ModalController from "../modals/ModalController";
 import ReportBugButton from "../ReportBugButton";
 import "../../styles/colors.css";
 
-export type BoolUseStateSetter = React.Dispatch<React.SetStateAction<boolean>>;
-export type StringUseStateSetter = React.Dispatch<React.SetStateAction<string>>;
-
 export interface BugReportingToolProps {
     platform: Platform,
     props: PlatformProps,

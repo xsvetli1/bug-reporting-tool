@@ -1,10 +1,10 @@
 import { Button, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import React from "react";
-import { BoolUseStateSetter } from "../../BugReportingTool";
+import { UseStateSetter } from "../../../models/UseStateSetter";
 
 export interface OptionsModalContentProps {
-    setIsBugAnnotationOpen: BoolUseStateSetter,
-    setIsIdeaAnnotationOpen: BoolUseStateSetter,
+    setIsBugAnnotationOpen: UseStateSetter<boolean>,
+    setIsIdeaAnnotationOpen: UseStateSetter<boolean>,
     handleClose: () => void
 }
 
