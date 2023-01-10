@@ -1,0 +1,35 @@
+:root {
+    --bug-color: #ff5252;
+    --issue-color: #448aff;
+    --border-width: 3px;
+}
+
+.annotation-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.3);
+    width: calc(100% - 2*var(--border-width));
+    height: calc(100% - 2*var(--border-width));
+    border-style: solid;
+    border-width: var(--border-width);
+}
+
+.annotation-area-content {
+    position: absolute;
+}
+
+.issue-annotation-area {
+    border-color: var(--issue-color);
+}
+
+.bug-annotation-area {
+    border-color: var(--bug-color);
+}
+
+.annotation-close-button {
+    position: fixed !important;
+    top: 0;
+    right: 0;
+    border-radius: 0 !important;
+}

@@ -1,7 +1,8 @@
 import React from "react";
-import { Modal } from "@mui/material";
 import IssueType from "../../../models/IssueType";
-import Canvas from "../Canvas";
+import AnnotationArea from "../AnnotationArea";
+import '../Annotations.css';
+import CloseButton from "../CloseButton";
 
 export interface AnnotationToolProps {
     issueType: IssueType;
@@ -11,17 +12,20 @@ export interface AnnotationToolProps {
 
 const AnnotationTool = (props: AnnotationToolProps) => {
 
-    const canvas = () => {
+    const annotationArea = () => {
         if (props.isOngoingAnnotation) {
-            return <Canvas/>;
+            return (
+                <div>
+                    <AnnotationArea issueType={props.issueType}/>
+                    <div className="annotation-area-content">
+                        <CloseButton issueType={props.issueType} onClick={props.handleClose}></CloseButton>
+                    </div>
+                </div>
+            );
         }
     };
 
-    return (
-        <div>
-            {canvas()}
-        </div>
-    );
+    return <div>{annotationArea()}</div>;
 };
 
 export default AnnotationTool;
