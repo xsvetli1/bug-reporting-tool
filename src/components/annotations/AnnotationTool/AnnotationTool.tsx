@@ -18,7 +18,7 @@ const AnnotationTool = (props: AnnotationToolProps) => {
                 <div>
                     <AnnotationArea issueType={props.issueType}/>
                     <div className="annotation-area-content">
-                        <CloseButton issueType={props.issueType} onClick={props.handleClose}></CloseButton>
+                        <CloseButton onClick={props.handleClose}/>
                     </div>
                 </div>
             );

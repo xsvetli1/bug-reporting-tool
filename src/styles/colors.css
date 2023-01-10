@@ -1,0 +1,11 @@
+:root {
+    --issue-type-based-light: #448aff;
+    --issue-type-based: #2979ff;
+    --issue-type-based-dark: #2962ff;
+}
+
+[data-theme='bug'] {
+    --issue-type-based-light: #ff5252;
+    --issue-type-based: #ff1744;
+    --issue-type-based-dark: #d50000;
+}

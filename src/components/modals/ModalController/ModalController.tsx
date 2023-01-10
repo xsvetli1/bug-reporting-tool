@@ -2,7 +2,7 @@ import { Alert, Dialog, Snackbar, SnackbarOrigin} from "@mui/material";
 import React, { useState } from "react";
 import IssueType from "../../../models/IssueType";
 import { IssueInfo } from "../../../integration/IssueInfo";
-import { BoolUseStateSetter } from "../../BugReportingTool";
+import { BoolUseStateSetter, StringUseStateSetter } from "../../BugReportingTool";
 import FormModalContent from "../FormModalContent";
 import OptionsModalContent from "../OptionsModalContent";
 import { FormProps } from "../../../models/FormProps";
@@ -16,6 +16,7 @@ export interface ModalControllerProps {
     setIsIdeaAnnotationOpen: BoolUseStateSetter,
     isOngoingAnnotation: boolean,
     setIsOngoingAnnotation: BoolUseStateSetter,
+    setTheme: StringUseStateSetter,
     newIssue: (issueInfo: IssueInfo) => Promise<boolean>;
 }
 
@@ -43,6 +44,8 @@ const ModalController = (props: ModalControllerProps) => {
 
     const formModal = (isFormOpen: boolean, type: IssueType) => {
         if (props.isToolOpen && isFormOpen) {
+            props.setTheme(type.getLabel());
+            
             return <FormModalContent
                 formState={formState}
                 setFormState={setFormState}

@@ -7,20 +7,23 @@ import IssueType from "../../models/IssueType";
 import AnnotationTool from "../annotations/AnnotationTool";
 import ModalController from "../modals/ModalController";
 import ReportBugButton from "../ReportBugButton";
+import "../../styles/colors.css";
 
-export type BoolUseStateSetter = React.Dispatch<React.SetStateAction<boolean>>
+export type BoolUseStateSetter = React.Dispatch<React.SetStateAction<boolean>>;
+export type StringUseStateSetter = React.Dispatch<React.SetStateAction<string>>;
 
 export interface BugReportingToolProps {
     platform: Platform,
     props: PlatformProps,
     children?: ReactNode
-}
+};
 
 const BugReportingTool = (props: BugReportingToolProps) => {
     const [isToolOpen, setIsToolOpen] = useState(false);
     const [isBugAnnotationOpen, setIsBugAnnotationOpen] = useState(false);
     const [isIdeaAnnotationOpen, setIsIdeaAnnotationOpen] = useState(false);
     const [isOngoingAnnotation, setIsOngoingAnnotation] = useState(false);
+    const [theme, setTheme] = useState("");
     const issueController = IssueControllerFactory.get(props.platform, props.props);
 
     const mainButton = () => {
@@ -37,7 +40,7 @@ const BugReportingTool = (props: BugReportingToolProps) => {
     };
 
     return (
-        <>
+        <div data-theme={theme}>
             {mainButton()}
             <ModalController
                 isToolOpen={isToolOpen}
@@ -48,11 +51,12 @@ const BugReportingTool = (props: BugReportingToolProps) => {
                 setIsIdeaAnnotationOpen={setIsIdeaAnnotationOpen}
                 isOngoingAnnotation={isOngoingAnnotation}
                 setIsOngoingAnnotation={setIsOngoingAnnotation}
+                setTheme={setTheme}
                 newIssue={(issueInfo: IssueInfo) => issueController.newIssue(issueInfo)}
             />
             {annotationTool()}
             {props.children}
-        </>
+        </div>
     );
 };
 
