@@ -1,1 +1,1 @@
-export { default } from './AnnotationTool';
+export { default, SelectedAreas } from './AnnotationTool';
