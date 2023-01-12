@@ -1,9 +1,10 @@
 import React from "react";
-import { SelectedAreas } from "../AnnotationTool";
+import { MouseEvents, SelectedAreas } from "../AnnotationTool";
 import { SelectAreaProps } from "../tools/SelectArea";
 
 export interface AnnotationAreaProps {
     selectedAreas: SelectedAreas;
+    mouseEvents: MouseEvents;
     children: JSX.Element[];
 }
 
@@ -11,7 +12,7 @@ const AnnotationArea = (props: AnnotationAreaProps) => {
 
     const rectToPathData = (selectAreaProps: SelectAreaProps) => {
         const {x, y, width, height} = selectAreaProps;
-        return `M ${x} ${y} h ${width} v ${height} h -${width} Z`;
+        return `M ${x} ${y} h ${width} v ${height} h ${-width} Z`;
     };
     
     const pathDataFromSelectedAreas = () => {
@@ -36,7 +37,7 @@ const AnnotationArea = (props: AnnotationAreaProps) => {
     };
 
     return (
-        <svg className="annotation-area">
+        <svg className="annotation-area" {...props.mouseEvents}>
             {areaPath()}
             {props.children}
         </svg>

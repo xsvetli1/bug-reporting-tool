@@ -1,1 +1,1 @@
-export { default, SelectedAreas } from './AnnotationTool';
+export { default, SelectedAreas, MouseEvents } from './AnnotationTool';
