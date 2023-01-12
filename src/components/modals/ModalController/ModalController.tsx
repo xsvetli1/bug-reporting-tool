@@ -1,5 +1,5 @@
-import { Alert, Dialog, Snackbar, SnackbarOrigin} from "@mui/material";
 import React, { useState } from "react";
+import { Alert, Dialog, Snackbar, SnackbarOrigin} from "@mui/material";
 import IssueType from "../../../models/IssueType";
 import { IssueInfo } from "../../../integration/IssueInfo";
 import FormModalContent from "../FormModalContent";
@@ -44,8 +44,6 @@ const ModalController = (props: ModalControllerProps) => {
 
     const formModal = (isFormOpen: boolean, type: IssueType) => {
         if (props.isToolOpen && isFormOpen) {
-            props.setTheme(type.getLabel());
-
             return <FormModalContent
                 formState={formState}
                 setFormState={setFormState}
@@ -53,6 +51,7 @@ const ModalController = (props: ModalControllerProps) => {
                 newIssue={props.newIssue}
                 setSnackbarShown={setSnackbarShown}
                 setSnackbarSuccess={setSnackbarSuccess}
+                setTheme={props.setTheme}
                 handleAnnotate={() => props.setIsOngoingAnnotation(true)}
                 handleClose={handleClose}
             />;

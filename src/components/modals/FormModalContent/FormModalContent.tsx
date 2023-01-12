@@ -1,4 +1,4 @@
-import React, { RefObject, useRef } from "react";
+import React, { RefObject, useEffect, useRef } from "react";
 import { Button, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
 import IssueType from "../../../models/IssueType";
 import { IssueInfo } from "../../../integration/IssueInfo";
@@ -12,6 +12,7 @@ export interface FormModalContentProps {
     newIssue: (issueInfo: IssueInfo) => Promise<boolean>,
     setSnackbarShown: UseStateSetter<boolean>,
     setSnackbarSuccess: UseStateSetter<boolean>,
+    setTheme: UseStateSetter<string>,
     handleAnnotate: () => void,
     handleClose: () => void
 }
@@ -60,6 +61,8 @@ const FormModalContent = (props: FormModalContentProps) => {
             }
         />
     };
+
+    useEffect(() => props.setTheme(props.type.getLabel()), []);
 
     return (
         <div>
