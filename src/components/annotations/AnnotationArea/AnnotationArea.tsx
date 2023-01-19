@@ -1,10 +1,10 @@
 import React from "react";
-import { MouseEvents, SelectedAreas } from "../AnnotationTool";
-import { SelectAreaProps } from "../tools/SelectArea";
+import { AnnotationToolEventHandlers, SelectedAreas } from "../AnnotationTool";
+import { SelectAreaProps } from "../components/SelectArea";
 
 export interface AnnotationAreaProps {
     selectedAreas: SelectedAreas;
-    mouseEvents: MouseEvents;
+    mouseEvents: AnnotationToolEventHandlers;
     children: JSX.Element[];
 }
 
