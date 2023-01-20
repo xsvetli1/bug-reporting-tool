@@ -1,11 +1,20 @@
-import React from "react";
-import { AnnotationToolEventHandlers, SelectedAreas } from "../AnnotationTool";
+import React, { ReactNode } from "react";
+import { SelectedAreas } from "../AnnotationTool";
+import { ReactMouseEvent, ReactTouchEvent } from "../AnnotationTool/AnnotationTool";
 import { SelectAreaProps } from "../components/SelectArea";
+
+type AnnotationToolEventHandlers = {
+    onMouseDown: (event: ReactMouseEvent) => void;
+    onMouseUp: (event: ReactMouseEvent) => void;
+    onMouseMove: (event: ReactMouseEvent) => void;
+    onTouchStart: (event: ReactTouchEvent) => void;
+    onTouchMove: (event: ReactTouchEvent) => void;
+}
 
 export interface AnnotationAreaProps {
     selectedAreas: SelectedAreas;
     mouseEvents: AnnotationToolEventHandlers;
-    children: JSX.Element[];
+    children: ReactNode;
 }
 
 const AnnotationArea = (props: AnnotationAreaProps) => {

@@ -1,1 +1,1 @@
-export { default } from './SelectAreaTool';
+export { useSelectAreaTool } from './SelectAreaTool';

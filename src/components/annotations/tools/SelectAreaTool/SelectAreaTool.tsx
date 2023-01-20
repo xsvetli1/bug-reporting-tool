@@ -1,6 +1,6 @@
-import React, { forwardRef, useImperativeHandle, useState } from "react";
+import React, { useState } from "react";
 import { UseStateSetter } from "../../../../models/UseStateSetter";
-import { AnnotationToolEventHandlers, ReactMouseEvent, ReactTouchEvent, SelectedAreas } from "../../AnnotationTool/AnnotationTool";
+import { ReactMouseEvent, ReactTouchEvent, SelectedAreas } from "../../AnnotationTool/AnnotationTool";
 import SelectArea, { SelectAreaProps } from "../../components/SelectArea";
 
 export interface SelectAreaToolProps {
@@ -10,7 +10,7 @@ export interface SelectAreaToolProps {
     setSelectedAreas: UseStateSetter<SelectedAreas>;
 }
 
-const SelectAreaTool = forwardRef<AnnotationToolEventHandlers, SelectAreaToolProps>((props, ref) => {
+export const useSelectAreaTool = (props: SelectAreaToolProps) => {
 
     const [startX, setStartX] = useState(0);
     const [startY, setStartY] = useState(0);
@@ -82,12 +82,6 @@ const SelectAreaTool = forwardRef<AnnotationToolEventHandlers, SelectAreaToolPro
         const element = event.currentTarget.getBoundingClientRect();
         return event.clientY - element.top - 3; // 3 is border-width
     }
-
-    useImperativeHandle(ref, () => publicRef);
     
-    return (
-        <></>  // Some button will come here
-    );
-});
-
-export default SelectAreaTool;
+    return publicRef;
+};
