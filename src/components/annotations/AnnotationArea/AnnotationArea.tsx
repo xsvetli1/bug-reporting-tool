@@ -23,7 +23,7 @@ const AnnotationArea = (props: AnnotationAreaProps) => {
     };
 
     const pathDataFromSelectedAreas = () => {
-        return Object.keys(props.selectedAreas).map((key: string, _: number) => {
+        return Object.keys(props.selectedAreas).map((key: string) => {
             return rectToPathData(props.selectedAreas[key]);
         });
     };

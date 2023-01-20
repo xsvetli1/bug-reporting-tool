@@ -1,1 +1,1 @@
-export { default as BugReportingTool } from "./BugReportingTool";
+export { default as BugReportingTool } from './BugReportingTool';
