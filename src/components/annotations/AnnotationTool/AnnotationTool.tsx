@@ -24,12 +24,17 @@ const AnnotationTool = (props: AnnotationToolProps) => {
     const [annotations, setAnnotations] = useState<AnnotationProps[]>([]);
     const [selectedAreas, setSelectedAreas] = useState<SelectedAreas>({});
 
+    const annotate = (annotation: AnnotationProps) => setAnnotations([
+        ...annotations,
+        annotation
+    ]);
+
     const selectAreaTool = useSelectArea({
         annotations: annotations,
-        setAnnotations: setAnnotations,
+        annotate: annotate,
         selectedAreas: selectedAreas,
         setSelectedAreas: setSelectedAreas
-    });
+    });    
 
     const tool = () => {
         if (props.isOngoingAnnotation) {

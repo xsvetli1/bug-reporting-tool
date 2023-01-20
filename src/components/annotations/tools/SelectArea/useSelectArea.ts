@@ -3,10 +3,11 @@ import { SelectAreaProps } from ".";
 import { UseStateSetter } from "../../../../models/UseStateSetter";
 import { ReactMouseEvent, ReactTouchEvent, SelectedAreas } from "../../AnnotationTool/AnnotationTool";
 import { AnnotationProps } from "../AnnotationProps";
+import { getX, getY } from "../CoordinatesHelper";
 
 export interface SelectAreaHookProps {
     annotations: AnnotationProps[];
-    setAnnotations: UseStateSetter<AnnotationProps[]>;
+    annotate: (annotation: AnnotationProps) => void;
     selectedAreas: SelectedAreas;
     setSelectedAreas: UseStateSetter<SelectedAreas>;
 }
@@ -60,28 +61,13 @@ export const useSelectArea = (props: SelectAreaHookProps) => {
         }
     }
 
-    const annotate = (annotation: AnnotationProps) => props.setAnnotations([
-        ...props.annotations,
-        annotation
-    ]);
-
     const selectArea = (selectAreaProps: SelectAreaProps, id=props.annotations.length) => {
         props.selectedAreas[id] = selectAreaProps;
         props.setSelectedAreas({...props.selectedAreas}); // Needs to be shallow copy to make setState re-render
         
         if (id === props.annotations.length) {
-            annotate(selectAreaProps);
+            props.annotate(selectAreaProps);
         }
-    }
-
-    const getX = (event: ReactMouseEvent) => {
-        const element = event.currentTarget.getBoundingClientRect();
-        return event.clientX - element.left - 3; // 3 is border-width
-    }
-
-    const getY = (event: ReactMouseEvent) => {
-        const element = event.currentTarget.getBoundingClientRect();
-        return event.clientY - element.top - 3; // 3 is border-width
     }
     
     return mouseEventHandlers;
