@@ -3,8 +3,7 @@ import IssueType from "../../../models/IssueType";
 import AnnotationArea from "../AnnotationArea";
 import '../Annotations.css';
 import CloseButton from "../CloseButton";
-import { SelectAreaProps } from "../components/SelectArea";
-import { useSelectAreaTool } from "../tools/SelectAreaTool/SelectAreaTool";
+import { SelectAreaProps, useSelectArea } from "../tools/SelectArea";
 
 export interface AnnotationToolProps {
     issueType: IssueType;
@@ -24,7 +23,7 @@ const AnnotationTool = (props: AnnotationToolProps) => {
     const [annotations, setAnnotations] = useState<JSX.Element[]>([]);
     const [selectedAreas, setSelectedAreas] = useState<SelectedAreas>({});
 
-    const selectAreaTool = useSelectAreaTool({
+    const selectAreaTool = useSelectArea({
         annotations: annotations,
         setAnnotations: setAnnotations,
         selectedAreas: selectedAreas,

@@ -1,22 +1,22 @@
 import React, { useState } from "react";
 import { UseStateSetter } from "../../../../models/UseStateSetter";
 import { ReactMouseEvent, ReactTouchEvent, SelectedAreas } from "../../AnnotationTool/AnnotationTool";
-import SelectArea, { SelectAreaProps } from "../../components/SelectArea";
+import SelectArea, { SelectAreaProps } from ".";
 
-export interface SelectAreaToolProps {
+export interface SelectAreaHookProps {
     annotations: JSX.Element[];
     setAnnotations: UseStateSetter<JSX.Element[]>;
     selectedAreas: SelectedAreas;
     setSelectedAreas: UseStateSetter<SelectedAreas>;
 }
 
-export const useSelectAreaTool = (props: SelectAreaToolProps) => {
+export const useSelectArea = (props: SelectAreaHookProps) => {
 
     const [startX, setStartX] = useState(0);
     const [startY, setStartY] = useState(0);
     const [selecting, setSelecting] = useState(false);
 
-    const publicRef = {
+    const mouseEventHandlers = {
         onMouseDown: (event: ReactMouseEvent) => {
             setStartX(getX(event));
             setStartY(getY(event));
@@ -83,5 +83,5 @@ export const useSelectAreaTool = (props: SelectAreaToolProps) => {
         return event.clientY - element.top - 3; // 3 is border-width
     }
     
-    return publicRef;
+    return mouseEventHandlers;
 };
