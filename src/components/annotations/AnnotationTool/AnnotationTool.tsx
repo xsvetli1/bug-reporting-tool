@@ -41,7 +41,9 @@ const AnnotationTool = (props: AnnotationToolProps) => {
             return (
                 <div>
                     <AnnotationArea selectedAreas={selectedAreas} mouseEvents={selectAreaTool}>
-                        {annotations.map(annotationProps => <SelectArea {...annotationProps} />)}
+                        {annotations.map((annotationProps, index) => 
+                            <SelectArea key={index} {...annotationProps} />
+                        )}
                     </AnnotationArea>
                     <div className="annotation-area-content">
                         <CloseButton onClick={props.handleClose} />
