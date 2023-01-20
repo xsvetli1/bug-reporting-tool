@@ -1,4 +1,4 @@
-import { ReactMouseEvent } from "../types/ReactMouseEvent";
+import { ReactMouseEvent } from '../types/ReactMouseEvent';
 
 export const getX = (event: ReactMouseEvent) => {
     const element = event.currentTarget.getBoundingClientRect();
@@ -8,4 +8,4 @@ export const getX = (event: ReactMouseEvent) => {
 export const getY = (event: ReactMouseEvent) => {
     const element = event.currentTarget.getBoundingClientRect();
     return event.clientY - element.top - 3; // 3 is border-width
-}
+};

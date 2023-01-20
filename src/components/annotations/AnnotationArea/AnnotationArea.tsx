@@ -1,6 +1,6 @@
-import React, { ReactNode } from "react";
-import { SelectAreaProps } from "../tools/SelectArea";
-import { ReactMouseEvent, ReactTouchEvent, SelectedAreas } from "../types";
+import React, { ReactNode } from 'react';
+import { SelectAreaProps } from '../tools/SelectArea';
+import { ReactMouseEvent, ReactTouchEvent, SelectedAreas } from '../types';
 
 type AnnotationToolEventHandlers = {
     onMouseDown: (event: ReactMouseEvent) => void;
@@ -8,7 +8,7 @@ type AnnotationToolEventHandlers = {
     onMouseMove: (event: ReactMouseEvent) => void;
     onTouchStart: (event: ReactTouchEvent) => void;
     onTouchMove: (event: ReactTouchEvent) => void;
-}
+};
 
 export interface AnnotationAreaProps {
     selectedAreas: SelectedAreas;
@@ -17,22 +17,21 @@ export interface AnnotationAreaProps {
 }
 
 const AnnotationArea = (props: AnnotationAreaProps) => {
-
     const rectToPathData = (selectAreaProps: SelectAreaProps) => {
-        const {x, y, width, height} = selectAreaProps;
+        const { x, y, width, height } = selectAreaProps;
         return `M ${x} ${y} h ${width} v ${height} h ${-width} Z`;
     };
-    
+
     const pathDataFromSelectedAreas = () => {
         return Object.keys(props.selectedAreas).map((key: string, _: number) => {
             return rectToPathData(props.selectedAreas[key]);
         });
     };
-    
+
     const areaPath = () => {
         const width = window.innerWidth;
         const height = window.innerHeight;
-        
+
         const background = rectToPathData({
             x: 0,
             y: 0,

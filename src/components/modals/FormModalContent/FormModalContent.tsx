@@ -1,20 +1,20 @@
-import React, { RefObject, useEffect, useRef } from "react";
-import { Button, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
-import IssueType from "../../../models/IssueType";
-import { IssueInfo } from "../../../integration/IssueInfo";
-import { FormFields, FormProps } from "../../../models/FormProps";
-import { UseStateSetter } from "../../../models/UseStateSetter";
+import React, { RefObject, useEffect, useRef } from 'react';
+import { Button, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
+import IssueType from '../../../models/IssueType';
+import { IssueInfo } from '../../../integration/IssueInfo';
+import { FormFields, FormProps } from '../../../models/FormProps';
+import { UseStateSetter } from '../../../models/UseStateSetter';
 
 export interface FormModalContentProps {
-    formState: FormProps,
-    setFormState: React.Dispatch<React.SetStateAction<FormProps>>,
-    type: IssueType,
-    newIssue: (issueInfo: IssueInfo) => Promise<boolean>,
-    setSnackbarShown: UseStateSetter<boolean>,
-    setSnackbarSuccess: UseStateSetter<boolean>,
-    setTheme: UseStateSetter<string>,
-    handleAnnotate: () => void,
-    handleClose: () => void
+    formState: FormProps;
+    setFormState: React.Dispatch<React.SetStateAction<FormProps>>;
+    type: IssueType;
+    newIssue: (issueInfo: IssueInfo) => Promise<boolean>;
+    setSnackbarShown: UseStateSetter<boolean>;
+    setSnackbarSuccess: UseStateSetter<boolean>;
+    setTheme: UseStateSetter<string>;
+    handleAnnotate: () => void;
+    handleClose: () => void;
 }
 
 const FormModalContent = (props: FormModalContentProps) => {
@@ -25,7 +25,7 @@ const FormModalContent = (props: FormModalContentProps) => {
     const handleSend = async () => {
         props.handleClose();
         props.setFormState({});
-        let success = await props.newIssue({
+        const success = await props.newIssue({
             email: emailRef.current?.value ?? '',
             title: titleRef.current?.value ?? '',
             description: descriptionRef.current?.value ?? '',
@@ -40,26 +40,28 @@ const FormModalContent = (props: FormModalContentProps) => {
         label: string,
         type: string,
         ref: RefObject<HTMLInputElement>,
-        multiline=false
+        multiline = false
     ) => {
-        return <TextField
-            margin="dense"
-            id={id}
-            label={label}
-            type={type}
-            fullWidth
-            multiline={multiline}
-            rows={8}
-            variant="standard"
-            inputRef={ref}
-            defaultValue={props.formState[id]}
-            onChange={event => props.setFormState(
-                state => ({
-                    ...state,
-                    ...{[id]: event.target.value}
-                }))
-            }
-        />
+        return (
+            <TextField
+                margin="dense"
+                id={id}
+                label={label}
+                type={type}
+                fullWidth
+                multiline={multiline}
+                rows={8}
+                variant="standard"
+                inputRef={ref}
+                defaultValue={props.formState[id]}
+                onChange={(event) =>
+                    props.setFormState((state) => ({
+                        ...state,
+                        ...{ [id]: event.target.value }
+                    }))
+                }
+            />
+        );
     };
 
     useEffect(() => props.setTheme(props.type.getLabel()), []);

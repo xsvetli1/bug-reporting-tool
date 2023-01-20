@@ -1,3 +1,3 @@
-import { SelectAreaProps } from "./SelectArea";
+import { SelectAreaProps } from './SelectArea';
 
 export type AnnotationProps = SelectAreaProps;

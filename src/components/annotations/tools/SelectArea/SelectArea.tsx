@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export interface SelectAreaProps {
     x: number;
@@ -8,9 +8,7 @@ export interface SelectAreaProps {
 }
 
 const SelectArea = (props: SelectAreaProps) => {
-    return (
-        <rect {...props} fillOpacity="0"/>
-    );
+    return <rect {...props} fillOpacity="0" />;
 };
 
 export default SelectArea;

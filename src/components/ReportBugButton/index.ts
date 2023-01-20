@@ -1,1 +1,1 @@
-export { default } from "./ReportBugButton"
+export { default } from './ReportBugButton';

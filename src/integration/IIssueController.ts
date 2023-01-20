@@ -1,4 +1,4 @@
-import { IssueInfo } from "./IssueInfo";
+import { IssueInfo } from './IssueInfo';
 
 interface IIssueController {
     newIssue(issueInfo: IssueInfo): Promise<boolean>;

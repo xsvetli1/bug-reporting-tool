@@ -1,6 +1,6 @@
-import IIssueController from "../IIssueController";
-import { IssueInfo } from "../IssueInfo";
-import { GitlabProps } from "./GitlabProps";
+import IIssueController from '../IIssueController';
+import { IssueInfo } from '../IssueInfo';
+import { GitlabProps } from './GitlabProps';
 
 class GitlabController implements IIssueController {
     props: GitlabProps;
@@ -11,9 +11,9 @@ class GitlabController implements IIssueController {
 
     async newIssue(issueInfo: IssueInfo): Promise<boolean> {
         const response = await fetch(
-            `https://${this.props.server.hostname}`
-            + `/api/v4/projects/${this.props.projectId}`
-            + `/issues?${this.queryFromIssueInfo(issueInfo)}`,
+            `https://${this.props.server.hostname}` +
+                `/api/v4/projects/${this.props.projectId}` +
+                `/issues?${this.queryFromIssueInfo(issueInfo)}`,
             {
                 method: 'POST',
                 headers: {
@@ -26,9 +26,11 @@ class GitlabController implements IIssueController {
     }
 
     queryFromIssueInfo(issueInfo: IssueInfo): string {
-        return `title=${issueInfo.title}`
-            + `&description=${issueInfo.description}`
-            + `&labels=${issueInfo.type.getLabel()}`;
+        return (
+            `title=${issueInfo.title}` +
+            `&description=${issueInfo.description}` +
+            `&labels=${issueInfo.type.getLabel()}`
+        );
     }
 }
 
