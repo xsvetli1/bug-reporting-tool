@@ -1,4 +1,4 @@
-import { ReactMouseEvent } from "../AnnotationTool/AnnotationTool";
+import { ReactMouseEvent } from "../types/ReactMouseEvent";
 
 export const getX = (event: ReactMouseEvent) => {
     const element = event.currentTarget.getBoundingClientRect();

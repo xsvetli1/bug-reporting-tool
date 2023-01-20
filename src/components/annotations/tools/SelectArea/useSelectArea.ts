@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { SelectAreaProps } from ".";
 import { UseStateSetter } from "../../../../models/UseStateSetter";
-import { ReactMouseEvent, ReactTouchEvent, SelectedAreas } from "../../AnnotationTool/AnnotationTool";
+import { ReactMouseEvent, ReactTouchEvent } from "../../types";
+import { SelectedAreas } from "../../types/SelectedAreas";
 import { AnnotationProps } from "../AnnotationProps";
 import { getX, getY } from "../CoordinatesHelper";
 

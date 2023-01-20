@@ -1,7 +1,6 @@
 import React, { ReactNode } from "react";
-import { SelectedAreas } from "../AnnotationTool";
-import { ReactMouseEvent, ReactTouchEvent } from "../AnnotationTool/AnnotationTool";
 import { SelectAreaProps } from "../tools/SelectArea";
+import { ReactMouseEvent, ReactTouchEvent, SelectedAreas } from "../types";
 
 type AnnotationToolEventHandlers = {
     onMouseDown: (event: ReactMouseEvent) => void;

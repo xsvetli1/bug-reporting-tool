@@ -4,20 +4,14 @@ import AnnotationArea from "../AnnotationArea";
 import '../Annotations.css';
 import CloseButton from "../CloseButton";
 import { AnnotationProps } from "../tools/AnnotationProps";
-import SelectArea, { SelectAreaProps, useSelectArea } from "../tools/SelectArea";
+import SelectArea, { useSelectArea } from "../tools/SelectArea";
+import { SelectedAreas } from "../types/SelectedAreas";
 
 export interface AnnotationToolProps {
     issueType: IssueType;
     isOngoingAnnotation: boolean;
     handleClose: () => void;
 };
-
-export type SelectedAreas = {
-    [id: string]: SelectAreaProps;
-};
-
-export type ReactMouseEvent = React.MouseEvent<SVGSVGElement, MouseEvent>;
-export type ReactTouchEvent = React.TouchEvent<SVGSVGElement>;
 
 const AnnotationTool = (props: AnnotationToolProps) => {
 
