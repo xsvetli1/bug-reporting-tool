@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { SelectAreaProps } from ".";
 import { UseStateSetter } from "../../../../models/UseStateSetter";
 import { ReactMouseEvent, ReactTouchEvent, SelectedAreas } from "../../AnnotationTool/AnnotationTool";
-import SelectArea, { SelectAreaProps } from ".";
+import { AnnotationProps } from "../AnnotationProps";
 
 export interface SelectAreaHookProps {
-    annotations: JSX.Element[];
-    setAnnotations: UseStateSetter<JSX.Element[]>;
+    annotations: AnnotationProps[];
+    setAnnotations: UseStateSetter<AnnotationProps[]>;
     selectedAreas: SelectedAreas;
     setSelectedAreas: UseStateSetter<SelectedAreas>;
 }
@@ -59,7 +60,7 @@ export const useSelectArea = (props: SelectAreaHookProps) => {
         }
     }
 
-    const annotate = (annotation: JSX.Element) => props.setAnnotations([
+    const annotate = (annotation: AnnotationProps) => props.setAnnotations([
         ...props.annotations,
         annotation
     ]);
@@ -69,7 +70,7 @@ export const useSelectArea = (props: SelectAreaHookProps) => {
         props.setSelectedAreas({...props.selectedAreas}); // Needs to be shallow copy to make setState re-render
         
         if (id === props.annotations.length) {
-            annotate(<SelectArea key={id} {...selectAreaProps} />);
+            annotate(selectAreaProps);
         }
     }
 

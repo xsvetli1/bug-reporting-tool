@@ -3,7 +3,8 @@ import IssueType from "../../../models/IssueType";
 import AnnotationArea from "../AnnotationArea";
 import '../Annotations.css';
 import CloseButton from "../CloseButton";
-import { SelectAreaProps, useSelectArea } from "../tools/SelectArea";
+import { AnnotationProps } from "../tools/AnnotationProps";
+import SelectArea, { SelectAreaProps, useSelectArea } from "../tools/SelectArea";
 
 export interface AnnotationToolProps {
     issueType: IssueType;
@@ -20,7 +21,7 @@ export type ReactTouchEvent = React.TouchEvent<SVGSVGElement>;
 
 const AnnotationTool = (props: AnnotationToolProps) => {
 
-    const [annotations, setAnnotations] = useState<JSX.Element[]>([]);
+    const [annotations, setAnnotations] = useState<AnnotationProps[]>([]);
     const [selectedAreas, setSelectedAreas] = useState<SelectedAreas>({});
 
     const selectAreaTool = useSelectArea({
@@ -35,7 +36,7 @@ const AnnotationTool = (props: AnnotationToolProps) => {
             return (
                 <div>
                     <AnnotationArea selectedAreas={selectedAreas} mouseEvents={selectAreaTool}>
-                        {annotations}
+                        {annotations.map(annotationProps => <SelectArea {...annotationProps} />)}
                     </AnnotationArea>
                     <div className="annotation-area-content">
                         <CloseButton onClick={props.handleClose} />
