@@ -32,40 +32,41 @@ const ModalController = (props: ModalControllerProps) => {
         setFormState({});
     };
 
-    const optionsModal = () => {
-        if (props.isToolOpen && !props.isBugAnnotationOpen && !props.isIdeaAnnotationOpen) {
-            return (
-                <OptionsModalContent
-                    setIsBugAnnotationOpen={props.setIsBugAnnotationOpen}
-                    setIsIdeaAnnotationOpen={props.setIsIdeaAnnotationOpen}
-                    handleClose={handleClose}
-                />
-            );
-        }
-    };
-
-    const formModal = (isFormOpen: boolean, type: IssueType) => {
-        if (props.isToolOpen && isFormOpen) {
-            return (
-                <FormModalContent
-                    formState={formState}
-                    setFormState={setFormState}
-                    type={type}
-                    newIssue={props.newIssue}
-                    setSnackbarShown={setSnackbarShown}
-                    setSnackbarSuccess={setSnackbarSuccess}
-                    setTheme={props.setTheme}
-                    handleAnnotate={() => props.setIsOngoingAnnotation(true)}
-                    handleClose={handleClose}
-                />
-            );
-        }
-    };
-
     const handleSnackbarClose = () => setSnackbarShown(false);
-    const snackbar = () => {
-        const anchor: SnackbarOrigin = { vertical: 'bottom', horizontal: 'right' };
-        return (
+
+    const formModalProps = (type: IssueType) => {
+        return {
+            formState: formState,
+            setFormState: setFormState,
+            type: type,
+            newIssue: props.newIssue,
+            setSnackbarShown: setSnackbarShown,
+            setSnackbarSuccess: setSnackbarSuccess,
+            setTheme: props.setTheme,
+            handleAnnotate: () => props.setIsOngoingAnnotation(true),
+            handleClose: handleClose
+        };
+    };
+
+    const anchor: SnackbarOrigin = { vertical: 'bottom', horizontal: 'right' };
+
+    return (
+        <div>
+            <Dialog open={props.isToolOpen && !props.isOngoingAnnotation} onClose={handleClose}>
+                {props.isToolOpen && !props.isBugAnnotationOpen && !props.isIdeaAnnotationOpen && (
+                    <OptionsModalContent
+                        setIsBugAnnotationOpen={props.setIsBugAnnotationOpen}
+                        setIsIdeaAnnotationOpen={props.setIsIdeaAnnotationOpen}
+                        handleClose={handleClose}
+                    />
+                )}
+                {props.isToolOpen && props.isBugAnnotationOpen && (
+                    <FormModalContent {...formModalProps(IssueType.Bug)} />
+                )}
+                {props.isToolOpen && props.isIdeaAnnotationOpen && (
+                    <FormModalContent {...formModalProps(IssueType.Idea)} />
+                )}
+            </Dialog>
             <Snackbar
                 anchorOrigin={anchor}
                 open={snackbarShown}
@@ -82,17 +83,6 @@ const ModalController = (props: ModalControllerProps) => {
                         : 'Error occured during feedback submission!'}
                 </Alert>
             </Snackbar>
-        );
-    };
-
-    return (
-        <div>
-            <Dialog open={props.isToolOpen && !props.isOngoingAnnotation} onClose={handleClose}>
-                {optionsModal()}
-                {formModal(props.isBugAnnotationOpen, IssueType.Bug)}
-                {formModal(props.isIdeaAnnotationOpen, IssueType.Idea)}
-            </Dialog>
-            {snackbar()}
         </div>
     );
 };
