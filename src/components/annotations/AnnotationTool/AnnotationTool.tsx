@@ -24,10 +24,10 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
         setSelectedAreas: setSelectedAreas
     });
 
-    const tool = () => {
-        if (isOngoingAnnotation) {
-            return (
-                <div>
+    return (
+        <>
+            {isOngoingAnnotation && (
+                <>
                     <AnnotationArea selectedAreas={selectedAreas} mouseEvents={selectAreaTool}>
                         {annotations.map((annotationProps, index) => (
                             <SelectArea key={index} {...annotationProps} />
@@ -36,12 +36,10 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
                     <div className="annotation-area-content">
                         <CloseButton onClick={handleClose} />
                     </div>
-                </div>
-            );
-        }
-    };
-
-    return <div>{tool()}</div>;
+                </>
+            )}
+        </>
+    );
 };
 
 export default AnnotationTool;
