@@ -64,7 +64,7 @@ const ModalController = (props: ModalControllerProps) => {
 
     const handleSnackbarClose = () => setSnackbarShown(false);
     const snackbar = () => {
-        const anchor = { vertical: 'bottom', horizontal: 'right' } as SnackbarOrigin;
+        const anchor: SnackbarOrigin = { vertical: 'bottom', horizontal: 'right' };
         return (
             <Snackbar
                 anchorOrigin={anchor}
