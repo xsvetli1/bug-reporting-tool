@@ -7,8 +7,6 @@ export interface SelectAreaProps {
     height: number;
 }
 
-const SelectArea = (props: SelectAreaProps) => {
-    return <rect {...props} fillOpacity="0" />;
-};
+const SelectArea = (props: SelectAreaProps) => <rect {...props} fillOpacity="0" />;
 
 export default SelectArea;
