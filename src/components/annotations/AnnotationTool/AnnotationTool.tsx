@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import IssueType from '../../../models/IssueType';
 import AnnotationArea from '../AnnotationArea';
 import '../Annotations.css';
 import CloseButton from '../CloseButton';
@@ -8,12 +7,11 @@ import SelectArea, { useSelectArea } from '../tools/SelectArea';
 import { SelectedAreas } from '../types/SelectedAreas';
 
 export interface AnnotationToolProps {
-    issueType: IssueType;
     isOngoingAnnotation: boolean;
     handleClose: () => void;
 }
 
-const AnnotationTool = (props: AnnotationToolProps) => {
+const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProps) => {
     const [annotations, setAnnotations] = useState<AnnotationProps[]>([]);
     const [selectedAreas, setSelectedAreas] = useState<SelectedAreas>({});
 
@@ -27,7 +25,7 @@ const AnnotationTool = (props: AnnotationToolProps) => {
     });
 
     const tool = () => {
-        if (props.isOngoingAnnotation) {
+        if (isOngoingAnnotation) {
             return (
                 <div>
                     <AnnotationArea selectedAreas={selectedAreas} mouseEvents={selectAreaTool}>
@@ -36,7 +34,7 @@ const AnnotationTool = (props: AnnotationToolProps) => {
                         ))}
                     </AnnotationArea>
                     <div className="annotation-area-content">
-                        <CloseButton onClick={props.handleClose} />
+                        <CloseButton onClick={handleClose} />
                     </div>
                 </div>
             );

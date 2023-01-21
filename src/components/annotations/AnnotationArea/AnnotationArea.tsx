@@ -16,15 +16,15 @@ export interface AnnotationAreaProps {
     children: ReactNode;
 }
 
-const AnnotationArea = (props: AnnotationAreaProps) => {
+const AnnotationArea = ({ selectedAreas, mouseEvents, children }: AnnotationAreaProps) => {
     const rectToPathData = (selectAreaProps: SelectAreaProps) => {
         const { x, y, width, height } = selectAreaProps;
         return `M ${x} ${y} h ${width} v ${height} h ${-width} Z`;
     };
 
     const pathDataFromSelectedAreas = () => {
-        return Object.keys(props.selectedAreas).map((key: string) => {
-            return rectToPathData(props.selectedAreas[key]);
+        return Object.keys(selectedAreas).map((key: string) => {
+            return rectToPathData(selectedAreas[key]);
         });
     };
 
@@ -44,9 +44,9 @@ const AnnotationArea = (props: AnnotationAreaProps) => {
     };
 
     return (
-        <svg className="annotation-area" {...props.mouseEvents}>
+        <svg className="annotation-area" {...mouseEvents}>
             {areaPath()}
-            {props.children}
+            {children}
         </svg>
     );
 };

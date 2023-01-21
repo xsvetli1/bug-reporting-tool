@@ -6,9 +6,9 @@ export interface ReportBugButtonProps {
     setIsToolOpen: UseStateSetter<boolean>;
 }
 
-const ReportBugButton = (props: ReportBugButtonProps) => {
+const ReportBugButton = ({ setIsToolOpen }: ReportBugButtonProps) => {
     const handleClick = () => {
-        props.setIsToolOpen(true);
+        setIsToolOpen(true);
     };
 
     return (
