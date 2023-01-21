@@ -1,5 +1,12 @@
 import React, { RefObject, useEffect, useRef } from 'react';
-import { Button, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
+import {
+    Button,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    TextField,
+    TextFieldProps
+} from '@mui/material';
 import IssueType from '../../../models/IssueType';
 import { IssueInfo } from '../../../integration/IssueInfo';
 import { FormFields, FormProps } from '../../../models/FormProps';
@@ -35,33 +42,30 @@ const FormModalContent = (props: FormModalContentProps) => {
         props.setSnackbarShown(true);
     };
 
-    const textField = (
+    const textFieldProps = (
         id: FormFields,
         label: string,
         type: string,
         ref: RefObject<HTMLInputElement>,
         multiline = false
-    ) => {
-        return (
-            <TextField
-                margin="dense"
-                id={id}
-                label={label}
-                type={type}
-                fullWidth
-                multiline={multiline}
-                rows={8}
-                variant="standard"
-                inputRef={ref}
-                defaultValue={props.formState[id]}
-                onChange={(event) =>
-                    props.setFormState((state) => ({
-                        ...state,
-                        ...{ [id]: event.target.value }
-                    }))
-                }
-            />
-        );
+    ): TextFieldProps => {
+        return {
+            margin: 'dense',
+            id: id,
+            label: label,
+            type: type,
+            fullWidth: true,
+            multiline: multiline,
+            rows: 8,
+            variant: 'standard',
+            inputRef: ref,
+            defaultValue: props.formState[id],
+            onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
+                props.setFormState((state) => ({
+                    ...state,
+                    ...{ [id]: event.target.value }
+                }))
+        };
     };
 
     useEffect(() => props.setTheme(props.type.getLabel()), []);
@@ -70,9 +74,11 @@ const FormModalContent = (props: FormModalContentProps) => {
         <div>
             <DialogTitle>{props.type.getTitle()}</DialogTitle>
             <DialogContent>
-                {textField('email', 'Email Address', 'email', emailRef)}
-                {textField('title', 'Title', 'text', titleRef)}
-                {textField('description', 'Description', 'text', descriptionRef, true)}
+                <TextField {...textFieldProps('email', 'Email Address', 'email', emailRef)} />
+                <TextField {...textFieldProps('title', 'Title', 'text', titleRef)} />
+                <TextField
+                    {...textFieldProps('description', 'Description', 'text', descriptionRef, true)}
+                />
             </DialogContent>
             <DialogActions>
                 <Button onClick={props.handleAnnotate}>Annotate</Button>
