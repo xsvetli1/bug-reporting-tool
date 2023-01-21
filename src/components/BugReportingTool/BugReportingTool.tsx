@@ -22,24 +22,9 @@ const BugReportingTool = ({ platform, platformProps, children }: BugReportingToo
     const [theme, setTheme] = useState('');
     const issueController = IssueControllerFactory.get(platform, platformProps);
 
-    const mainButton = () => {
-        if (!isToolOpen) {
-            return <ReportBugButton setIsToolOpen={setIsToolOpen}></ReportBugButton>;
-        }
-    };
-
-    const annotationTool = () => {
-        return (
-            <AnnotationTool
-                isOngoingAnnotation={isOngoingAnnotation}
-                handleClose={() => setIsOngoingAnnotation(false)}
-            ></AnnotationTool>
-        );
-    };
-
     return (
         <div data-theme={theme}>
-            {mainButton()}
+            {!isToolOpen && <ReportBugButton setIsToolOpen={setIsToolOpen} />}
             <ModalController
                 isToolOpen={isToolOpen}
                 setIsToolOpen={setIsToolOpen}
@@ -52,7 +37,10 @@ const BugReportingTool = ({ platform, platformProps, children }: BugReportingToo
                 setTheme={setTheme}
                 newIssue={(issueInfo: IssueInfo) => issueController.newIssue(issueInfo)}
             />
-            {annotationTool()}
+            <AnnotationTool
+                isOngoingAnnotation={isOngoingAnnotation}
+                handleClose={() => setIsOngoingAnnotation(false)}
+            />
             {children}
         </div>
     );
