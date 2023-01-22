@@ -6,8 +6,8 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: calc(100% - 2*var(--border-width));
-    height: calc(100% - 2*var(--border-width));
+    width: calc(100% - 2 * var(--border-width));
+    height: calc(100% - 2 * var(--border-width));
     border-style: solid;
     border-width: var(--border-width);
     border-color: var(--issue-type-based);
