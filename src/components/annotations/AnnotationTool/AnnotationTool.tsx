@@ -20,12 +20,12 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
     const annotate = (annotation: AnnotationProps) => setAnnotations([...annotations, annotation]);
 
     const selectArea = useSelectArea({
-        annotations: annotations,
-        annotate: annotate,
-        selectedAreas: selectedAreas,
-        setSelectedAreas: setSelectedAreas
+        annotations,
+        annotate,
+        selectedAreas,
+        setSelectedAreas
     });
-    const arrow = useArrow({ annotations: annotations, annotate: annotate });
+    const arrow = useArrow({ annotations, annotate });
 
     const allHandlers = {
         [selectArea.id]: selectArea.handlers,
