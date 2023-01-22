@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import { SelectAreaProps } from '.';
 import { UseStateSetter } from '../../../../models/UseStateSetter';
 import { ReactMouseEvent, ReactTouchEvent } from '../../types';
+import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
 import { SelectedAreas } from '../../types/SelectedAreas';
 import { AnnotationProps } from '../AnnotationProps';
 import { getX, getY } from '../CoordinatesHelper';
@@ -20,7 +19,7 @@ export const useSelectArea = (props: SelectAreaHookProps) => {
     const [startY, setStartY] = useState(0);
     const [selecting, setSelecting] = useState(false);
 
-    const mouseEventHandlers = {
+    const mouseEventHandlers: AnnotationMouseEventHandlers = {
         onMouseDown: (event: ReactMouseEvent) => {
             setStartX(getX(event));
             setStartY(getY(event));
@@ -34,6 +33,7 @@ export const useSelectArea = (props: SelectAreaHookProps) => {
             });
         },
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         onMouseUp: (_: ReactMouseEvent) => {
             setSelecting(false);
         },
@@ -56,8 +56,10 @@ export const useSelectArea = (props: SelectAreaHookProps) => {
             );
         },
 
+        // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
         onTouchStart: (_: ReactTouchEvent) => {},
 
+        // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
         onTouchMove: (_: ReactTouchEvent) => {}
     };
 
@@ -70,5 +72,5 @@ export const useSelectArea = (props: SelectAreaHookProps) => {
         }
     };
 
-    return mouseEventHandlers;
+    return { id: useId(), handlers: mouseEventHandlers };
 };

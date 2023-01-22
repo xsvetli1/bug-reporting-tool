@@ -1,8 +1,10 @@
+import { Button, ButtonGroup } from '@mui/material';
 import React, { useState } from 'react';
 import AnnotationArea from '../AnnotationArea';
 import '../Annotations.css';
 import CloseButton from '../CloseButton';
 import { AnnotationProps } from '../tools/AnnotationProps';
+import { useArrow } from '../tools/Arrow';
 import SelectArea, { useSelectArea } from '../tools/SelectArea';
 import { SelectedAreas } from '../types/SelectedAreas';
 
@@ -17,12 +19,20 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
 
     const annotate = (annotation: AnnotationProps) => setAnnotations([...annotations, annotation]);
 
-    const selectAreaHandlers = useSelectArea({
+    const selectArea = useSelectArea({
         annotations: annotations,
         annotate: annotate,
         selectedAreas: selectedAreas,
         setSelectedAreas: setSelectedAreas
     });
+    const arrow = useArrow({ annotations: annotations, annotate: annotate });
+
+    const allHandlers = {
+        [selectArea.id]: selectArea.handlers,
+        [arrow.id]: arrow.handlers
+    };
+    const [currentAnnotationId, setCurrentAnnotationId] = useState(selectArea.id);
+    const annotationHandlers = allHandlers[currentAnnotationId];
 
     return (
         <>
@@ -30,7 +40,7 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
                 <>
                     <AnnotationArea
                         selectedAreas={selectedAreas}
-                        mouseEventHandlers={selectAreaHandlers}
+                        mouseEventHandlers={annotationHandlers}
                     >
                         {annotations.map((annotationProps, index) => (
                             <SelectArea key={index} {...annotationProps} />
@@ -38,6 +48,16 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
                     </AnnotationArea>
                     <div className="annotation-area-content">
                         <CloseButton onClick={handleClose} />
+                        <ButtonGroup
+                            orientation="vertical"
+                            variant="contained"
+                            aria-label="tool button group"
+                        >
+                            <Button onClick={() => setCurrentAnnotationId(selectArea.id)}>
+                                Select
+                            </Button>
+                            <Button onClick={() => setCurrentAnnotationId(arrow.id)}>Arrow</Button>
+                        </ButtonGroup>
                     </div>
                 </>
             )}

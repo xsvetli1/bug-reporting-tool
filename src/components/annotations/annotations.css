@@ -31,3 +31,9 @@
 .annotation-close-button:hover {
     background: var(--issue-type-based-dark) !important;
 }
+
+.annotation-tools-button-group {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+}
