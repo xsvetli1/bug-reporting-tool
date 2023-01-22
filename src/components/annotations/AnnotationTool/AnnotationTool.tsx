@@ -17,7 +17,7 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
 
     const annotate = (annotation: AnnotationProps) => setAnnotations([...annotations, annotation]);
 
-    const selectAreaTool = useSelectArea({
+    const selectAreaHandlers = useSelectArea({
         annotations: annotations,
         annotate: annotate,
         selectedAreas: selectedAreas,
@@ -28,7 +28,10 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
         <>
             {isOngoingAnnotation && (
                 <>
-                    <AnnotationArea selectedAreas={selectedAreas} mouseEvents={selectAreaTool}>
+                    <AnnotationArea
+                        selectedAreas={selectedAreas}
+                        mouseEventHandlers={selectAreaHandlers}
+                    >
                         {annotations.map((annotationProps, index) => (
                             <SelectArea key={index} {...annotationProps} />
                         ))}

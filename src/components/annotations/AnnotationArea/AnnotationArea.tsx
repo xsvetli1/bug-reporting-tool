@@ -12,17 +12,17 @@ type AnnotationToolEventHandlers = {
 
 export interface AnnotationAreaProps {
     selectedAreas: SelectedAreas;
-    mouseEvents: AnnotationToolEventHandlers;
+    mouseEventHandlers: AnnotationToolEventHandlers;
     children: ReactNode;
 }
 
-const AnnotationArea = ({ selectedAreas, mouseEvents, children }: AnnotationAreaProps) => {
+const AnnotationArea = (props: AnnotationAreaProps) => {
     const rectToPathData = ({ x, y, width, height }: SelectAreaProps) =>
         `M ${x} ${y} h ${width} v ${height} h ${-width} Z`;
 
     const pathDataFromSelectedAreas = () =>
-        Object.keys(selectedAreas).map((key: string) => {
-            return rectToPathData(selectedAreas[key]);
+        Object.keys(props.selectedAreas).map((key: string) => {
+            return rectToPathData(props.selectedAreas[key]);
         });
 
     const width = window.innerWidth;
@@ -37,9 +37,9 @@ const AnnotationArea = ({ selectedAreas, mouseEvents, children }: AnnotationArea
     const d = [background, ...pathDataFromSelectedAreas()].join('\n');
 
     return (
-        <svg className="annotation-area" {...mouseEvents}>
+        <svg className="annotation-area" {...props.mouseEventHandlers}>
             <path fill="#ffffff" fillOpacity="0.3" fillRule="evenodd" d={d}></path>
-            {children}
+            {props.children}
         </svg>
     );
 };
