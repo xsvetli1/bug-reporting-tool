@@ -1,5 +1,7 @@
-import { Button, ButtonGroup } from '@mui/material';
 import React, { useId, useState } from 'react';
+import { ToggleButton, ToggleButtonGroup } from '@mui/material';
+import CropFreeSharpIcon from '@mui/icons-material/CropFreeSharp';
+import CallMadeSharpIcon from '@mui/icons-material/CallMadeSharp';
 import AnnotationArea from '../AnnotationArea';
 import '../Annotations.css';
 import CloseButton from '../CloseButton';
@@ -41,6 +43,10 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
     const arrowId = addAnnotationHandlers(useArrow({ annotations, annotate }));
     const [currentAnnotationId, setCurrentAnnotationId] = useState(selectAreaId);
 
+    const handleAnnotationId = (_: React.MouseEvent<HTMLElement>, newId: string) => {
+        setCurrentAnnotationId(newId);
+    };
+
     return (
         <>
             {isOngoingAnnotation && (
@@ -55,16 +61,20 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
                     </AnnotationArea>
                     <div className="annotation-area-content">
                         <CloseButton onClick={handleClose} />
-                        <ButtonGroup
+                        <ToggleButtonGroup
                             orientation="vertical"
-                            variant="contained"
+                            exclusive
                             aria-label="tool button group"
+                            value={currentAnnotationId}
+                            onChange={handleAnnotationId}
                         >
-                            <Button onClick={() => setCurrentAnnotationId(selectAreaId)}>
-                                Select
-                            </Button>
-                            <Button onClick={() => setCurrentAnnotationId(arrowId)}>Arrow</Button>
-                        </ButtonGroup>
+                            <ToggleButton className="annotation-tools-button" value={selectAreaId}>
+                                <CropFreeSharpIcon />
+                            </ToggleButton>
+                            <ToggleButton className="annotation-tools-button" value={arrowId}>
+                                <CallMadeSharpIcon />
+                            </ToggleButton>
+                        </ToggleButtonGroup>
                     </div>
                 </>
             )}

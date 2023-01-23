@@ -10,7 +10,7 @@ export interface CloseButtonProps {
 const CloseButton = ({ onClick }: CloseButtonProps) => {
     return (
         <Fab size="small" aria-label="close" onClick={onClick} className="annotation-close-button">
-            <CloseIcon sx={{ color: 'rgb(255, 255, 255)' }} />
+            <CloseIcon />
         </Fab>
     );
 };

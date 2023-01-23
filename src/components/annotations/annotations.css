@@ -37,3 +37,20 @@
     top: 0;
     left: 0;
 }
+
+.annotation-tools-button {
+    border-radius: 0 !important;
+    background: var(--issue-type-based-light) !important;
+}
+
+.annotation-tools-button:hover {
+    background: var(--issue-type-based) !important;
+}
+
+.annotation-tools-button.Mui-selected {
+    background: var(--issue-type-based-dark) !important;
+}
+
+.MuiSvgIcon-root {
+    color: rgb(255, 255, 255);
+}
