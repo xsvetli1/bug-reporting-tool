@@ -1,11 +1,12 @@
 import { Button, ButtonGroup } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useId, useState } from 'react';
 import AnnotationArea from '../AnnotationArea';
 import '../Annotations.css';
 import CloseButton from '../CloseButton';
 import { AnnotationProps } from '../tools/AnnotationProps';
 import { useArrow } from '../tools/Arrow';
 import SelectArea, { useSelectArea } from '../tools/SelectArea';
+import { AnnotationMouseEventHandlers } from '../types/AnnotationMouseEventHandlers';
 import { SelectedAreas } from '../types/SelectedAreas';
 
 export interface AnnotationToolProps {
@@ -13,26 +14,32 @@ export interface AnnotationToolProps {
     handleClose: () => void;
 }
 
+type AllAnnotationHandlers = {
+    [id: string]: AnnotationMouseEventHandlers;
+};
+
 const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProps) => {
     const [annotations, setAnnotations] = useState<AnnotationProps[]>([]);
     const [selectedAreas, setSelectedAreas] = useState<SelectedAreas>({});
-
     const annotate = (annotation: AnnotationProps) => setAnnotations([...annotations, annotation]);
 
-    const selectArea = useSelectArea({
-        annotations,
-        annotate,
-        selectedAreas,
-        setSelectedAreas
-    });
-    const arrow = useArrow({ annotations, annotate });
-
-    const allHandlers = {
-        [selectArea.id]: selectArea.handlers,
-        [arrow.id]: arrow.handlers
+    const allAnnotationHandlers: AllAnnotationHandlers = {};
+    const addAnnotationHandlers = (handlers: AnnotationMouseEventHandlers) => {
+        const id = useId();
+        allAnnotationHandlers[id] = handlers;
+        return id;
     };
-    const [currentAnnotationId, setCurrentAnnotationId] = useState(selectArea.id);
-    const annotationHandlers = allHandlers[currentAnnotationId];
+
+    const selectAreaId = addAnnotationHandlers(
+        useSelectArea({
+            annotations,
+            annotate,
+            selectedAreas,
+            setSelectedAreas
+        })
+    );
+    const arrowId = addAnnotationHandlers(useArrow({ annotations, annotate }));
+    const [currentAnnotationId, setCurrentAnnotationId] = useState(selectAreaId);
 
     return (
         <>
@@ -40,7 +47,7 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
                 <>
                     <AnnotationArea
                         selectedAreas={selectedAreas}
-                        mouseEventHandlers={annotationHandlers}
+                        mouseEventHandlers={allAnnotationHandlers[currentAnnotationId]}
                     >
                         {annotations.map((annotationProps, index) => (
                             <SelectArea key={index} {...annotationProps} />
@@ -53,10 +60,10 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
                             variant="contained"
                             aria-label="tool button group"
                         >
-                            <Button onClick={() => setCurrentAnnotationId(selectArea.id)}>
+                            <Button onClick={() => setCurrentAnnotationId(selectAreaId)}>
                                 Select
                             </Button>
-                            <Button onClick={() => setCurrentAnnotationId(arrow.id)}>Arrow</Button>
+                            <Button onClick={() => setCurrentAnnotationId(arrowId)}>Arrow</Button>
                         </ButtonGroup>
                     </div>
                 </>

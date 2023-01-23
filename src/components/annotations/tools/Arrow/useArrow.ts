@@ -1,4 +1,3 @@
-import { useId } from 'react';
 import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
 import { AnnotationProps } from '../AnnotationProps';
 
@@ -26,5 +25,5 @@ export const useArrow = (props: ArrowHookProps) => {
         onTouchMove: () => {}
     };
 
-    return { id: useId(), handlers: mouseEventHandlers };
+    return mouseEventHandlers;
 };

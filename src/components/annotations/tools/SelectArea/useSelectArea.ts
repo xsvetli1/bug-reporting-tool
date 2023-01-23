@@ -1,4 +1,4 @@
-import { useId, useState } from 'react';
+import { useState } from 'react';
 import { SelectAreaProps } from '.';
 import { UseStateSetter } from '../../../../models/UseStateSetter';
 import { ReactMouseEvent, ReactTouchEvent } from '../../types';
@@ -72,5 +72,5 @@ export const useSelectArea = (props: SelectAreaHookProps) => {
         }
     };
 
-    return { id: useId(), handlers: mouseEventHandlers };
+    return mouseEventHandlers;
 };
