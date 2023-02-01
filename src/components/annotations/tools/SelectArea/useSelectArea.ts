@@ -4,12 +4,12 @@ import { UseStateSetter } from '../../../../models/UseStateSetter';
 import { ReactMouseEvent, ReactTouchEvent } from '../../types';
 import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
 import { SelectedAreas } from '../../types/SelectedAreas';
-import { AnnotationProps } from '../AnnotationProps';
+import { AnnotationProps, AnnotationPropsObject } from '../AnnotationProps';
 import { getX, getY } from '../CoordinatesHelper';
 
 export interface SelectAreaHookProps {
-    annotations: AnnotationProps[];
-    annotate: (annotation: AnnotationProps) => void;
+    annotations: AnnotationPropsObject;
+    annotate: (annotation: AnnotationProps, id: number) => void;
     selectedAreas: SelectedAreas;
     setSelectedAreas: UseStateSetter<SelectedAreas>;
 }
@@ -23,15 +23,16 @@ export const useSelectArea = (props: SelectAreaHookProps) => {
         onMouseDown: (event: ReactMouseEvent) => {
             setStartX(getX(event));
             setStartY(getY(event));
-            setSelecting(true);
 
             selectArea({
                 TYPE: 'SELECT_AREA',
-                x: startX,
-                y: startY,
+                x: startX, // remove from declaration
+                y: startY, // remove from declaration
                 width: 0,
                 height: 0
             });
+
+            setSelecting(true);
         },
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -46,16 +47,13 @@ export const useSelectArea = (props: SelectAreaHookProps) => {
 
             const [x, y] = [getX(event), getY(event)];
 
-            selectArea(
-                {
-                    TYPE: 'SELECT_AREA',
-                    x: startX,
-                    y: startY,
-                    width: x - startX,
-                    height: y - startY
-                },
-                props.annotations.length - 1
-            );
+            selectArea({
+                TYPE: 'SELECT_AREA',
+                x: startX,
+                y: startY,
+                width: x - startX,
+                height: y - startY
+            });
         },
 
         // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
@@ -65,13 +63,16 @@ export const useSelectArea = (props: SelectAreaHookProps) => {
         onTouchMove: (_: ReactTouchEvent) => {}
     };
 
-    const selectArea = (selectAreaProps: SelectAreaProps, id = props.annotations.length) => {
+    const selectArea = (selectAreaProps: SelectAreaProps) => {
+        let id = Object.keys(props.annotations).length;
+        if (selecting) {
+            id--;
+        }
+
         props.selectedAreas[id] = selectAreaProps;
         props.setSelectedAreas({ ...props.selectedAreas }); // Needs to be shallow copy to make setState re-render
 
-        if (id === props.annotations.length) {
-            props.annotate(selectAreaProps);
-        }
+        props.annotate(selectAreaProps, id);
     };
 
     return mouseEventHandlers;

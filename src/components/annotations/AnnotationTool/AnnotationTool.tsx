@@ -5,7 +5,7 @@ import CallMadeSharpIcon from '@mui/icons-material/CallMadeSharp';
 import AnnotationArea from '../AnnotationArea';
 import '../Annotations.css';
 import CloseButton from '../CloseButton';
-import { AnnotationProps } from '../tools/AnnotationProps';
+import { AnnotationProps, AnnotationPropsObject } from '../tools/AnnotationProps';
 import Arrow, { useArrow } from '../tools/Arrow';
 import SelectArea, { useSelectArea } from '../tools/SelectArea';
 import { AnnotationMouseEventHandlers } from '../types/AnnotationMouseEventHandlers';
@@ -21,9 +21,12 @@ type AllAnnotationHandlers = {
 };
 
 const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProps) => {
-    const [annotations, setAnnotations] = useState<AnnotationProps[]>([]);
+    const [annotations, setAnnotations] = useState<AnnotationPropsObject>({});
     const [selectedAreas, setSelectedAreas] = useState<SelectedAreas>({});
-    const annotate = (annotation: AnnotationProps) => setAnnotations([...annotations, annotation]);
+    const annotate = (annotation: AnnotationProps, id: number) => {
+        annotations[id] = annotation;
+        setAnnotations({ ...annotations }); // Needs to be shallow copy to make setState re-render
+    };
 
     const allAnnotationHandlers: AllAnnotationHandlers = {};
     const addAnnotationHandlers = (handlers: AnnotationMouseEventHandlers) => {
@@ -55,16 +58,19 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
                         selectedAreas={selectedAreas}
                         mouseEventHandlers={allAnnotationHandlers[currentAnnotationId]}
                     >
-                        {annotations.map((annotationProps, index) => (
-                            <>
-                                {annotationProps.TYPE == 'SELECT_AREA' && (
-                                    <SelectArea key={index} {...annotationProps} />
-                                )}
-                                {annotationProps.TYPE == 'ARROW' && (
-                                    <Arrow key={index} {...annotationProps} />
-                                )}
-                            </>
-                        ))}
+                        {Object.keys(annotations).map((key, index) => {
+                            const annotationProps = annotations[key];
+                            return (
+                                <>
+                                    {annotationProps.TYPE == 'SELECT_AREA' && (
+                                        <SelectArea key={index} {...annotationProps} />
+                                    )}
+                                    {annotationProps.TYPE == 'ARROW' && (
+                                        <Arrow key={index} {...annotationProps} />
+                                    )}
+                                </>
+                            );
+                        })}
                     </AnnotationArea>
                     <div className="annotation-area-content">
                         <CloseButton onClick={handleClose} />
