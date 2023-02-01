@@ -6,7 +6,7 @@ import AnnotationArea from '../AnnotationArea';
 import '../Annotations.css';
 import CloseButton from '../CloseButton';
 import { AnnotationProps } from '../tools/AnnotationProps';
-import { useArrow } from '../tools/Arrow';
+import Arrow, { useArrow } from '../tools/Arrow';
 import SelectArea, { useSelectArea } from '../tools/SelectArea';
 import { AnnotationMouseEventHandlers } from '../types/AnnotationMouseEventHandlers';
 import { SelectedAreas } from '../types/SelectedAreas';
@@ -56,7 +56,14 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
                         mouseEventHandlers={allAnnotationHandlers[currentAnnotationId]}
                     >
                         {annotations.map((annotationProps, index) => (
-                            <SelectArea key={index} {...annotationProps} />
+                            <>
+                                {annotationProps.TYPE == 'SELECT_AREA' && (
+                                    <SelectArea key={index} {...annotationProps} />
+                                )}
+                                {annotationProps.TYPE == 'ARROW' && (
+                                    <Arrow key={index} {...annotationProps} />
+                                )}
+                            </>
                         ))}
                     </AnnotationArea>
                     <div className="annotation-area-content">

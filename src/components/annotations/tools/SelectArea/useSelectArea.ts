@@ -26,6 +26,7 @@ export const useSelectArea = (props: SelectAreaHookProps) => {
             setSelecting(true);
 
             selectArea({
+                TYPE: 'SELECT_AREA',
                 x: startX,
                 y: startY,
                 width: 0,
@@ -47,6 +48,7 @@ export const useSelectArea = (props: SelectAreaHookProps) => {
 
             selectArea(
                 {
+                    TYPE: 'SELECT_AREA',
                     x: startX,
                     y: startY,
                     width: x - startX,
