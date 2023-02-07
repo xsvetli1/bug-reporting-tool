@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { SelectAreaProps } from '.';
 import { UseStateSetter } from '../../../../models/UseStateSetter';
 import { ReactMouseEvent, ReactTouchEvent } from '../../types';
 import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
@@ -25,9 +24,6 @@ export const useSelectArea = (props: SelectAreaHookProps) => {
             setStartY(getY(event));
 
             selectArea({
-                TYPE: 'SELECT_AREA',
-                x: startX, // remove from declaration
-                y: startY, // remove from declaration
                 width: 0,
                 height: 0
             });
@@ -48,9 +44,6 @@ export const useSelectArea = (props: SelectAreaHookProps) => {
             const [x, y] = [getX(event), getY(event)];
 
             selectArea({
-                TYPE: 'SELECT_AREA',
-                x: startX,
-                y: startY,
                 width: x - startX,
                 height: y - startY
             });
@@ -63,16 +56,22 @@ export const useSelectArea = (props: SelectAreaHookProps) => {
         onTouchMove: (_: ReactTouchEvent) => {}
     };
 
-    const selectArea = (selectAreaProps: SelectAreaProps) => {
+    const selectArea = ({ width, height }: { width: number; height: number }) => {
         let id = Object.keys(props.annotations).length;
         if (selecting) {
             id--;
         }
 
-        props.selectedAreas[id] = selectAreaProps;
+        props.selectedAreas[id] = {
+            TYPE: 'SELECT_AREA',
+            x: startX,
+            y: startY,
+            width: width,
+            height: height
+        };
         props.setSelectedAreas({ ...props.selectedAreas }); // Needs to be shallow copy to make setState re-render
 
-        props.annotate(selectAreaProps, id);
+        props.annotate(props.selectedAreas[id], id);
     };
 
     return mouseEventHandlers;
