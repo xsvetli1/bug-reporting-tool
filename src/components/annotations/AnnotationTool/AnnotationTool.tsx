@@ -61,14 +61,14 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
                         {Object.keys(annotations).map((key, index) => {
                             const annotationProps = annotations[key];
                             return (
-                                <>
+                                <React.Fragment key={index}>
                                     {annotationProps.TYPE == 'SELECT_AREA' && (
-                                        <SelectArea key={index} {...annotationProps} />
+                                        <SelectArea {...annotationProps} />
                                     )}
                                     {annotationProps.TYPE == 'ARROW' && (
-                                        <Arrow key={index} {...annotationProps} />
+                                        <Arrow {...annotationProps} />
                                     )}
-                                </>
+                                </React.Fragment>
                             );
                         })}
                     </AnnotationArea>
