@@ -48,7 +48,11 @@ const AnnotationArea = (props: AnnotationAreaProps) => {
                     refY="2.5"
                     orient="auto"
                 >
-                    <polygon points="0 0, 7 2.5, 0 5" strokeWidth={1} />
+                    <polygon
+                        points="0 0, 7 2.5, 0 5"
+                        strokeWidth={1}
+                        fill={'var(--issue-type-based)'}
+                    />
                 </marker>
             </defs>
             <path fill="#ffffff" fillOpacity="0.3" fillRule="evenodd" d={d}></path>

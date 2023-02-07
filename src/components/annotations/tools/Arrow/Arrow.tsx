@@ -29,7 +29,7 @@ const Arrow = ({ x1, y1, x2, y2 }: ArrowProps) => {
             y1={y1}
             x2={x2}
             y2={y2}
-            stroke="#000"
+            className="arrow-line"
             strokeWidth={strokeWidth}
             markerEnd="url(#arrowhead)"
         />
