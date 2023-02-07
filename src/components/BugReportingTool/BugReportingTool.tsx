@@ -37,10 +37,12 @@ const BugReportingTool = ({ platform, platformProps, children }: BugReportingToo
                 setTheme={setTheme}
                 newIssue={(issueInfo: IssueInfo) => issueController.newIssue(issueInfo)}
             />
-            <AnnotationTool
-                isOngoingAnnotation={isOngoingAnnotation}
-                handleClose={() => setIsOngoingAnnotation(false)}
-            />
+            {isToolOpen && (
+                <AnnotationTool
+                    isOngoingAnnotation={isOngoingAnnotation}
+                    handleClose={() => setIsOngoingAnnotation(false)}
+                />
+            )}
             {children}
         </div>
     );
