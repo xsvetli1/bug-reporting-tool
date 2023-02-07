@@ -11,6 +11,8 @@
     border-style: solid;
     border-width: var(--border-width);
     border-color: var(--issue-type-based);
+    stroke-width: var(--border-width);
+    stroke: var(--issue-type-based);
 }
 
 .annotation-area-content {
