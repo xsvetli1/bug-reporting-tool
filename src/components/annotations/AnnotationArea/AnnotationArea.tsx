@@ -42,14 +42,14 @@ const AnnotationArea = (props: AnnotationAreaProps) => {
             <defs>
                 <marker
                     id="arrowhead"
-                    markerWidth="7"
-                    markerHeight="5"
-                    refX="0"
-                    refY="2.5"
+                    markerWidth="11"
+                    markerHeight="11"
+                    refX="9"
+                    refY="5.5"
                     orient="auto"
                 >
                     <polygon
-                        points="0 0, 7 2.5, 0 5"
+                        points="2 2, 9 5.5, 2 9"
                         strokeWidth={1}
                         fill={'var(--issue-type-based)'}
                     />
