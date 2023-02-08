@@ -2,6 +2,7 @@ import React, { useId, useState } from 'react';
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 import CropFreeSharpIcon from '@mui/icons-material/CropFreeSharp';
 import CallMadeSharpIcon from '@mui/icons-material/CallMadeSharp';
+import ModeEditOutlineSharpIcon from '@mui/icons-material/ModeEditOutlineSharp';
 import AnnotationArea from '../AnnotationArea';
 import '../Annotations.css';
 import CloseButton from '../CloseButton';
@@ -10,6 +11,7 @@ import Arrow, { useArrow } from '../tools/Arrow';
 import SelectArea, { useSelectArea } from '../tools/SelectArea';
 import { AnnotationMouseEventHandlers } from '../types/AnnotationMouseEventHandlers';
 import { SelectedAreas } from '../types/SelectedAreas';
+import FreeHand, { useFreeHand } from '../tools/FreeHand';
 
 export interface AnnotationToolProps {
     isOngoingAnnotation: boolean;
@@ -44,6 +46,7 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
         })
     );
     const arrowId = addAnnotationHandlers(useArrow({ annotations, annotate }));
+    const freeHandId = addAnnotationHandlers(useFreeHand({ annotations, annotate }));
     const [currentAnnotationId, setCurrentAnnotationId] = useState(selectAreaId);
 
     const handleAnnotationId = (_: React.MouseEvent<HTMLElement>, newId: string) => {
@@ -68,6 +71,9 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
                                     {annotationProps.TYPE == 'ARROW' && (
                                         <Arrow {...annotationProps} />
                                     )}
+                                    {annotationProps.TYPE == 'FREE_HAND' && (
+                                        <FreeHand {...annotationProps} />
+                                    )}
                                 </React.Fragment>
                             );
                         })}
@@ -86,6 +92,9 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
                             </ToggleButton>
                             <ToggleButton className="annotation-tools-button" value={arrowId}>
                                 <CallMadeSharpIcon />
+                            </ToggleButton>
+                            <ToggleButton className="annotation-tools-button" value={freeHandId}>
+                                <ModeEditOutlineSharpIcon />
                             </ToggleButton>
                         </ToggleButtonGroup>
                     </div>
