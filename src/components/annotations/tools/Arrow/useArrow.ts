@@ -1,4 +1,4 @@
-import { useId, useState } from 'react';
+import { useState } from 'react';
 import { ReactMouseEvent } from '../../types';
 import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
 import { AnnotationProps, AnnotationPropsObject } from '../AnnotationProps';
