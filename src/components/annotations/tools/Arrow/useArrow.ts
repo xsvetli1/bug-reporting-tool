@@ -17,8 +17,7 @@ export const useArrow = (props: ArrowHookProps) => {
 
     const mouseEventHandlers: AnnotationMouseEventHandlers = {
         onMouseDown: (event: ReactMouseEvent) => {
-            const x = getX(event);
-            const y = getY(event);
+            const [x, y] = [getX(event), getY(event)];
             setStartX(x);
             setStartY(y);
 

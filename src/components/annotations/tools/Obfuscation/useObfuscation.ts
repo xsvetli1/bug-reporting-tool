@@ -1,19 +1,15 @@
 import { useState } from 'react';
-import { UseStateSetter } from '../../../../models/UseStateSetter';
-import { ReactMouseEvent, ReactTouchEvent } from '../../types';
+import { ReactMouseEvent } from '../../types';
 import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
-import { SelectedAreas } from '../../types/SelectedAreas';
 import { AnnotationProps, AnnotationPropsObject } from '../AnnotationProps';
 import { getX, getY } from '../CoordinatesHelper';
 
-export interface SelectAreaHookProps {
+export interface ObfuscationHookProps {
     annotations: AnnotationPropsObject;
     annotate: (annotation: AnnotationProps, id: number) => void;
-    selectedAreas: SelectedAreas;
-    setSelectedAreas: UseStateSetter<SelectedAreas>;
 }
 
-export const useSelectArea = (props: SelectAreaHookProps) => {
+export const useObfuscation = (props: ObfuscationHookProps) => {
     const [startX, setStartX] = useState(0);
     const [startY, setStartY] = useState(0);
     const [selecting, setSelecting] = useState(false);
@@ -24,7 +20,7 @@ export const useSelectArea = (props: SelectAreaHookProps) => {
             setStartX(x);
             setStartY(y);
 
-            selectArea(event, x, y);
+            annotateObfuscation(event, x, y);
 
             setSelecting(true);
         },
@@ -38,7 +34,7 @@ export const useSelectArea = (props: SelectAreaHookProps) => {
                 return;
             }
 
-            selectArea(event);
+            annotateObfuscation(event);
         },
 
         // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -48,24 +44,27 @@ export const useSelectArea = (props: SelectAreaHookProps) => {
         onTouchMove: () => {}
     };
 
-    const selectArea = (event: ReactMouseEvent, currentStartX = startX, currentStartY = startY) => {
+    const annotateObfuscation = (
+        event: ReactMouseEvent,
+        currentStartX = startX,
+        currentStartY = startY
+    ) => {
         let id = Object.keys(props.annotations).length;
         if (selecting) {
             id--;
         }
 
         const [x, y] = [getX(event), getY(event)];
+        const width = Math.abs(x - currentStartX);
+        const height = Math.abs(y - currentStartY);
 
-        props.selectedAreas[id] = {
-            TYPE: 'SELECT_AREA',
-            x: currentStartX,
-            y: currentStartY,
-            width: x - currentStartX,
-            height: y - currentStartY
-        };
+        const lowerX = Math.min(x, currentStartX);
+        const lowerY = Math.min(y, currentStartY);
 
-        props.setSelectedAreas({ ...props.selectedAreas }); // Needs to be shallow copy to make setState re-render
-        props.annotate(props.selectedAreas[id], id);
+        props.annotate(
+            { TYPE: 'OBFUSCATION', x: lowerX, y: lowerY, width: width, height: height },
+            id
+        );
     };
 
     return mouseEventHandlers;
