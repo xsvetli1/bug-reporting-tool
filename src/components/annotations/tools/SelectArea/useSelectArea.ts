@@ -55,13 +55,18 @@ export const useSelectArea = (props: SelectAreaHookProps) => {
         }
 
         const [x, y] = [getX(event), getY(event)];
+        const width = Math.abs(x - currentStartX);
+        const height = Math.abs(y - currentStartY);
+
+        const lowerX = Math.min(x, currentStartX);
+        const lowerY = Math.min(y, currentStartY);
 
         props.selectedAreas[id] = {
             TYPE: 'SELECT_AREA',
-            x: currentStartX,
-            y: currentStartY,
-            width: x - currentStartX,
-            height: y - currentStartY
+            x: lowerX,
+            y: lowerY,
+            width: width,
+            height: height
         };
 
         props.setSelectedAreas({ ...props.selectedAreas }); // Needs to be shallow copy to make setState re-render
