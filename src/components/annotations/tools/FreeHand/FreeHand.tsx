@@ -6,7 +6,13 @@ export interface FreeHandProps {
 }
 
 const FreeHand = ({ path }: FreeHandProps) => {
-    return <polyline fill="none" points={path.map(([x, y]) => `${x},${y}`).join(' ')} />;
+    return (
+        <polyline
+            fill="none"
+            strokeWidth="8"
+            points={path.map(([x, y]) => `${x},${y}`).join(' ')}
+        />
+    );
 };
 
 export default FreeHand;

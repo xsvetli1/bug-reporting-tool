@@ -55,7 +55,7 @@ const AnnotationArea = (props: AnnotationAreaProps) => {
                     />
                 </marker>
             </defs>
-            <path fill="#ffffff" fillOpacity="0.3" fillRule="evenodd" d={d}></path>
+            <path fill="#ffffff" stroke="none" fillOpacity="0.3" fillRule="evenodd" d={d}></path>
             {props.children}
         </svg>
     );

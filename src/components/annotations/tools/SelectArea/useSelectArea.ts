@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { UseStateSetter } from '../../../../models/UseStateSetter';
-import { ReactMouseEvent, ReactTouchEvent } from '../../types';
+import { ReactMouseEvent } from '../../types';
 import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
 import { SelectedAreas } from '../../types/SelectedAreas';
 import { AnnotationProps, AnnotationPropsObject } from '../AnnotationProps';
