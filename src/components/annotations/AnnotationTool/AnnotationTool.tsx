@@ -4,6 +4,7 @@ import CropFreeSharpIcon from '@mui/icons-material/CropFreeSharp';
 import CallMadeSharpIcon from '@mui/icons-material/CallMadeSharp';
 import ModeEditOutlineSharpIcon from '@mui/icons-material/ModeEditOutlineSharp';
 import DeselectIcon from '@mui/icons-material/Deselect';
+import ChatSharpIcon from '@mui/icons-material/ChatSharp';
 import AnnotationArea from '../AnnotationArea';
 import '../Annotations.css';
 import CloseButton from '../CloseButton';
@@ -14,6 +15,7 @@ import { AnnotationMouseEventHandlers } from '../types/AnnotationMouseEventHandl
 import { SelectedAreas } from '../types/SelectedAreas';
 import FreeHand, { useFreeHand } from '../tools/FreeHand';
 import Obfuscation, { useObfuscation } from '../tools/Obfuscation';
+import Text, { useText } from '../tools/Text';
 
 export interface AnnotationToolProps {
     isOngoingAnnotation: boolean;
@@ -50,11 +52,15 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
     const arrowId = addAnnotationHandlers(useArrow({ annotations, annotate }));
     const freeHandId = addAnnotationHandlers(useFreeHand({ annotations, annotate }));
     const obfuscationId = addAnnotationHandlers(useObfuscation({ annotations, annotate }));
-    const [currentAnnotationId, setCurrentAnnotationId] = useState(selectAreaId);
+    const textId = addAnnotationHandlers(useText({ annotations, annotate }));
 
-    const handleAnnotationId = (_: React.MouseEvent<HTMLElement>, newId: string) => {
-        setCurrentAnnotationId(newId);
+    const [currentAnnotationTypeId, setCurrentAnnotationTypeId] = useState(selectAreaId);
+
+    const handleAnnotationTypeId = (_: React.MouseEvent<HTMLElement>, newId: string) => {
+        setCurrentAnnotationTypeId(newId);
     };
+
+    let textCommentIndex = 1;
 
     return (
         <>
@@ -62,7 +68,7 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
                 <>
                     <AnnotationArea
                         selectedAreas={selectedAreas}
-                        mouseEventHandlers={allAnnotationHandlers[currentAnnotationId]}
+                        mouseEventHandlers={allAnnotationHandlers[currentAnnotationTypeId]}
                     >
                         {Object.keys(annotations).map((key, index) => {
                             const annotationProps = annotations[key];
@@ -80,6 +86,9 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
                                     {annotationProps.TYPE == 'OBFUSCATION' && (
                                         <Obfuscation {...annotationProps} />
                                     )}
+                                    {annotationProps.TYPE == 'TEXT' && (
+                                        <Text {...annotationProps} id={textCommentIndex++} />
+                                    )}
                                 </React.Fragment>
                             );
                         })}
@@ -90,8 +99,8 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
                             orientation="vertical"
                             exclusive
                             aria-label="tool button group"
-                            value={currentAnnotationId}
-                            onChange={handleAnnotationId}
+                            value={currentAnnotationTypeId}
+                            onChange={handleAnnotationTypeId}
                         >
                             <ToggleButton className="annotation-tools-button" value={selectAreaId}>
                                 <CropFreeSharpIcon />
@@ -104,6 +113,9 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
                             </ToggleButton>
                             <ToggleButton className="annotation-tools-button" value={obfuscationId}>
                                 <DeselectIcon />
+                            </ToggleButton>
+                            <ToggleButton className="annotation-tools-button" value={textId}>
+                                <ChatSharpIcon />
                             </ToggleButton>
                         </ToggleButtonGroup>
                     </div>

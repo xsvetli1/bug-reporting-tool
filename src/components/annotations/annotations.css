@@ -60,3 +60,10 @@
 .arrow-line {
     stroke: var(--issue-type-based);
 }
+
+.text-annotation-id {
+    stroke: none;
+    fill: white;
+    font-size: 17px;
+    font-weight: bold;
+}
