@@ -57,6 +57,11 @@
     color: rgb(255, 255, 255);
 }
 
+.annotation:hover {
+    cursor: grab;
+    filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
+}
+
 .arrow-line {
     stroke: var(--issue-type-based);
 }
@@ -66,4 +71,12 @@
     fill: white;
     font-size: 17px;
     font-weight: bold;
+}
+
+.text-annotation-comment-wrapper {
+    overflow: visible;
+}
+
+.text-annotation-comment {
+    width: 250px;
 }

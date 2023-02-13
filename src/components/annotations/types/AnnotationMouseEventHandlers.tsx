@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { ReactMouseEvent } from './ReactMouseEvent';
 import { ReactTouchEvent } from './ReactTouchEvent';
 
@@ -7,4 +8,12 @@ export type AnnotationMouseEventHandlers = {
     onMouseMove: (event: ReactMouseEvent) => void;
     onTouchStart: (event: ReactTouchEvent) => void;
     onTouchMove: (event: ReactTouchEvent) => void;
+};
+
+export const AnnotationMouseEventHandlersEmpty = {
+    onMouseDown: () => {},
+    onMouseUp: () => {},
+    onMouseMove: () => {},
+    onTouchStart: () => {},
+    onTouchMove: () => {}
 };

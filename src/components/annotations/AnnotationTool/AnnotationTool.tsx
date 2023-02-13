@@ -11,11 +11,16 @@ import CloseButton from '../CloseButton';
 import { AnnotationProps, AnnotationPropsObject } from '../tools/AnnotationProps';
 import Arrow, { useArrow } from '../tools/Arrow';
 import SelectArea, { useSelectArea } from '../tools/SelectArea';
-import { AnnotationMouseEventHandlers } from '../types/AnnotationMouseEventHandlers';
+import {
+    AnnotationMouseEventHandlers,
+    AnnotationMouseEventHandlersEmpty
+} from '../types/AnnotationMouseEventHandlers';
 import { SelectedAreas } from '../types/SelectedAreas';
 import FreeHand, { useFreeHand } from '../tools/FreeHand';
 import Obfuscation, { useObfuscation } from '../tools/Obfuscation';
 import Text, { useText } from '../tools/Text';
+import { ReactMouseEvent } from '../types';
+import { getX, getY } from '../tools/CoordinatesHelper';
 
 export interface AnnotationToolProps {
     isOngoingAnnotation: boolean;
@@ -62,20 +67,79 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
 
     let textCommentIndex = 1;
 
+    const [annotationInHand, setAnnotationInHand] = useState<string | null>(null);
+    const [startingCoordinates, setStartingCoordinates] = useState<[number, number]>([-1, -1]);
+    const annotationMoveHandlers = (id: string): AnnotationMouseEventHandlers => ({
+        onMouseDown: (event: ReactMouseEvent) => {
+            console.log('Inside OnMouseDown');
+            setAnnotationInHand(id);
+            setStartingCoordinates([getX(event), getY(event)]);
+            setCurrentAnnotationTypeId('');
+        },
+        onMouseMove: (event: ReactMouseEvent) => {
+            if (!annotationInHand) {
+                return;
+            }
+
+            const annotationProps = annotations[annotationInHand];
+            const annotationType = annotationProps.TYPE;
+            const [startX, startY] = startingCoordinates;
+            const [currentX, currentY] = [getX(event), getY(event)];
+            const diffX = currentX - startX;
+            const diffY = currentY - startY;
+
+            switch (annotationType) {
+                case 'SELECT_AREA':
+                case 'OBFUSCATION': {
+                    const { x, y, width, height } = annotationProps;
+                    annotations[annotationInHand] = {
+                        TYPE: annotationType,
+                        x: x + diffX,
+                        y: y + diffY,
+                        width,
+                        height
+                    };
+                    break;
+                }
+                case 'ARROW':
+                    break;
+                case 'FREE_HAND':
+                    break;
+                case 'TEXT':
+                    break;
+            }
+            setAnnotations({ ...annotations });
+        },
+        onMouseUp: () => setAnnotationInHand(null),
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        onTouchStart: () => {},
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        onTouchMove: () => {}
+    });
+
+    const mouseEventHandlers = () => {
+        return annotationInHand
+            ? AnnotationMouseEventHandlersEmpty
+            : allAnnotationHandlers[currentAnnotationTypeId];
+    };
+
     return (
         <>
             {isOngoingAnnotation && (
                 <>
                     <AnnotationArea
                         selectedAreas={selectedAreas}
-                        mouseEventHandlers={allAnnotationHandlers[currentAnnotationTypeId]}
+                        mouseEventHandlers={mouseEventHandlers()}
                     >
                         {Object.keys(annotations).map((key, index) => {
                             const annotationProps = annotations[key];
                             return (
                                 <React.Fragment key={index}>
                                     {annotationProps.TYPE == 'SELECT_AREA' && (
-                                        <SelectArea {...annotationProps} />
+                                        <SelectArea
+                                            {...annotationProps}
+                                            moveHandlers={annotationMoveHandlers(key)}
+                                        />
                                     )}
                                     {annotationProps.TYPE == 'ARROW' && (
                                         <Arrow {...annotationProps} />
@@ -84,7 +148,10 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
                                         <FreeHand {...annotationProps} />
                                     )}
                                     {annotationProps.TYPE == 'OBFUSCATION' && (
-                                        <Obfuscation {...annotationProps} />
+                                        <Obfuscation
+                                            {...annotationProps}
+                                            moveHandlers={annotationMoveHandlers(key)}
+                                        />
                                     )}
                                     {annotationProps.TYPE == 'TEXT' && (
                                         <Text {...annotationProps} id={textCommentIndex++} />
