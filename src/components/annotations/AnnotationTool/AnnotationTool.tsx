@@ -149,7 +149,7 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
                     break;
                 }
                 case 'TEXT':
-                    break;
+                    return;
             }
             setAnnotations({ ...annotations });
         },
@@ -203,7 +203,11 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
                                         />
                                     )}
                                     {annotationProps.TYPE == 'TEXT' && (
-                                        <Text {...annotationProps} id={textCommentIndex++} />
+                                        <Text
+                                            {...annotationProps}
+                                            id={textCommentIndex++}
+                                            moveHandlers={annotationGrabHandlers(key)}
+                                        />
                                     )}
                                 </React.Fragment>
                             );

@@ -1,4 +1,6 @@
+import { Card, CardContent, TextareaAutosize } from '@mui/material';
 import React from 'react';
+import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
 
 export interface TextProps {
     TYPE: 'TEXT';
@@ -7,9 +9,13 @@ export interface TextProps {
     y: number;
 }
 
-const Text = ({ id, x, y }: TextProps) => {
+interface TextPropsWithHandlers extends TextProps {
+    moveHandlers: AnnotationMouseEventHandlers;
+}
+
+const Text = ({ id, x, y, moveHandlers }: TextPropsWithHandlers) => {
     return (
-        <g>
+        <g {...moveHandlers}>
             <circle
                 cx={x}
                 cy={y}
@@ -26,6 +32,19 @@ const Text = ({ id, x, y }: TextProps) => {
             >
                 {id}
             </text>
+            <foreignObject
+                x={x + 17}
+                y={y}
+                width={1}
+                height={1}
+                className="text-annotation-comment-wrapper"
+            >
+                <Card className="text-annotation-comment">
+                    <CardContent>
+                        <TextareaAutosize />
+                    </CardContent>
+                </Card>
+            </foreignObject>
         </g>
     );
 };
