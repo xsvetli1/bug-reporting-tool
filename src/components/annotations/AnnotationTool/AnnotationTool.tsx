@@ -175,39 +175,26 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
                         mouseEventHandlers={mouseEventHandlers()}
                     >
                         {Object.keys(annotations).map((key, index) => {
-                            const annotationProps = annotations[key];
+                            const annotationProps = {
+                                ...annotations[key],
+                                moveHandlers: annotationGrabHandlers(key)
+                            };
                             return (
                                 <React.Fragment key={index}>
                                     {annotationProps.TYPE == 'SELECT_AREA' && (
-                                        <SelectArea
-                                            {...annotationProps}
-                                            moveHandlers={annotationGrabHandlers(key)}
-                                        />
+                                        <SelectArea {...annotationProps} />
                                     )}
                                     {annotationProps.TYPE == 'ARROW' && (
-                                        <Arrow
-                                            {...annotationProps}
-                                            moveHandlers={annotationGrabHandlers(key)}
-                                        />
+                                        <Arrow {...annotationProps} />
                                     )}
                                     {annotationProps.TYPE == 'FREE_HAND' && (
-                                        <FreeHand
-                                            {...annotationProps}
-                                            moveHandlers={annotationGrabHandlers(key)}
-                                        />
+                                        <FreeHand {...annotationProps} />
                                     )}
                                     {annotationProps.TYPE == 'OBFUSCATION' && (
-                                        <Obfuscation
-                                            {...annotationProps}
-                                            moveHandlers={annotationGrabHandlers(key)}
-                                        />
+                                        <Obfuscation {...annotationProps} />
                                     )}
                                     {annotationProps.TYPE == 'TEXT' && (
-                                        <Text
-                                            {...annotationProps}
-                                            id={textCommentIndex++}
-                                            moveHandlers={annotationGrabHandlers(key)}
-                                        />
+                                        <Text {...annotationProps} id={textCommentIndex++} />
                                     )}
                                 </React.Fragment>
                             );
