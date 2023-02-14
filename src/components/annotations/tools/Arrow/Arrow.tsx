@@ -1,4 +1,5 @@
 import React from 'react';
+import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
 
 export interface ArrowProps {
     TYPE: 'ARROW';
@@ -8,7 +9,11 @@ export interface ArrowProps {
     y2: number;
 }
 
-const Arrow = ({ x1, y1, x2, y2 }: ArrowProps) => {
+interface ArrowPropsWithHandlers extends ArrowProps {
+    moveHandlers: AnnotationMouseEventHandlers;
+}
+
+const Arrow = ({ x1, y1, x2, y2, moveHandlers }: ArrowPropsWithHandlers) => {
     return (
         <line
             x1={x1}
@@ -18,6 +23,7 @@ const Arrow = ({ x1, y1, x2, y2 }: ArrowProps) => {
             strokeWidth={4}
             markerEnd="url(#arrowhead)"
             className="annotation arrow-line"
+            {...moveHandlers}
         />
     );
 };

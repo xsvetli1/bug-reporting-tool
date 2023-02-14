@@ -14,8 +14,14 @@ interface SelectAreaPropsWithHandlers extends SelectAreaProps {
 }
 
 const SelectArea = ({ x, y, width, height, moveHandlers }: SelectAreaPropsWithHandlers) => (
-    <g {...moveHandlers}>
-        <rect x={x} y={y} width={width} height={height} fillOpacity="0" className="annotation" />
-    </g>
+    <rect
+        x={x}
+        y={y}
+        width={width}
+        height={height}
+        fillOpacity="0"
+        className="annotation"
+        {...moveHandlers}
+    />
 );
 export default SelectArea;

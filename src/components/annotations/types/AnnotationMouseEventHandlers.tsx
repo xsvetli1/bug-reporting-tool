@@ -9,11 +9,3 @@ export type AnnotationMouseEventHandlers = {
     onTouchStart: (event: ReactTouchEvent) => void;
     onTouchMove: (event: ReactTouchEvent) => void;
 };
-
-export const AnnotationMouseEventHandlersEmpty = {
-    onMouseDown: () => {},
-    onMouseUp: () => {},
-    onMouseMove: () => {},
-    onTouchStart: () => {},
-    onTouchMove: () => {}
-};
