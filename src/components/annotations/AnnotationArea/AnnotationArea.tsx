@@ -1,18 +1,11 @@
 import React, { ReactNode } from 'react';
 import { SelectAreaProps } from '../tools/SelectArea';
-import { ReactMouseEvent, ReactTouchEvent, SelectedAreas } from '../types';
-
-type AnnotationToolEventHandlers = {
-    onMouseDown: (event: ReactMouseEvent) => void;
-    onMouseUp: (event: ReactMouseEvent) => void;
-    onMouseMove: (event: ReactMouseEvent) => void;
-    onTouchStart: (event: ReactTouchEvent) => void;
-    onTouchMove: (event: ReactTouchEvent) => void;
-};
+import { SelectedAreas } from '../types';
+import { AnnotationMouseEventHandlers } from '../types/AnnotationMouseEventHandlers';
 
 export interface AnnotationAreaProps {
     selectedAreas: SelectedAreas;
-    mouseEventHandlers: AnnotationToolEventHandlers;
+    mouseEventHandlers: AnnotationMouseEventHandlers;
     children: ReactNode;
 }
 

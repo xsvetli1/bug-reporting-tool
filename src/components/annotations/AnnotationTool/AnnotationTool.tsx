@@ -16,8 +16,7 @@ import { SelectedAreas } from '../types/SelectedAreas';
 import FreeHand, { useFreeHand } from '../tools/FreeHand';
 import Obfuscation, { useObfuscation } from '../tools/Obfuscation';
 import Text, { useText } from '../tools/Text';
-import { ReactMouseEvent } from '../types';
-import { getParentX, getParentY, getX, getY } from '../tools/CoordinatesHelper';
+import { useAnnotationRelocation } from './useAnnotationRelocation';
 
 export interface AnnotationToolProps {
     isOngoingAnnotation: boolean;
@@ -64,101 +63,13 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
 
     let textCommentIndex = 1;
 
-    const [annotationInHand, setAnnotationInHand] = useState<string | null>(null);
-    const [startingCoordinates, setStartingCoordinates] = useState<[number, number]>([-1, -1]);
-    const annotationGrabHandlers = (id: string): AnnotationMouseEventHandlers => ({
-        onMouseDown: (event: ReactMouseEvent) => {
-            event.stopPropagation();
-            setAnnotationInHand(id);
-            setStartingCoordinates([getParentX(event), getParentY(event)]);
-        },
-        onMouseUp: () => setAnnotationInHand(null),
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        onMouseMove: () => {},
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        onTouchStart: () => {},
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        onTouchMove: () => {}
-    });
-
-    const annotationMoveHandlers: AnnotationMouseEventHandlers = {
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        onMouseDown: () => {},
-        onMouseMove: (event: ReactMouseEvent) => {
-            if (!annotationInHand) {
-                return;
-            }
-
-            const annotationProps = annotations[annotationInHand];
-            const annotationType = annotationProps.TYPE;
-            const [startX, startY] = startingCoordinates;
-            const [currentX, currentY] = [getX(event), getY(event)];
-            setStartingCoordinates([currentX, currentY]);
-
-            const diffX = currentX - startX;
-            const diffY = currentY - startY;
-
-            switch (annotationType) {
-                case 'SELECT_AREA': {
-                    const { x, y, width, height } = annotationProps;
-                    annotations[annotationInHand] = {
-                        TYPE: annotationType,
-                        x: x + diffX,
-                        y: y + diffY,
-                        width,
-                        height
-                    };
-                    selectedAreas[annotationInHand] = {
-                        TYPE: annotationType,
-                        x: x + diffX,
-                        y: y + diffY,
-                        width,
-                        height
-                    };
-                    setSelectedAreas({ ...selectedAreas });
-                    break;
-                }
-                case 'OBFUSCATION': {
-                    const { x, y, width, height } = annotationProps;
-                    annotations[annotationInHand] = {
-                        TYPE: annotationType,
-                        x: x + diffX,
-                        y: y + diffY,
-                        width,
-                        height
-                    };
-                    break;
-                }
-                case 'ARROW': {
-                    const { x1, y1, x2, y2 } = annotationProps;
-                    annotations[annotationInHand] = {
-                        TYPE: annotationType,
-                        x1: x1 + diffX,
-                        y1: y1 + diffY,
-                        x2: x2 + diffX,
-                        y2: y2 + diffY
-                    };
-                    break;
-                }
-                case 'FREE_HAND': {
-                    const { path } = annotationProps;
-                    annotations[annotationInHand] = {
-                        TYPE: annotationType,
-                        path: path.map(([x, y]) => [x + diffX, y + diffY])
-                    };
-                    break;
-                }
-                case 'TEXT':
-                    return;
-            }
-            setAnnotations({ ...annotations });
-        },
-        onMouseUp: () => setAnnotationInHand(null),
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        onTouchStart: () => {},
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        onTouchMove: () => {}
-    };
+    const [annotationInHand, annotationGrabHandlers, annotationMoveHandlers] =
+        useAnnotationRelocation({
+            annotations,
+            setAnnotations,
+            selectedAreas,
+            setSelectedAreas
+        });
 
     const mouseEventHandlers = () => {
         return annotationInHand
