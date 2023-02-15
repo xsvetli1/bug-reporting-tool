@@ -71,19 +71,16 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
             setSelectedAreas
         });
 
-    const mouseEventHandlers = () => {
-        return annotationInHand
-            ? annotationMoveHandlers
-            : allAnnotationHandlers[currentAnnotationTypeId];
-    };
-
+    const mouseEventHandlers = annotationInHand
+        ? annotationMoveHandlers
+        : allAnnotationHandlers[currentAnnotationTypeId];
     return (
         <>
             {isOngoingAnnotation && (
                 <>
                     <AnnotationArea
                         selectedAreas={selectedAreas}
-                        mouseEventHandlers={mouseEventHandlers()}
+                        mouseEventHandlers={mouseEventHandlers}
                     >
                         {Object.keys(annotations).map((key, index) => {
                             const annotationProps = {
