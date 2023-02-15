@@ -42,26 +42,26 @@ export const useAnnotationRelocation = ({
     selectedAreas,
     setSelectedAreas
 }: AnnotationRelocationHookProps): [
-    string | null,
+    string,
     (id: string) => AnnotationMouseEventHandlers,
     AnnotationMouseEventHandlers
 ] => {
-    const [annotationInHand, setAnnotationInHand] = useState<string | null>(null);
+    const [annotationInHandId, setAnnotationInHandId] = useState<string>('');
     const [startingCoordinates, setStartingCoordinates] = useState<[number, number]>([-1, -1]);
 
     const annotationGrabHandlers = (id: string): AnnotationMouseEventHandlers => ({
         onMouseDown: (event: ReactMouseEvent) => {
             event.stopPropagation();
 
-            setAnnotationInHand(id);
+            setAnnotationInHandId(id);
             setStartingCoordinates([getParentX(event), getParentY(event)]);
         },
-        onMouseUp: () => setAnnotationInHand(null)
+        onMouseUp: () => setAnnotationInHandId('')
     });
 
     const annotationMoveHandlers: AnnotationMouseEventHandlers = {
         onMouseMove: (event: ReactMouseEvent) => {
-            if (!annotationInHand) {
+            if (!annotationInHandId) {
                 return;
             }
 
@@ -72,22 +72,22 @@ export const useAnnotationRelocation = ({
             const diffX = currentX - startX;
             const diffY = currentY - startY;
 
-            annotations[annotationInHand] = calculateRelocatedAnnotation(
-                annotations[annotationInHand],
+            annotations[annotationInHandId] = calculateRelocatedAnnotation(
+                annotations[annotationInHandId],
                 diffX,
                 diffY
             );
 
             setAnnotations({ ...annotations });
 
-            const annotation = annotations[annotationInHand];
+            const annotation = annotations[annotationInHandId];
             if (annotation.TYPE === 'SELECT_AREA') {
-                selectedAreas[annotationInHand] = annotation;
+                selectedAreas[annotationInHandId] = annotation;
                 setSelectedAreas({ ...selectedAreas });
             }
         },
-        onMouseUp: () => setAnnotationInHand(null)
+        onMouseUp: () => setAnnotationInHandId('')
     };
 
-    return [annotationInHand, annotationGrabHandlers, annotationMoveHandlers];
+    return [annotationInHandId, annotationGrabHandlers, annotationMoveHandlers];
 };

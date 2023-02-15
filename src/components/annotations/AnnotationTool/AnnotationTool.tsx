@@ -1,69 +1,38 @@
-import React, { useId, useState } from 'react';
-import { ToggleButton, ToggleButtonGroup } from '@mui/material';
-import CropFreeSharpIcon from '@mui/icons-material/CropFreeSharp';
-import CallMadeSharpIcon from '@mui/icons-material/CallMadeSharp';
-import ModeEditOutlineSharpIcon from '@mui/icons-material/ModeEditOutlineSharp';
-import DeselectIcon from '@mui/icons-material/Deselect';
-import ChatSharpIcon from '@mui/icons-material/ChatSharp';
+import React, { useState } from 'react';
+
 import AnnotationArea from '../AnnotationArea';
 import '../Annotations.css';
-import CloseButton from '../CloseButton';
-import { AnnotationProps, AnnotationPropsObject } from '../tools/AnnotationProps';
-import Arrow, { useArrow } from '../tools/Arrow';
-import SelectArea, { useSelectArea } from '../tools/SelectArea';
-import { AnnotationMouseEventHandlers } from '../types/AnnotationMouseEventHandlers';
+import { AnnotationPropsObject } from '../tools/AnnotationProps';
+import Arrow from '../tools/Arrow';
+import SelectArea from '../tools/SelectArea';
 import { SelectedAreas } from '../types/SelectedAreas';
-import FreeHand, { useFreeHand } from '../tools/FreeHand';
-import Obfuscation, { useObfuscation } from '../tools/Obfuscation';
-import Text, { useText } from '../tools/Text';
+import FreeHand from '../tools/FreeHand';
+import Obfuscation from '../tools/Obfuscation';
+import Text from '../tools/Text';
 import { useAnnotationRelocation } from './useAnnotationRelocation';
+import AnnotationAreaContent from '../AnnotationAreaContent';
+import { useAnnotationCreateHandlers } from './useAnnotationCreateHandlers';
+import { AllAnnotationTypes } from '../types';
 
 export interface AnnotationToolProps {
     isOngoingAnnotation: boolean;
     handleClose: () => void;
 }
 
-type AllAnnotationHandlers = {
-    [id: string]: AnnotationMouseEventHandlers;
-};
-
 const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProps) => {
     const [annotations, setAnnotations] = useState<AnnotationPropsObject>({});
     const [selectedAreas, setSelectedAreas] = useState<SelectedAreas>({});
-    const annotate = (annotation: AnnotationProps, id: number) => {
-        annotations[id] = annotation;
-        setAnnotations({ ...annotations }); // Needs to be shallow copy to make setState re-render
-    };
 
-    const allAnnotationHandlers: AllAnnotationHandlers = {};
-    const addAnnotationHandlers = (handlers: AnnotationMouseEventHandlers) => {
-        const id = useId();
-        allAnnotationHandlers[id] = handlers;
-        return id;
-    };
+    const allAnnotationCreateHandlers = useAnnotationCreateHandlers({
+        annotations,
+        setAnnotations,
+        selectedAreas,
+        setSelectedAreas
+    });
+    const [currentAnnotationType, setCurrentAnnotationType] =
+        useState<AllAnnotationTypes>('SELECT_AREA');
 
-    const selectAreaId = addAnnotationHandlers(
-        useSelectArea({
-            annotations,
-            annotate,
-            selectedAreas,
-            setSelectedAreas
-        })
-    );
-    const arrowId = addAnnotationHandlers(useArrow({ annotations, annotate }));
-    const freeHandId = addAnnotationHandlers(useFreeHand({ annotations, annotate }));
-    const obfuscationId = addAnnotationHandlers(useObfuscation({ annotations, annotate }));
-    const textId = addAnnotationHandlers(useText({ annotations, annotate }));
-
-    const [currentAnnotationTypeId, setCurrentAnnotationTypeId] = useState(selectAreaId);
-
-    const handleAnnotationTypeId = (_: React.MouseEvent<HTMLElement>, newId: string) => {
-        setCurrentAnnotationTypeId(newId);
-    };
-
-    let textCommentIndex = 1;
-
-    const [annotationInHand, annotationGrabHandlers, annotationMoveHandlers] =
+    const [annotationInHandId, annotationGrabHandlers, annotationMoveHandlers] =
         useAnnotationRelocation({
             annotations,
             setAnnotations,
@@ -71,9 +40,11 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
             setSelectedAreas
         });
 
-    const mouseEventHandlers = annotationInHand
+    const mouseEventHandlers = annotationInHandId
         ? annotationMoveHandlers
-        : allAnnotationHandlers[currentAnnotationTypeId];
+        : allAnnotationCreateHandlers[currentAnnotationType];
+
+    let textCommentIndex = 1;
     return (
         <>
             {isOngoingAnnotation && (
@@ -108,32 +79,12 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
                             );
                         })}
                     </AnnotationArea>
-                    <div className="annotation-area-content">
-                        <CloseButton onClick={handleClose} />
-                        <ToggleButtonGroup
-                            orientation="vertical"
-                            exclusive
-                            aria-label="tool button group"
-                            value={annotationInHand ? '' : currentAnnotationTypeId}
-                            onChange={handleAnnotationTypeId}
-                        >
-                            <ToggleButton className="annotation-tools-button" value={selectAreaId}>
-                                <CropFreeSharpIcon />
-                            </ToggleButton>
-                            <ToggleButton className="annotation-tools-button" value={arrowId}>
-                                <CallMadeSharpIcon />
-                            </ToggleButton>
-                            <ToggleButton className="annotation-tools-button" value={freeHandId}>
-                                <ModeEditOutlineSharpIcon />
-                            </ToggleButton>
-                            <ToggleButton className="annotation-tools-button" value={obfuscationId}>
-                                <DeselectIcon />
-                            </ToggleButton>
-                            <ToggleButton className="annotation-tools-button" value={textId}>
-                                <ChatSharpIcon />
-                            </ToggleButton>
-                        </ToggleButtonGroup>
-                    </div>
+                    <AnnotationAreaContent
+                        currentAnnotationType={currentAnnotationType}
+                        setCurrentAnnotationType={setCurrentAnnotationType}
+                        handleClose={handleClose}
+                        annotationInHandId={annotationInHandId}
+                    />
                 </>
             )}
         </>
