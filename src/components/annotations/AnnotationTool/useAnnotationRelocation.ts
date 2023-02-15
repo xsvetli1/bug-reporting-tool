@@ -1,70 +1,13 @@
 import { useState } from 'react';
 import { UseStateSetter } from '../../../models/UseStateSetter';
 import { AnnotationProps, AnnotationPropsObject } from '../tools/AnnotationProps';
-import { ArrowProps } from '../tools/Arrow';
+import { calculateRelocatedArrow } from '../tools/Arrow';
 import { getParentX, getParentY, getX, getY } from '../tools/CoordinatesHelper';
-import { FreeHandProps } from '../tools/FreeHand';
-import { ObfuscationProps } from '../tools/Obfuscation';
-import { SelectAreaProps } from '../tools/SelectArea';
+import { calculateRelocatedFreeHand } from '../tools/FreeHand';
+import { calculateRelocatedObfuscation } from '../tools/Obfuscation';
+import { calculateRelocatedSelectArea } from '../tools/SelectArea';
 import { ReactMouseEvent, SelectedAreas } from '../types';
 import { AnnotationMouseEventHandlers } from '../types/AnnotationMouseEventHandlers';
-
-const calculateRelocatedObfuscation = (
-    annotationProps: ObfuscationProps,
-    diffX: number,
-    diffY: number
-): ObfuscationProps => {
-    const { TYPE, x, y, width, height } = annotationProps;
-    return {
-        TYPE,
-        x: x + diffX,
-        y: y + diffY,
-        width,
-        height
-    };
-};
-
-const calculateRelocatedSelectArea = (
-    annotationProps: SelectAreaProps,
-    diffX: number,
-    diffY: number
-): SelectAreaProps => {
-    const { TYPE, x, y, width, height } = annotationProps;
-    return {
-        TYPE,
-        x: x + diffX,
-        y: y + diffY,
-        width,
-        height
-    };
-};
-
-const calculateRelocatedArrow = (
-    annotationProps: ArrowProps,
-    diffX: number,
-    diffY: number
-): ArrowProps => {
-    const { TYPE, x1, y1, x2, y2 } = annotationProps;
-    return {
-        TYPE,
-        x1: x1 + diffX,
-        y1: y1 + diffY,
-        x2: x2 + diffX,
-        y2: y2 + diffY
-    };
-};
-
-const calculateRelocatedFreeHand = (
-    annotationProps: FreeHandProps,
-    diffX: number,
-    diffY: number
-): FreeHandProps => {
-    const { TYPE, path } = annotationProps;
-    return {
-        TYPE,
-        path: path.map(([x, y]) => [x + diffX, y + diffY])
-    };
-};
 
 const calculateRelocatedAnnotation = (
     annotationProps: AnnotationProps,
