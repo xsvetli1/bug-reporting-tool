@@ -49,7 +49,7 @@ export const useAnnotationRelocation = ({
     const [annotationInHandId, setAnnotationInHandId] = useState<string>('');
     const [startingCoordinates, setStartingCoordinates] = useState<[number, number]>([-1, -1]);
 
-    const annotationGrabHandlers = (id: string): AnnotationMouseEventHandlers => ({
+    const obtainAnnotationGrabHandlers = (id: string): AnnotationMouseEventHandlers => ({
         onMouseDown: (event: ReactMouseEvent) => {
             event.stopPropagation();
 
@@ -89,5 +89,5 @@ export const useAnnotationRelocation = ({
         onMouseUp: () => setAnnotationInHandId('')
     };
 
-    return [annotationInHandId, annotationGrabHandlers, annotationMoveHandlers];
+    return [annotationInHandId, obtainAnnotationGrabHandlers, annotationMoveHandlers];
 };
