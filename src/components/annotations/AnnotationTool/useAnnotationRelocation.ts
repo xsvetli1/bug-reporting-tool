@@ -6,6 +6,7 @@ import { getParentX, getParentY, getX, getY } from '../tools/CoordinatesHelper';
 import { calculateRelocatedFreeHand } from '../tools/FreeHand';
 import { calculateRelocatedObfuscation } from '../tools/Obfuscation';
 import { calculateRelocatedSelectArea } from '../tools/SelectArea';
+import { calculateRelocatedText } from '../tools/Text';
 import { ReactMouseEvent, SelectedAreas } from '../types';
 import { AnnotationMouseEventHandlers } from '../types/AnnotationMouseEventHandlers';
 
@@ -24,7 +25,7 @@ const calculateRelocatedAnnotation = (
     } else if (TYPE === 'FREE_HAND') {
         return calculateRelocatedFreeHand(annotationProps, diffX, diffY);
     } else if (TYPE === 'TEXT') {
-        return annotationProps;
+        return calculateRelocatedText(annotationProps, diffX, diffY);
     }
     return annotationProps;
 };
@@ -34,13 +35,15 @@ export interface AnnotationRelocationHookProps {
     setAnnotations: UseStateSetter<AnnotationPropsObject>;
     selectedAreas: SelectedAreas;
     setSelectedAreas: UseStateSetter<SelectedAreas>;
+    setSelectedCommentId: UseStateSetter<string>;
 }
 
 export const useAnnotationRelocation = ({
     annotations,
     setAnnotations,
     selectedAreas,
-    setSelectedAreas
+    setSelectedAreas,
+    setSelectedCommentId
 }: AnnotationRelocationHookProps): [
     string,
     (id: string) => AnnotationMouseEventHandlers,
@@ -55,6 +58,9 @@ export const useAnnotationRelocation = ({
 
             setAnnotationInHandId(id);
             setStartingCoordinates([getParentX(event), getParentY(event)]);
+            if (annotations[id].TYPE === 'TEXT') {
+                setSelectedCommentId(id);
+            }
         },
         onMouseUp: () => setAnnotationInHandId('')
     });

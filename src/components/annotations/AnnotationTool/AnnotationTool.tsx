@@ -18,7 +18,7 @@ export interface AnnotationToolProps {
 const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProps) => {
     const [annotations, setAnnotations] = useState<AnnotationPropsObject>({});
     const [selectedAreas, setSelectedAreas] = useState<SelectedAreas>({});
-    const [selectedCommentId, setSelectedCommentId] = useState(-1);
+    const [selectedCommentId, setSelectedCommentId] = useState('');
 
     const allAnnotationCreateHandlers = useAnnotationCreateHandlers({
         annotations,
@@ -33,7 +33,8 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
             annotations,
             setAnnotations,
             selectedAreas,
-            setSelectedAreas
+            setSelectedAreas,
+            setSelectedCommentId
         });
 
     const [currentAnnotationType, setCurrentAnnotationType] =

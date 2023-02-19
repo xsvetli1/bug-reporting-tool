@@ -11,8 +11,8 @@ import { AnnotationMouseEventHandlers } from '../types/AnnotationMouseEventHandl
 export interface AnnotationsProps {
     annotations: AnnotationPropsObject;
     obtainAnnotationGrabHandlers: (id: string) => AnnotationMouseEventHandlers;
-    selectedCommentId: number;
-    setSelectedCommentId: UseStateSetter<number>;
+    selectedCommentId: string;
+    setSelectedCommentId: UseStateSetter<string>;
 }
 
 const Annotations = ({

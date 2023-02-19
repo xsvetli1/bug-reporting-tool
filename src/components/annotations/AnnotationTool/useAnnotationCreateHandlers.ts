@@ -13,8 +13,8 @@ export interface AnnotationCreateHandlersHookProps {
     setAnnotations: UseStateSetter<AnnotationPropsObject>;
     selectedAreas: SelectedAreas;
     setSelectedAreas: UseStateSetter<SelectedAreas>;
-    selectedCommentId: number;
-    setSelectedCommentId: UseStateSetter<number>;
+    selectedCommentId: string;
+    setSelectedCommentId: UseStateSetter<string>;
 }
 
 export const useAnnotationCreateHandlers = ({

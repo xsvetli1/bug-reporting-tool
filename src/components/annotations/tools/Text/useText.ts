@@ -9,8 +9,8 @@ import { getX, getY } from '../CoordinatesHelper';
 export interface TextHookProps {
     annotations: AnnotationPropsObject;
     annotate: (annotation: AnnotationProps, id: number) => void;
-    selectedCommentId: number;
-    setSelectedCommentId: UseStateSetter<number>;
+    selectedCommentId: string;
+    setSelectedCommentId: UseStateSetter<string>;
 }
 
 export const useText = (props: TextHookProps) => {
@@ -18,7 +18,7 @@ export const useText = (props: TextHookProps) => {
 
     const mouseEventHandlers: AnnotationMouseEventHandlers = {
         onMouseDown: (event: ReactMouseEvent) => {
-            if (props.selectedCommentId != -1) {
+            if (props.selectedCommentId) {
                 return;
             }
 
@@ -47,7 +47,7 @@ export const useText = (props: TextHookProps) => {
         if (selecting) {
             id--;
         } else {
-            props.setSelectedCommentId(id);
+            props.setSelectedCommentId(id.toString());
         }
 
         props.annotate(annotation, id);

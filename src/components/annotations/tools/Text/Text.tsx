@@ -14,7 +14,7 @@ export interface TextProps {
 
 interface TextPropsWithHandlers extends TextProps {
     moveHandlers: AnnotationMouseEventHandlers;
-    setSelectedCommentId: UseStateSetter<number>;
+    setSelectedCommentId: UseStateSetter<string>;
 }
 
 const Text = ({ index, x, y, open, moveHandlers, setSelectedCommentId }: TextPropsWithHandlers) => {
@@ -62,7 +62,7 @@ const Text = ({ index, x, y, open, moveHandlers, setSelectedCommentId }: TextPro
                                 aria-label="submit comment"
                                 className="annotation-tools-button"
                                 sx={{ padding: 0 }}
-                                onClick={() => setSelectedCommentId(-1)}
+                                onClick={() => setSelectedCommentId('')}
                             >
                                 <CheckIcon />
                             </IconButton>
