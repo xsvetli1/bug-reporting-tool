@@ -1,4 +1,5 @@
 import React from 'react';
+import { UseStateSetter } from '../../../models/UseStateSetter';
 import { AnnotationPropsObject } from '../tools/AnnotationProps';
 import Arrow from '../tools/Arrow';
 import FreeHand from '../tools/FreeHand';
@@ -10,9 +11,16 @@ import { AnnotationMouseEventHandlers } from '../types/AnnotationMouseEventHandl
 export interface AnnotationsProps {
     annotations: AnnotationPropsObject;
     obtainAnnotationGrabHandlers: (id: string) => AnnotationMouseEventHandlers;
+    selectedCommentId: number;
+    setSelectedCommentId: UseStateSetter<number>;
 }
 
-const Annotations = ({ annotations, obtainAnnotationGrabHandlers }: AnnotationsProps) => {
+const Annotations = ({
+    annotations,
+    obtainAnnotationGrabHandlers,
+    selectedCommentId,
+    setSelectedCommentId
+}: AnnotationsProps) => {
     let textCommentIndex = 1;
 
     return (
@@ -29,7 +37,14 @@ const Annotations = ({ annotations, obtainAnnotationGrabHandlers }: AnnotationsP
                         {type == 'ARROW' && <Arrow {...annotationProps} />}
                         {type == 'FREE_HAND' && <FreeHand {...annotationProps} />}
                         {type == 'OBFUSCATION' && <Obfuscation {...annotationProps} />}
-                        {type == 'TEXT' && <Text {...annotationProps} id={textCommentIndex++} />}
+                        {type == 'TEXT' && (
+                            <Text
+                                {...annotationProps}
+                                index={textCommentIndex++}
+                                open={selectedCommentId.toString() == key}
+                                setSelectedCommentId={setSelectedCommentId}
+                            />
+                        )}
                     </React.Fragment>
                 );
             })}

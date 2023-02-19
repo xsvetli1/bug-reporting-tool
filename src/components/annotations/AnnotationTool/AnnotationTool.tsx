@@ -18,12 +18,15 @@ export interface AnnotationToolProps {
 const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProps) => {
     const [annotations, setAnnotations] = useState<AnnotationPropsObject>({});
     const [selectedAreas, setSelectedAreas] = useState<SelectedAreas>({});
+    const [selectedCommentId, setSelectedCommentId] = useState(-1);
 
     const allAnnotationCreateHandlers = useAnnotationCreateHandlers({
         annotations,
         setAnnotations,
         selectedAreas,
-        setSelectedAreas
+        setSelectedAreas,
+        selectedCommentId,
+        setSelectedCommentId
     });
     const [annotationInHandId, obtainAnnotationGrabHandlers, annotationMoveHandlers] =
         useAnnotationRelocation({
@@ -51,6 +54,8 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
                         <Annotations
                             annotations={annotations}
                             obtainAnnotationGrabHandlers={obtainAnnotationGrabHandlers}
+                            selectedCommentId={selectedCommentId}
+                            setSelectedCommentId={setSelectedCommentId}
                         />
                     </AnnotationArea>
                     <AnnotationAreaContent

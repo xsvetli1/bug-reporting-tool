@@ -13,13 +13,17 @@ export interface AnnotationCreateHandlersHookProps {
     setAnnotations: UseStateSetter<AnnotationPropsObject>;
     selectedAreas: SelectedAreas;
     setSelectedAreas: UseStateSetter<SelectedAreas>;
+    selectedCommentId: number;
+    setSelectedCommentId: UseStateSetter<number>;
 }
 
 export const useAnnotationCreateHandlers = ({
     annotations,
     setAnnotations,
     selectedAreas,
-    setSelectedAreas
+    setSelectedAreas,
+    selectedCommentId,
+    setSelectedCommentId
 }: AnnotationCreateHandlersHookProps): {
     [key in AllAnnotationTypes]: AnnotationMouseEventHandlers;
 } => {
@@ -38,6 +42,6 @@ export const useAnnotationCreateHandlers = ({
         ARROW: useArrow({ annotations, annotate }),
         FREE_HAND: useFreeHand({ annotations, annotate }),
         OBFUSCATION: useObfuscation({ annotations, annotate }),
-        TEXT: useText({ annotations, annotate })
+        TEXT: useText({ annotations, annotate, selectedCommentId, setSelectedCommentId })
     };
 };
