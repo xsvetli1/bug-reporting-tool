@@ -39,13 +39,7 @@ export const useSelectArea = (props: SelectAreaHookProps) => {
             }
 
             selectArea(event);
-        },
-
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        onTouchStart: () => {},
-
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        onTouchMove: () => {}
+        }
     };
 
     const selectArea = (event: ReactMouseEvent, currentStartX = startX, currentStartY = startY) => {

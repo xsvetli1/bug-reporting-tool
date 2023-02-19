@@ -37,13 +37,7 @@ export const useArrow = (props: ArrowHookProps) => {
 
             const [x, y] = [getX(event), getY(event)];
             annotateArrow({ TYPE: 'ARROW', x1: startX, y1: startY, x2: x, y2: y });
-        },
-
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        onTouchStart: () => {},
-
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        onTouchMove: () => {}
+        }
     };
 
     const annotateArrow = (annotation: ArrowProps) => {

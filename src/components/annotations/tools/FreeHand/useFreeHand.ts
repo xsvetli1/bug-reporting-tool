@@ -30,13 +30,7 @@ export const useFreeHand = (props: FreeHandHookProps) => {
             }
 
             annotateFreeHand(event);
-        },
-
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        onTouchStart: () => {},
-
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        onTouchMove: () => {}
+        }
     };
 
     const annotateFreeHand = (event: ReactMouseEvent) => {

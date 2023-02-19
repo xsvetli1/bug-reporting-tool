@@ -35,13 +35,7 @@ export const useObfuscation = (props: ObfuscationHookProps) => {
             }
 
             annotateObfuscation(event);
-        },
-
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        onTouchStart: () => {},
-
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        onTouchMove: () => {}
+        }
     };
 
     const annotateObfuscation = (
