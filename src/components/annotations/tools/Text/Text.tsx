@@ -1,5 +1,5 @@
 import { Card, CardActions, CardContent, IconButton, TextField } from '@mui/material';
-import React from 'react';
+import React, { createRef, useEffect, useState } from 'react';
 import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
 import CheckIcon from '@mui/icons-material/Check';
 import { UseStateSetter } from '../../../../models/UseStateSetter';
@@ -19,10 +19,29 @@ interface TextPropsWithHandlers extends TextProps {
 }
 
 const Text = ({ index, x, y, open, moveHandlers, setSelectedCommentId }: TextPropsWithHandlers) => {
-    const CIRCLE_RADIUS = 17;
     const MIN_ROWS = 3;
-    const CARD_WIDTH = '250px';
-    const PADDING = '8px';
+    const CARD_WIDTH = 250;
+    const PADDING = 8;
+    const CIRCLE_RADIUS = 17;
+    const CARD_X_SHIFT = 8;
+
+    const cardRef = createRef<HTMLDivElement>();
+    const [cardHeight, setCardHeight] = useState(0);
+
+    useEffect(() => {
+        if (cardRef.current) {
+            setCardHeight(cardRef.current.clientHeight);
+        }
+    }, []);
+
+    const CARD_X =
+        x + CIRCLE_RADIUS + CARD_X_SHIFT + CARD_WIDTH + 2 * PADDING >= window.innerWidth
+            ? x - (CIRCLE_RADIUS + CARD_X_SHIFT + CARD_WIDTH + 2 * PADDING)
+            : x + CIRCLE_RADIUS + CARD_X_SHIFT;
+
+    const CARD_Y = Math.min(y - CIRCLE_RADIUS, window.innerHeight - cardHeight - CIRCLE_RADIUS);
+
+    const inPx = (size: number) => `${size}px`;
 
     return (
         <g {...moveHandlers}>
@@ -44,14 +63,18 @@ const Text = ({ index, x, y, open, moveHandlers, setSelectedCommentId }: TextPro
             </text>
             {open && (
                 <foreignObject
-                    x={x + CIRCLE_RADIUS + 8}
-                    y={y - (CIRCLE_RADIUS + 3)}
+                    x={CARD_X}
+                    y={CARD_Y}
                     width={1}
                     height={1}
                     className="text-annotation-comment-wrapper"
                     onMouseDown={(event) => event.stopPropagation()}
                 >
-                    <Card style={{ width: CARD_WIDTH, padding: PADDING }}>
+                    <Card
+                        ref={cardRef}
+                        onChange={(event) => setCardHeight(event.currentTarget.clientHeight)}
+                        style={{ width: inPx(CARD_WIDTH), padding: inPx(PADDING) }}
+                    >
                         <CardContent sx={{ padding: '0' }}>
                             <TextField
                                 id={`comment-${index}`}
@@ -63,7 +86,11 @@ const Text = ({ index, x, y, open, moveHandlers, setSelectedCommentId }: TextPro
                             />
                         </CardContent>
                         <CardActions
-                            sx={{ padding: '0', paddingTop: PADDING, flexDirection: 'row-reverse' }}
+                            sx={{
+                                padding: '0',
+                                paddingTop: inPx(PADDING),
+                                flexDirection: 'row-reverse'
+                            }}
                         >
                             <IconButton
                                 aria-label="submit comment"
