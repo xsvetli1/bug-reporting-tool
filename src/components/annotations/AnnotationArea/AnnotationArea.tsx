@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+import { ISSUE_TYPE_BASED } from '../../../models/Colors';
 import { SelectAreaProps } from '../tools/SelectArea';
 import { SelectedAreas } from '../types';
 import { AnnotationMouseEventHandlers } from '../types/AnnotationMouseEventHandlers';
@@ -41,11 +42,7 @@ const AnnotationArea = (props: AnnotationAreaProps) => {
                     refY="5.5"
                     orient="auto"
                 >
-                    <polygon
-                        points="2 2, 9 5.5, 2 9"
-                        strokeWidth={1}
-                        fill={'var(--issue-type-based)'}
-                    />
+                    <polygon points="2 2, 9 5.5, 2 9" strokeWidth={1} fill={ISSUE_TYPE_BASED} />
                 </marker>
             </defs>
             <path fill="#ffffff" stroke="none" fillOpacity="0.3" fillRule="evenodd" d={d}></path>
