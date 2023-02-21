@@ -1,14 +1,14 @@
-import { useState } from 'react';
-import { UseStateSetter } from '../../../models/UseStateSetter';
-import { AnnotationProps, AnnotationPropsObject } from '../tools/AnnotationProps';
+import { useContext, useState } from 'react';
+import { AnnotationProps } from '../tools/AnnotationProps';
 import { calculateRelocatedArrow } from '../tools/Arrow';
 import { getParentX, getParentY, getX, getY } from '../tools/CoordinatesHelper';
 import { calculateRelocatedFreeHand } from '../tools/FreeHand';
 import { calculateRelocatedObfuscation } from '../tools/Obfuscation';
 import { calculateRelocatedSelectArea } from '../tools/SelectArea';
 import { calculateRelocatedText } from '../tools/Text';
-import { ReactMouseEvent, SelectedAreas } from '../types';
+import { ReactMouseEvent } from '../types';
 import { AnnotationMouseEventHandlers } from '../types/AnnotationMouseEventHandlers';
+import { AnnotationContext } from './AnnotationContext';
 
 const calculateRelocatedAnnotation = (
     annotationProps: AnnotationProps,
@@ -30,25 +30,14 @@ const calculateRelocatedAnnotation = (
     return annotationProps;
 };
 
-export interface AnnotationRelocationHookProps {
-    annotations: AnnotationPropsObject;
-    setAnnotations: UseStateSetter<AnnotationPropsObject>;
-    selectedAreas: SelectedAreas;
-    setSelectedAreas: UseStateSetter<SelectedAreas>;
-    setSelectedCommentIds: UseStateSetter<string[]>;
-}
-
-export const useAnnotationRelocation = ({
-    annotations,
-    setAnnotations,
-    selectedAreas,
-    setSelectedAreas,
-    setSelectedCommentIds
-}: AnnotationRelocationHookProps): [
+export const useAnnotationRelocation = (): [
     string,
     (id: string) => AnnotationMouseEventHandlers,
     AnnotationMouseEventHandlers
 ] => {
+    const { annotations, setAnnotations, selectedAreas, setSelectedAreas, setSelectedCommentIds } =
+        useContext(AnnotationContext);
+
     const [annotationInHandId, setAnnotationInHandId] = useState<string>('');
     const [startingCoordinates, setStartingCoordinates] = useState<[number, number]>([-1, -1]);
 

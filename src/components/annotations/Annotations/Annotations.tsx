@@ -1,6 +1,5 @@
-import React from 'react';
-import { UseStateSetter } from '../../../models/UseStateSetter';
-import { AnnotationPropsObject } from '../tools/AnnotationProps';
+import React, { useContext } from 'react';
+import { AnnotationContext } from '../AnnotationTool/AnnotationContext';
 import Arrow from '../tools/Arrow';
 import FreeHand from '../tools/FreeHand';
 import Obfuscation from '../tools/Obfuscation';
@@ -9,18 +8,13 @@ import Text from '../tools/Text';
 import { AnnotationMouseEventHandlers } from '../types/AnnotationMouseEventHandlers';
 
 export interface AnnotationsProps {
-    annotations: AnnotationPropsObject;
     obtainAnnotationGrabHandlers: (id: string) => AnnotationMouseEventHandlers;
-    selectedCommentIds: string[];
-    setSelectedCommentIds: UseStateSetter<string[]>;
 }
 
-const Annotations = ({
-    annotations,
-    obtainAnnotationGrabHandlers,
-    selectedCommentIds,
-    setSelectedCommentIds
-}: AnnotationsProps) => {
+const Annotations = ({ obtainAnnotationGrabHandlers }: AnnotationsProps) => {
+    const { annotations, selectedCommentIds, setSelectedCommentIds } =
+        useContext(AnnotationContext);
+
     let textCommentIndex = 1;
 
     return (

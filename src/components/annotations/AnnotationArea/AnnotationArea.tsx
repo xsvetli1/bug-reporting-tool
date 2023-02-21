@@ -1,22 +1,23 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useContext } from 'react';
 import { ISSUE_TYPE_BASED } from '../../../models/Colors';
+import { AnnotationContext } from '../AnnotationTool/AnnotationContext';
 import { SelectAreaProps } from '../tools/SelectArea';
-import { SelectedAreas } from '../types';
 import { AnnotationMouseEventHandlers } from '../types/AnnotationMouseEventHandlers';
 
 export interface AnnotationAreaProps {
-    selectedAreas: SelectedAreas;
     mouseEventHandlers: AnnotationMouseEventHandlers;
     children: ReactNode;
 }
 
 const AnnotationArea = (props: AnnotationAreaProps) => {
+    const { selectedAreas } = useContext(AnnotationContext);
+
     const rectToPathData = ({ x, y, width, height }: SelectAreaProps) =>
         `M ${x} ${y} h ${width} v ${height} h ${-width} Z`;
 
     const pathDataFromSelectedAreas = () =>
-        Object.keys(props.selectedAreas).map((key: string) => {
-            return rectToPathData(props.selectedAreas[key]);
+        Object.keys(selectedAreas).map((key: string) => {
+            return rectToPathData(selectedAreas[key]);
         });
 
     const width = window.innerWidth;

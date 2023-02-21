@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 
 import AnnotationArea from '../AnnotationArea';
 import '../Annotations.css';
-import { AnnotationPropsObject } from '../tools/AnnotationProps';
-import { SelectedAreas } from '../types/SelectedAreas';
 import { useAnnotationRelocation } from './useAnnotationRelocation';
 import AnnotationAreaContent from '../AnnotationAreaContent';
 import { useAnnotationCreateHandlers } from './useAnnotationCreateHandlers';
@@ -16,26 +14,9 @@ export interface AnnotationToolProps {
 }
 
 const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProps) => {
-    const [annotations, setAnnotations] = useState<AnnotationPropsObject>({});
-    const [selectedAreas, setSelectedAreas] = useState<SelectedAreas>({});
-    const [selectedCommentIds, setSelectedCommentIds] = useState<string[]>([]);
-
-    const allAnnotationCreateHandlers = useAnnotationCreateHandlers({
-        annotations,
-        setAnnotations,
-        selectedAreas,
-        setSelectedAreas,
-        selectedCommentIds,
-        setSelectedCommentIds
-    });
+    const allAnnotationCreateHandlers = useAnnotationCreateHandlers();
     const [annotationInHandId, obtainAnnotationGrabHandlers, annotationMoveHandlers] =
-        useAnnotationRelocation({
-            annotations,
-            setAnnotations,
-            selectedAreas,
-            setSelectedAreas,
-            setSelectedCommentIds
-        });
+        useAnnotationRelocation();
 
     const [currentAnnotationType, setCurrentAnnotationType] =
         useState<AllAnnotationTypes>('SELECT_AREA');
@@ -48,16 +29,8 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
         <>
             {isOngoingAnnotation && (
                 <>
-                    <AnnotationArea
-                        selectedAreas={selectedAreas}
-                        mouseEventHandlers={mouseEventHandlers}
-                    >
-                        <Annotations
-                            annotations={annotations}
-                            obtainAnnotationGrabHandlers={obtainAnnotationGrabHandlers}
-                            selectedCommentIds={selectedCommentIds}
-                            setSelectedCommentIds={setSelectedCommentIds}
-                        />
+                    <AnnotationArea mouseEventHandlers={mouseEventHandlers}>
+                        <Annotations obtainAnnotationGrabHandlers={obtainAnnotationGrabHandlers} />
                     </AnnotationArea>
                     <AnnotationAreaContent
                         currentAnnotationType={currentAnnotationType}

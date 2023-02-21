@@ -3,10 +3,10 @@ import IssueControllerFactory from '../../integration/IssueControllerFactory';
 import { IssueInfo } from '../../integration/IssueInfo';
 import Platform from '../../integration/Platform';
 import { PlatformProps } from '../../integration/PlatformProps';
-import AnnotationTool from '../annotations/AnnotationTool';
 import ModalController from '../modals/ModalController';
 import ReportBugButton from '../ReportBugButton';
 import '../../styles/colors.css';
+import AnnotationToolWrapper from '../annotations/AnnotationTool/AnnotationToolWrapper';
 
 export interface BugReportingToolProps {
     platform: Platform;
@@ -38,7 +38,7 @@ const BugReportingTool = ({ platform, platformProps, children }: BugReportingToo
                 newIssue={(issueInfo: IssueInfo) => issueController.newIssue(issueInfo)}
             />
             {isToolOpen && (
-                <AnnotationTool
+                <AnnotationToolWrapper
                     isOngoingAnnotation={isOngoingAnnotation}
                     handleClose={() => setIsOngoingAnnotation(false)}
                 />
