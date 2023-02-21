@@ -5,9 +5,10 @@ export const calculateRelocatedText = (
     diffX: number,
     diffY: number
 ): TextProps => {
-    const { TYPE, index, x, y, open } = annotationProps;
+    const { TYPE, id, index, x, y, open } = annotationProps;
     return {
         TYPE,
+        id,
         index,
         x: x + diffX,
         y: y + diffY,

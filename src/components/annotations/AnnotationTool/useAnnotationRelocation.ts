@@ -35,7 +35,7 @@ export interface AnnotationRelocationHookProps {
     setAnnotations: UseStateSetter<AnnotationPropsObject>;
     selectedAreas: SelectedAreas;
     setSelectedAreas: UseStateSetter<SelectedAreas>;
-    setSelectedCommentId: UseStateSetter<string>;
+    setSelectedCommentIds: UseStateSetter<string[]>;
 }
 
 export const useAnnotationRelocation = ({
@@ -43,7 +43,7 @@ export const useAnnotationRelocation = ({
     setAnnotations,
     selectedAreas,
     setSelectedAreas,
-    setSelectedCommentId
+    setSelectedCommentIds
 }: AnnotationRelocationHookProps): [
     string,
     (id: string) => AnnotationMouseEventHandlers,
@@ -59,7 +59,7 @@ export const useAnnotationRelocation = ({
             setAnnotationInHandId(id);
             setStartingCoordinates([getParentX(event), getParentY(event)]);
             if (annotations[id].TYPE === 'TEXT') {
-                setSelectedCommentId(id);
+                setSelectedCommentIds((selectedCommentIds) => [...selectedCommentIds, id]);
             }
         },
         onMouseUp: () => setAnnotationInHandId('')

@@ -7,6 +7,7 @@ import { ISSUE_TYPE_BASED_DARK, ISSUE_TYPE_BASED_LIGHT } from '../../../../model
 
 export interface TextProps {
     TYPE: 'TEXT';
+    id: string;
     index: number;
     x: number;
     y: number;
@@ -15,10 +16,18 @@ export interface TextProps {
 
 interface TextPropsWithHandlers extends TextProps {
     moveHandlers: AnnotationMouseEventHandlers;
-    setSelectedCommentId: UseStateSetter<string>;
+    setSelectedCommentIds: UseStateSetter<string[]>;
 }
 
-const Text = ({ index, x, y, open, moveHandlers, setSelectedCommentId }: TextPropsWithHandlers) => {
+const Text = ({
+    id,
+    index,
+    x,
+    y,
+    open,
+    moveHandlers,
+    setSelectedCommentIds
+}: TextPropsWithHandlers) => {
     const MIN_ROWS = 3;
     const CARD_WIDTH = 250;
     const PADDING = 8;
@@ -96,7 +105,11 @@ const Text = ({ index, x, y, open, moveHandlers, setSelectedCommentId }: TextPro
                                 aria-label="submit comment"
                                 className="annotation-tools-button"
                                 sx={{ padding: 0 }}
-                                onClick={() => setSelectedCommentId('')}
+                                onClick={() =>
+                                    setSelectedCommentIds((selectedCommentIds) =>
+                                        selectedCommentIds.filter((commentId) => commentId != id)
+                                    )
+                                }
                             >
                                 <CheckIcon />
                             </IconButton>

@@ -9,8 +9,8 @@ import { getX, getY } from '../CoordinatesHelper';
 export interface TextHookProps {
     annotations: AnnotationPropsObject;
     annotate: (annotation: AnnotationProps, id: number) => void;
-    selectedCommentId: string;
-    setSelectedCommentId: UseStateSetter<string>;
+    selectedCommentIds: string[];
+    setSelectedCommentIds: UseStateSetter<string[]>;
 }
 
 export const useText = (props: TextHookProps) => {
@@ -18,12 +18,12 @@ export const useText = (props: TextHookProps) => {
 
     const mouseEventHandlers: AnnotationMouseEventHandlers = {
         onMouseDown: (event: ReactMouseEvent) => {
-            if (props.selectedCommentId) {
+            if (props.selectedCommentIds.length) {
                 return;
             }
 
             const [x, y] = [getX(event), getY(event)];
-            annotateText({ TYPE: 'TEXT', index: -1, x, y, open: true });
+            annotateText({ TYPE: 'TEXT', id: '', index: -1, x, y, open: true });
 
             setSelecting(true);
         },
@@ -38,7 +38,7 @@ export const useText = (props: TextHookProps) => {
             }
 
             const [x, y] = [getX(event), getY(event)];
-            annotateText({ TYPE: 'TEXT', index: -1, x, y, open: true });
+            annotateText({ TYPE: 'TEXT', id: '', index: -1, x, y, open: true });
         }
     };
 
@@ -47,7 +47,9 @@ export const useText = (props: TextHookProps) => {
         if (selecting) {
             id--;
         } else {
-            props.setSelectedCommentId(id.toString());
+            props.setSelectedCommentIds([...props.selectedCommentIds, id.toString()]);
+            console.log(props.selectedCommentIds);
+            console.log([...props.selectedCommentIds, id.toString()]);
         }
 
         props.annotate(annotation, id);

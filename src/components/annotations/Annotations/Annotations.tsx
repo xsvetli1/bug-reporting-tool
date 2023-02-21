@@ -11,15 +11,15 @@ import { AnnotationMouseEventHandlers } from '../types/AnnotationMouseEventHandl
 export interface AnnotationsProps {
     annotations: AnnotationPropsObject;
     obtainAnnotationGrabHandlers: (id: string) => AnnotationMouseEventHandlers;
-    selectedCommentId: string;
-    setSelectedCommentId: UseStateSetter<string>;
+    selectedCommentIds: string[];
+    setSelectedCommentIds: UseStateSetter<string[]>;
 }
 
 const Annotations = ({
     annotations,
     obtainAnnotationGrabHandlers,
-    selectedCommentId,
-    setSelectedCommentId
+    selectedCommentIds,
+    setSelectedCommentIds
 }: AnnotationsProps) => {
     let textCommentIndex = 1;
 
@@ -40,9 +40,10 @@ const Annotations = ({
                         {type == 'TEXT' && (
                             <Text
                                 {...annotationProps}
+                                id={key}
                                 index={textCommentIndex++}
-                                open={selectedCommentId.toString() == key}
-                                setSelectedCommentId={setSelectedCommentId}
+                                open={selectedCommentIds.includes(key)}
+                                setSelectedCommentIds={setSelectedCommentIds}
                             />
                         )}
                     </React.Fragment>
