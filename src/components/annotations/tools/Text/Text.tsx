@@ -1,9 +1,9 @@
-import { Card, CardActions, CardContent, IconButton, TextField } from '@mui/material';
 import React, { createRef, useEffect, useState } from 'react';
+import { Card, CardActions, CardContent, IconButton, TextField } from '@mui/material';
 import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
-import CheckIcon from '@mui/icons-material/Check';
 import { UseStateSetter } from '../../../../models/UseStateSetter';
 import { ISSUE_TYPE_BASED_DARK, ISSUE_TYPE_BASED_LIGHT } from '../../../../models/Colors';
+import CheckIcon from '@mui/icons-material/Check';
 
 export interface TextProps {
     TYPE: 'TEXT';
@@ -36,6 +36,7 @@ const Text = ({
 
     const cardRef = createRef<HTMLDivElement>();
     const [cardHeight, setCardHeight] = useState(0);
+    const [comment, setComment] = useState('');
 
     useEffect(() => {
         if (cardRef.current) {
@@ -92,6 +93,8 @@ const Text = ({
                                 multiline
                                 minRows={MIN_ROWS}
                                 placeholder="Write your comment here..."
+                                defaultValue={comment}
+                                onChange={(event) => setComment(event.currentTarget.value)}
                             />
                         </CardContent>
                         <CardActions

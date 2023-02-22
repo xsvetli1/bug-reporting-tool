@@ -48,8 +48,6 @@ export const useText = (props: TextHookProps) => {
             id--;
         } else {
             props.setSelectedCommentIds([...props.selectedCommentIds, id.toString()]);
-            console.log(props.selectedCommentIds);
-            console.log([...props.selectedCommentIds, id.toString()]);
         }
 
         props.annotate(annotation, id);
