@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import AnnotationArea from '../AnnotationArea';
-import '../Annotations.css';
+import '../styles/annotations.css';
 import { useAnnotationRelocation } from './useAnnotationRelocation';
 import AnnotationAreaContent from '../AnnotationAreaContent';
 import { useAnnotationCreateHandlers } from './useAnnotationCreateHandlers';

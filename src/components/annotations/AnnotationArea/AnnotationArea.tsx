@@ -1,6 +1,7 @@
 import React, { ReactNode, useContext } from 'react';
 import { ISSUE_TYPE_BASED } from '../../../models/Colors';
 import { AnnotationContext } from '../AnnotationTool/AnnotationContext';
+import { getSVGHeigth, getSVGWidth } from '../tools/CoordinatesHelper';
 import { SelectAreaProps } from '../tools/SelectArea';
 import { AnnotationMouseEventHandlers } from '../types/AnnotationMouseEventHandlers';
 
@@ -20,15 +21,12 @@ const AnnotationArea = (props: AnnotationAreaProps) => {
             return rectToPathData(selectedAreas[key]);
         });
 
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-
     const background = rectToPathData({
         TYPE: 'SELECT_AREA',
         x: 0,
         y: 0,
-        width: width,
-        height: height
+        width: getSVGWidth(),
+        height: getSVGHeigth()
     });
     const d = [background, ...pathDataFromSelectedAreas()].join('\n');
 

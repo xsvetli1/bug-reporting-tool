@@ -4,6 +4,7 @@ import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHa
 import { UseStateSetter } from '../../../../models/UseStateSetter';
 import { ISSUE_TYPE_BASED_DARK, ISSUE_TYPE_BASED_LIGHT } from '../../../../models/Colors';
 import CheckIcon from '@mui/icons-material/Check';
+import { getSVGHeigth, getSVGWidth } from '../CoordinatesHelper';
 
 export interface TextProps {
     TYPE: 'TEXT';
@@ -28,21 +29,18 @@ const Text = ({
     moveHandlers,
     setSelectedCommentIds
 }: TextPropsWithHandlers) => {
+    const cardRef = createRef<HTMLDivElement>();
+    const [cardHeight, setCardHeight] = useState(0);
+    const [comment, setComment] = useState('');
+
     const MIN_ROWS = 3;
     const CARD_WIDTH = 250;
     const PADDING = 8;
     const CIRCLE_RADIUS = 17;
     const CARD_X_SHIFT = 8;
 
-    const cardRef = createRef<HTMLDivElement>();
-    const [cardHeight, setCardHeight] = useState(0);
-    const [comment, setComment] = useState('');
-
-    useEffect(() => {
-        if (cardRef.current) {
-            setCardHeight(cardRef.current.clientHeight);
-        }
-    }, []);
+    x = Math.min(Math.max(x, CIRCLE_RADIUS), getSVGWidth() - CIRCLE_RADIUS);
+    y = Math.min(Math.max(y, CIRCLE_RADIUS), getSVGHeigth() - CIRCLE_RADIUS);
 
     const CARD_X =
         x + CIRCLE_RADIUS + CARD_X_SHIFT + CARD_WIDTH + 2 * PADDING >= window.innerWidth
@@ -50,6 +48,12 @@ const Text = ({
             : x + CIRCLE_RADIUS + CARD_X_SHIFT;
 
     const CARD_Y = Math.min(y - CIRCLE_RADIUS, window.innerHeight - cardHeight - CIRCLE_RADIUS);
+
+    useEffect(() => {
+        if (cardRef.current) {
+            setCardHeight(cardRef.current.clientHeight);
+        }
+    }, []);
 
     const inPx = (size: number) => `${size}px`;
 

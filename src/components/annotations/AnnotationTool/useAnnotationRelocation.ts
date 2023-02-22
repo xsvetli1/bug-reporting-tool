@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { AnnotationProps } from '../tools/AnnotationProps';
 import { calculateRelocatedArrow } from '../tools/Arrow';
-import { getParentX, getParentY, getX, getY } from '../tools/CoordinatesHelper';
+import { getX, getY } from '../tools/CoordinatesHelper';
 import { calculateRelocatedFreeHand } from '../tools/FreeHand';
 import { calculateRelocatedObfuscation } from '../tools/Obfuscation';
 import { calculateRelocatedSelectArea } from '../tools/SelectArea';
@@ -46,7 +46,7 @@ export const useAnnotationRelocation = (): [
             event.stopPropagation();
 
             setAnnotationInHandId(id);
-            setStartingCoordinates([getParentX(event), getParentY(event)]);
+            setStartingCoordinates([getX(event), getY(event)]);
             if (annotations[id].TYPE === 'TEXT') {
                 setSelectedCommentIds((selectedCommentIds) => [...selectedCommentIds, id]);
             }
