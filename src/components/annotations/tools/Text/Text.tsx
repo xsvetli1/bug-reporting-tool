@@ -59,22 +59,24 @@ const Text = ({
 
     return (
         <g {...moveHandlers}>
-            <circle
-                cx={x}
-                cy={y}
-                r={CIRCLE_RADIUS}
-                stroke={ISSUE_TYPE_BASED_DARK}
-                fill={ISSUE_TYPE_BASED_LIGHT}
-            />
-            <text
-                x={x}
-                y={y + 1}
-                dominantBaseline="middle"
-                textAnchor="middle"
-                className="text-annotation-id"
-            >
-                {index}
-            </text>
+            <g className="annotation">
+                <circle
+                    cx={x}
+                    cy={y}
+                    r={CIRCLE_RADIUS}
+                    stroke={ISSUE_TYPE_BASED_DARK}
+                    fill={ISSUE_TYPE_BASED_LIGHT}
+                />
+                <text
+                    x={x}
+                    y={y + 1}
+                    dominantBaseline="middle"
+                    textAnchor="middle"
+                    className="text-annotation-id"
+                >
+                    {index}
+                </text>
+            </g>
             {open && (
                 <foreignObject
                     x={CARD_X}
