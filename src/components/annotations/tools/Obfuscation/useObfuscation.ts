@@ -56,7 +56,15 @@ export const useObfuscation = (props: ObfuscationHookProps) => {
         const lowerY = Math.min(y, currentStartY);
 
         props.annotate(
-            { TYPE: 'OBFUSCATION', x: lowerX, y: lowerY, width: width, height: height },
+            {
+                TYPE: 'OBFUSCATION',
+                xShift: 0,
+                yShift: 0,
+                x: lowerX,
+                y: lowerY,
+                width: width,
+                height: height
+            },
             id
         );
     };

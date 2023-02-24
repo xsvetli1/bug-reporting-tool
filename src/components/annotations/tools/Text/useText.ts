@@ -23,7 +23,16 @@ export const useText = (props: TextHookProps) => {
             }
 
             const [x, y] = [getX(event), getY(event)];
-            annotateText({ TYPE: 'TEXT', id: '', index: -1, x, y, open: true });
+            annotateText({
+                TYPE: 'TEXT',
+                xShift: 0,
+                yShift: 0,
+                id: '',
+                index: -1,
+                x,
+                y,
+                open: true
+            });
 
             setSelecting(true);
         },
@@ -38,7 +47,16 @@ export const useText = (props: TextHookProps) => {
             }
 
             const [x, y] = [getX(event), getY(event)];
-            annotateText({ TYPE: 'TEXT', id: '', index: -1, x, y, open: true });
+            annotateText({
+                TYPE: 'TEXT',
+                xShift: 0,
+                yShift: 0,
+                id: '',
+                index: -1,
+                x,
+                y,
+                open: true
+            });
         }
     };
 

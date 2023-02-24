@@ -13,8 +13,8 @@ export interface AnnotationAreaProps {
 const AnnotationArea = (props: AnnotationAreaProps) => {
     const { selectedAreas } = useContext(AnnotationContext);
 
-    const rectToPathData = ({ x, y, width, height }: SelectAreaProps) =>
-        `M ${x} ${y} h ${width} v ${height} h ${-width} Z`;
+    const rectToPathData = ({ xShift, yShift, x, y, width, height }: SelectAreaProps) =>
+        `M ${x + xShift} ${y + yShift} h ${width} v ${height} h ${-width} Z`;
 
     const pathDataFromSelectedAreas = () =>
         Object.keys(selectedAreas).map((key: string) => {
@@ -23,6 +23,8 @@ const AnnotationArea = (props: AnnotationAreaProps) => {
 
     const background = rectToPathData({
         TYPE: 'SELECT_AREA',
+        xShift: 0,
+        yShift: 0,
         x: 0,
         y: 0,
         width: getSVGWidth(),

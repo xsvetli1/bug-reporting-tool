@@ -43,7 +43,7 @@ export const useFreeHand = (props: FreeHandHookProps) => {
         const newPath: [number, number][] = [...path, [x, y]];
         setPath(newPath);
 
-        props.annotate({ TYPE: 'FREE_HAND', path: newPath }, id);
+        props.annotate({ TYPE: 'FREE_HAND', xShift: 0, yShift: 0, path: newPath }, id);
     };
 
     return mouseEventHandlers;

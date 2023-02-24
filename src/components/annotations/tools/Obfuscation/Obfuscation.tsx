@@ -3,6 +3,8 @@ import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHa
 
 export interface ObfuscationProps {
     TYPE: 'OBFUSCATION';
+    xShift: number;
+    yShift: number;
     x: number;
     y: number;
     width: number;
@@ -13,7 +15,15 @@ interface ObfuscationPropsWithHandlers extends ObfuscationProps {
     moveHandlers: AnnotationMouseEventHandlers;
 }
 
-const Obfuscation = ({ x, y, width, height, moveHandlers }: ObfuscationPropsWithHandlers) => (
+const Obfuscation = ({
+    xShift,
+    yShift,
+    x,
+    y,
+    width,
+    height,
+    moveHandlers
+}: ObfuscationPropsWithHandlers) => (
     <rect
         x={x}
         y={y}
@@ -21,6 +31,7 @@ const Obfuscation = ({ x, y, width, height, moveHandlers }: ObfuscationPropsWith
         height={height}
         stroke="none"
         className="annotation"
+        style={{ transform: `matrix(1, 0, 0, 1, ${xShift}, ${yShift})` }}
         {...moveHandlers}
     />
 );

@@ -1,34 +1,8 @@
 import { useContext, useState } from 'react';
-import { AnnotationProps } from '../tools/AnnotationProps';
-import { calculateRelocatedArrow } from '../tools/Arrow';
 import { getX, getY } from '../tools/CoordinatesHelper';
-import { calculateRelocatedFreeHand } from '../tools/FreeHand';
-import { calculateRelocatedObfuscation } from '../tools/Obfuscation';
-import { calculateRelocatedSelectArea } from '../tools/SelectArea';
-import { calculateRelocatedText } from '../tools/Text';
 import { ReactMouseEvent } from '../types';
 import { AnnotationMouseEventHandlers } from '../types/AnnotationMouseEventHandlers';
 import { AnnotationContext } from './AnnotationContext';
-
-const calculateRelocatedAnnotation = (
-    annotationProps: AnnotationProps,
-    diffX: number,
-    diffY: number
-): AnnotationProps => {
-    const { TYPE } = annotationProps;
-    if (TYPE === 'SELECT_AREA') {
-        return calculateRelocatedSelectArea(annotationProps, diffX, diffY);
-    } else if (TYPE === 'OBFUSCATION') {
-        return calculateRelocatedObfuscation(annotationProps, diffX, diffY);
-    } else if (TYPE === 'ARROW') {
-        return calculateRelocatedArrow(annotationProps, diffX, diffY);
-    } else if (TYPE === 'FREE_HAND') {
-        return calculateRelocatedFreeHand(annotationProps, diffX, diffY);
-    } else if (TYPE === 'TEXT') {
-        return calculateRelocatedText(annotationProps, diffX, diffY);
-    }
-    return annotationProps;
-};
 
 export const useAnnotationRelocation = (): [
     string,
@@ -67,11 +41,8 @@ export const useAnnotationRelocation = (): [
             const diffX = currentX - startX;
             const diffY = currentY - startY;
 
-            annotations[annotationInHandId] = calculateRelocatedAnnotation(
-                annotations[annotationInHandId],
-                diffX,
-                diffY
-            );
+            annotations[annotationInHandId].xShift += diffX;
+            annotations[annotationInHandId].yShift += diffY;
 
             setAnnotations({ ...annotations });
 

@@ -57,6 +57,8 @@ export const useSelectArea = (props: SelectAreaHookProps) => {
 
         props.selectedAreas[id] = {
             TYPE: 'SELECT_AREA',
+            xShift: 0,
+            yShift: 0,
             x: lowerX,
             y: lowerY,
             width: width,

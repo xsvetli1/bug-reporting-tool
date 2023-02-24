@@ -21,7 +21,7 @@ export const useArrow = (props: ArrowHookProps) => {
             setStartX(x);
             setStartY(y);
 
-            annotateArrow({ TYPE: 'ARROW', x1: x, y1: y, x2: x, y2: y });
+            annotateArrow({ TYPE: 'ARROW', xShift: 0, yShift: 0, x1: x, y1: y, x2: x, y2: y });
 
             setSelecting(true);
         },
@@ -36,7 +36,15 @@ export const useArrow = (props: ArrowHookProps) => {
             }
 
             const [x, y] = [getX(event), getY(event)];
-            annotateArrow({ TYPE: 'ARROW', x1: startX, y1: startY, x2: x, y2: y });
+            annotateArrow({
+                TYPE: 'ARROW',
+                xShift: 0,
+                yShift: 0,
+                x1: startX,
+                y1: startY,
+                x2: x,
+                y2: y
+            });
         }
     };
 

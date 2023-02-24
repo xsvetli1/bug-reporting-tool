@@ -8,6 +8,8 @@ import { getSVGHeigth, getSVGWidth } from '../CoordinatesHelper';
 
 export interface TextProps {
     TYPE: 'TEXT';
+    xShift: number;
+    yShift: number;
     id: string;
     index: number;
     x: number;
@@ -21,6 +23,8 @@ interface TextPropsWithHandlers extends TextProps {
 }
 
 const Text = ({
+    xShift,
+    yShift,
     id,
     index,
     x,
@@ -58,7 +62,7 @@ const Text = ({
     const inPx = (size: number) => `${size}px`;
 
     return (
-        <g {...moveHandlers}>
+        <g style={{ transform: `matrix(1, 0, 0, 1, ${xShift}, ${yShift})` }} {...moveHandlers}>
             <g className="annotation">
                 <circle
                     cx={x}
