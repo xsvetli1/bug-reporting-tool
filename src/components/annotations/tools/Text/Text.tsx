@@ -84,18 +84,14 @@ const Text = ({
                     className="text-annotation-comment-wrapper"
                     onMouseDown={(event) => event.stopPropagation()}
                 >
-                    <Card
-                        ref={cardRef}
-                        onChange={(event) => setCardHeight(event.currentTarget.clientHeight)}
-                        style={{ width: inPx(CARD_WIDTH), padding: inPx(PADDING) }}
-                    >
+                    <Card ref={cardRef} style={{ width: inPx(CARD_WIDTH), padding: inPx(PADDING) }}>
                         <CardContent sx={{ padding: '0' }}>
                             <TextField
                                 id={`comment-${index}`}
                                 variant="standard"
                                 fullWidth
                                 multiline
-                                minRows={MIN_ROWS}
+                                rows={MIN_ROWS}
                                 placeholder="Write your comment here..."
                                 defaultValue={comment}
                                 onChange={(event) => setComment(event.currentTarget.value)}
