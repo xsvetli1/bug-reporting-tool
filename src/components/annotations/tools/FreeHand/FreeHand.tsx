@@ -1,16 +1,11 @@
 import React from 'react';
-import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
 import { AnnotationProps } from '../AnnotationProps';
 
 export interface FreeHandProps extends AnnotationProps<'FREE_HAND'> {
     path: [number, number][];
 }
 
-interface FreeHandPropsWithHandlers extends FreeHandProps {
-    moveHandlers: AnnotationMouseEventHandlers;
-}
-
-const FreeHand = ({ xShift, yShift, path, moveHandlers }: FreeHandPropsWithHandlers) => {
+const FreeHand = ({ xShift, yShift, path, moveHandlers }: FreeHandProps) => {
     return (
         <polyline
             className="annotation"

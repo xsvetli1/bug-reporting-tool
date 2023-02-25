@@ -1,5 +1,4 @@
 import React from 'react';
-import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
 import { AnnotationProps } from '../AnnotationProps';
 
 export interface ArrowProps extends AnnotationProps<'ARROW'> {
@@ -9,11 +8,7 @@ export interface ArrowProps extends AnnotationProps<'ARROW'> {
     y2: number;
 }
 
-interface ArrowPropsWithHandlers extends ArrowProps {
-    moveHandlers: AnnotationMouseEventHandlers;
-}
-
-const Arrow = ({ xShift, yShift, x1, y1, x2, y2, moveHandlers }: ArrowPropsWithHandlers) => {
+const Arrow = ({ xShift, yShift, x1, y1, x2, y2, moveHandlers }: ArrowProps) => {
     return (
         <line
             x1={x1}

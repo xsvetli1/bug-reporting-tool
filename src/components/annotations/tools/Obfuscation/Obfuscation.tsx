@@ -1,5 +1,4 @@
 import React from 'react';
-import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
 import { AnnotationProps } from '../AnnotationProps';
 
 export interface ObfuscationProps extends AnnotationProps<'OBFUSCATION'> {
@@ -9,19 +8,7 @@ export interface ObfuscationProps extends AnnotationProps<'OBFUSCATION'> {
     height: number;
 }
 
-interface ObfuscationPropsWithHandlers extends ObfuscationProps {
-    moveHandlers: AnnotationMouseEventHandlers;
-}
-
-const Obfuscation = ({
-    xShift,
-    yShift,
-    x,
-    y,
-    width,
-    height,
-    moveHandlers
-}: ObfuscationPropsWithHandlers) => (
+const Obfuscation = ({ xShift, yShift, x, y, width, height, moveHandlers }: ObfuscationProps) => (
     <rect
         x={x}
         y={y}
