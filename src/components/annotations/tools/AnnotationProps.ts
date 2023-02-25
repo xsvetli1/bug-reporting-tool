@@ -4,7 +4,7 @@ import { ObfuscationProps } from './Obfuscation';
 import { SelectAreaProps } from './SelectArea';
 import { TextProps } from './Text';
 
-export type AnnotationProps =
+export type AllAnnotationProps =
     | SelectAreaProps
     | ArrowProps
     | FreeHandProps
@@ -12,5 +12,5 @@ export type AnnotationProps =
     | TextProps;
 
 export type AnnotationPropsObject = {
-    [id: string]: AnnotationProps;
+    [id: string]: AllAnnotationProps;
 };

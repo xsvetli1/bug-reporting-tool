@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import AnnotationArea from '../AnnotationArea';
 import '../styles/annotations.css';
 import { useAnnotationRelocation } from './handlers/useAnnotationRelocation';

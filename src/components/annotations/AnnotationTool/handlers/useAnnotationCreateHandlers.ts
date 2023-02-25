@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { AnnotationProps } from '../../tools/AnnotationProps';
+import { AllAnnotationProps } from '../../tools/AnnotationProps';
 import { useArrow } from '../../tools/Arrow';
 import { useFreeHand } from '../../tools/FreeHand';
 import { useObfuscation } from '../../tools/Obfuscation';
@@ -21,7 +21,7 @@ export const useAnnotationCreateHandlers = (): {
         setSelectedCommentIds
     } = useContext(AnnotationContext);
 
-    const annotate = (annotation: AnnotationProps, id: number) => {
+    const annotate = (annotation: AllAnnotationProps, id: number) => {
         annotations[id] = annotation;
         setAnnotations({ ...annotations }); // Needs to be shallow copy to make setState re-render
     };

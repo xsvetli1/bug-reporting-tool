@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { ReactMouseEvent } from '../../types';
 import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
-import { AnnotationProps, AnnotationPropsObject } from '../AnnotationProps';
+import { AllAnnotationProps, AnnotationPropsObject } from '../AnnotationProps';
 import { getX, getY } from '../CoordinatesHelper';
 
 export interface FreeHandHookProps {
     annotations: AnnotationPropsObject;
-    annotate: (annotation: AnnotationProps, id: number) => void;
+    annotate: (annotation: AllAnnotationProps, id: number) => void;
 }
 
 export const useFreeHand = (props: FreeHandHookProps) => {

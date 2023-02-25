@@ -3,12 +3,12 @@ import { UseStateSetter } from '../../../../models/UseStateSetter';
 import { ReactMouseEvent } from '../../types';
 import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
 import { SelectedAreas } from '../../types/SelectedAreas';
-import { AnnotationProps, AnnotationPropsObject } from '../AnnotationProps';
+import { AllAnnotationProps, AnnotationPropsObject } from '../AnnotationProps';
 import { getX, getY } from '../CoordinatesHelper';
 
 export interface SelectAreaHookProps {
     annotations: AnnotationPropsObject;
-    annotate: (annotation: AnnotationProps, id: number) => void;
+    annotate: (annotation: AllAnnotationProps, id: number) => void;
     selectedAreas: SelectedAreas;
     setSelectedAreas: UseStateSetter<SelectedAreas>;
 }
