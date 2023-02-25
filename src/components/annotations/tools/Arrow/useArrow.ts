@@ -1,16 +1,13 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { ReactMouseEvent } from '../../types';
 import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
-import { AllAnnotationProps, AnnotationPropsObject } from '../AllAnnotationProps';
 import { getX, getY } from '../../helpers/CoordinatesHelper';
 import { ArrowProps } from './Arrow';
+import { AnnotationContext } from '../../AnnotationTool/AnnotationContext';
 
-export interface ArrowHookProps {
-    annotations: AnnotationPropsObject;
-    annotate: (annotation: AllAnnotationProps, id: number) => void;
-}
+export const useArrow = () => {
+    const { annotations, annotate } = useContext(AnnotationContext);
 
-export const useArrow = (props: ArrowHookProps) => {
     const [startX, setStartX] = useState(0);
     const [startY, setStartY] = useState(0);
     const [selecting, setSelecting] = useState(false);
@@ -48,12 +45,12 @@ export const useArrow = (props: ArrowHookProps) => {
     };
 
     const annotateArrow = (annotation: ArrowProps) => {
-        let id = Object.keys(props.annotations).length;
+        let id = Object.keys(annotations).length;
         if (selecting) {
             id--;
         }
 
-        props.annotate(annotation, id);
+        annotate(annotation, id);
     };
 
     return mouseEventHandlers;

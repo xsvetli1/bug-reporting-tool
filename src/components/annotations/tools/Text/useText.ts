@@ -1,24 +1,19 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { TextProps } from '.';
-import { UseStateSetter } from '../../../../models/UseStateSetter';
 import { ReactMouseEvent } from '../../types';
 import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
-import { AllAnnotationProps, AnnotationPropsObject } from '../AllAnnotationProps';
 import { getX, getY } from '../../helpers/CoordinatesHelper';
+import { AnnotationContext } from '../../AnnotationTool/AnnotationContext';
 
-export interface TextHookProps {
-    annotations: AnnotationPropsObject;
-    annotate: (annotation: AllAnnotationProps, id: number) => void;
-    selectedCommentIds: string[];
-    setSelectedCommentIds: UseStateSetter<string[]>;
-}
+export const useText = () => {
+    const { annotations, annotate, selectedCommentIds, setSelectedCommentIds } =
+        useContext(AnnotationContext);
 
-export const useText = (props: TextHookProps) => {
     const [selecting, setSelecting] = useState(false);
 
     const mouseEventHandlers: AnnotationMouseEventHandlers = {
         onMouseDown: (event: ReactMouseEvent) => {
-            if (props.selectedCommentIds.length) {
+            if (selectedCommentIds.length) {
                 return;
             }
 
@@ -59,14 +54,14 @@ export const useText = (props: TextHookProps) => {
     };
 
     const annotateText = (annotation: TextProps) => {
-        let id = Object.keys(props.annotations).length;
+        let id = Object.keys(annotations).length;
         if (selecting) {
             id--;
         } else {
-            props.setSelectedCommentIds([...props.selectedCommentIds, id.toString()]);
+            setSelectedCommentIds([...selectedCommentIds, id.toString()]);
         }
 
-        props.annotate(annotation, id);
+        annotate(annotation, id);
     };
 
     return mouseEventHandlers;

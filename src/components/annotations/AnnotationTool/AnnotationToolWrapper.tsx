@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AnnotationPropsObject } from '../tools/AllAnnotationProps';
+import { AllAnnotationProps, AnnotationPropsObject } from '../tools/AllAnnotationProps';
 import { SelectedAreas } from '../types';
 import { AnnotationContext } from './AnnotationContext';
 import AnnotationTool from './AnnotationTool';
@@ -14,11 +14,17 @@ const AnnotationToolWrapper = (props: AnnotationToolWrapperProps) => {
     const [selectedAreas, setSelectedAreas] = useState<SelectedAreas>({});
     const [selectedCommentIds, setSelectedCommentIds] = useState<string[]>([]);
 
+    const annotate = (annotation: AllAnnotationProps, id: number) => {
+        annotations[id] = annotation;
+        setAnnotations({ ...annotations });
+    };
+
     return (
         <AnnotationContext.Provider
             value={{
                 annotations,
                 setAnnotations,
+                annotate,
                 selectedAreas,
                 setSelectedAreas,
                 selectedCommentIds,

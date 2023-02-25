@@ -1,15 +1,12 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { ReactMouseEvent } from '../../types';
 import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
-import { AllAnnotationProps, AnnotationPropsObject } from '../AllAnnotationProps';
 import { getX, getY } from '../../helpers/CoordinatesHelper';
+import { AnnotationContext } from '../../AnnotationTool/AnnotationContext';
 
-export interface FreeHandHookProps {
-    annotations: AnnotationPropsObject;
-    annotate: (annotation: AllAnnotationProps, id: number) => void;
-}
+export const useFreeHand = () => {
+    const { annotations, annotate } = useContext(AnnotationContext);
 
-export const useFreeHand = (props: FreeHandHookProps) => {
     const [path, setPath] = useState<[number, number][]>([]);
     const [selecting, setSelecting] = useState(false);
 
@@ -34,7 +31,7 @@ export const useFreeHand = (props: FreeHandHookProps) => {
     };
 
     const annotateFreeHand = (event: ReactMouseEvent) => {
-        let id = Object.keys(props.annotations).length;
+        let id = Object.keys(annotations).length;
         if (selecting) {
             id--;
         }
@@ -43,7 +40,7 @@ export const useFreeHand = (props: FreeHandHookProps) => {
         const newPath: [number, number][] = [...path, [x, y]];
         setPath(newPath);
 
-        props.annotate({ type: 'FREE_HAND', shift: { x: 0, y: 0 }, path: newPath }, id);
+        annotate({ type: 'FREE_HAND', shift: { x: 0, y: 0 }, path: newPath }, id);
     };
 
     return mouseEventHandlers;

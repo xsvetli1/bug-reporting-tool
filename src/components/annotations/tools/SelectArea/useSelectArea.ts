@@ -1,19 +1,13 @@
-import { useState } from 'react';
-import { UseStateSetter } from '../../../../models/UseStateSetter';
+import { useContext, useState } from 'react';
 import { ReactMouseEvent } from '../../types';
 import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
-import { SelectedAreas } from '../../types/SelectedAreas';
-import { AllAnnotationProps, AnnotationPropsObject } from '../AllAnnotationProps';
 import { getX, getY } from '../../helpers/CoordinatesHelper';
+import { AnnotationContext } from '../../AnnotationTool/AnnotationContext';
 
-export interface SelectAreaHookProps {
-    annotations: AnnotationPropsObject;
-    annotate: (annotation: AllAnnotationProps, id: number) => void;
-    selectedAreas: SelectedAreas;
-    setSelectedAreas: UseStateSetter<SelectedAreas>;
-}
+export const useSelectArea = () => {
+    const { annotations, annotate, selectedAreas, setSelectedAreas } =
+        useContext(AnnotationContext);
 
-export const useSelectArea = (props: SelectAreaHookProps) => {
     const [startX, setStartX] = useState(0);
     const [startY, setStartY] = useState(0);
     const [selecting, setSelecting] = useState(false);
@@ -43,7 +37,7 @@ export const useSelectArea = (props: SelectAreaHookProps) => {
     };
 
     const selectArea = (event: ReactMouseEvent, currentStartX = startX, currentStartY = startY) => {
-        let id = Object.keys(props.annotations).length;
+        let id = Object.keys(annotations).length;
         if (selecting) {
             id--;
         }
@@ -55,7 +49,7 @@ export const useSelectArea = (props: SelectAreaHookProps) => {
         const lowerX = Math.min(x, currentStartX);
         const lowerY = Math.min(y, currentStartY);
 
-        props.selectedAreas[id] = {
+        selectedAreas[id] = {
             type: 'SELECT_AREA',
             shift: { x: 0, y: 0 },
             x: lowerX,
@@ -64,8 +58,8 @@ export const useSelectArea = (props: SelectAreaHookProps) => {
             height: height
         };
 
-        props.setSelectedAreas({ ...props.selectedAreas }); // Needs to be shallow copy to make setState re-render
-        props.annotate(props.selectedAreas[id], id);
+        setSelectedAreas({ ...selectedAreas });
+        annotate(selectedAreas[id], id);
     };
 
     return mouseEventHandlers;
