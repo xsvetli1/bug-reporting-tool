@@ -3,9 +3,9 @@ import { Card, CardActions, CardContent, IconButton, TextField } from '@mui/mate
 import { UseStateSetter } from '../../../../models/UseStateSetter';
 import { ISSUE_TYPE_BASED_DARK, ISSUE_TYPE_BASED_LIGHT } from '../../../../models/Colors';
 import CheckIcon from '@mui/icons-material/Check';
-import { getSVGHeigth, getSVGWidth } from '../helpers/CoordinatesHelper';
+import { getSVGHeigth, getSVGWidth } from '../../helpers/CoordinatesHelper';
 import { AnnotationProps } from '../AnnotationProps';
-import { getRelocationStyle } from '../helpers/RelocationHelper';
+import { getRelocationStyle } from '../../helpers/RelocationHelper';
 
 export interface TextProps extends AnnotationProps<'TEXT'> {
     id: string;

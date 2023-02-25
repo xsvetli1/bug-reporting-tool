@@ -1,6 +1,6 @@
 import React from 'react';
 import { AnnotationProps } from '../AnnotationProps';
-import { getRelocationStyle } from '../helpers/RelocationHelper';
+import { getRelocationStyle } from '../../helpers/RelocationHelper';
 
 export interface ArrowProps extends AnnotationProps<'ARROW'> {
     x1: number;

@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { getX, getY } from '../../tools/helpers/CoordinatesHelper';
+import { getX, getY } from '../../helpers/CoordinatesHelper';
 import { ReactMouseEvent } from '../../types';
 import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
 import { AnnotationContext } from '../AnnotationContext';

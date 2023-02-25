@@ -1,6 +1,6 @@
 import React from 'react';
 import { AnnotationProps } from '../AnnotationProps';
-import { getRelocationStyle } from '../helpers/RelocationHelper';
+import { getRelocationStyle } from '../../helpers/RelocationHelper';
 
 export interface ObfuscationProps extends AnnotationProps<'OBFUSCATION'> {
     x: number;

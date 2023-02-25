@@ -4,7 +4,7 @@ import { UseStateSetter } from '../../../../models/UseStateSetter';
 import { ReactMouseEvent } from '../../types';
 import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
 import { AllAnnotationProps, AnnotationPropsObject } from '../AllAnnotationProps';
-import { getX, getY } from '../helpers/CoordinatesHelper';
+import { getX, getY } from '../../helpers/CoordinatesHelper';
 
 export interface TextHookProps {
     annotations: AnnotationPropsObject;

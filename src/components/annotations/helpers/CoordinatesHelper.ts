@@ -1,5 +1,5 @@
-import { BORDER_WIDTH } from '../../styles/Constants';
-import { ReactMouseEvent } from '../../types/ReactMouseEvent';
+import { BORDER_WIDTH } from '../styles/Constants';
+import { ReactMouseEvent } from '../types/ReactMouseEvent';
 
 export const getX = (event: ReactMouseEvent) => {
     return event.clientX - BORDER_WIDTH;

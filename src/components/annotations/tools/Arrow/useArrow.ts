@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ReactMouseEvent } from '../../types';
 import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
 import { AllAnnotationProps, AnnotationPropsObject } from '../AllAnnotationProps';
-import { getX, getY } from '../helpers/CoordinatesHelper';
+import { getX, getY } from '../../helpers/CoordinatesHelper';
 import { ArrowProps } from './Arrow';
 
 export interface ArrowHookProps {

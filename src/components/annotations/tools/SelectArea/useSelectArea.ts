@@ -4,7 +4,7 @@ import { ReactMouseEvent } from '../../types';
 import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
 import { SelectedAreas } from '../../types/SelectedAreas';
 import { AllAnnotationProps, AnnotationPropsObject } from '../AllAnnotationProps';
-import { getX, getY } from '../helpers/CoordinatesHelper';
+import { getX, getY } from '../../helpers/CoordinatesHelper';
 
 export interface SelectAreaHookProps {
     annotations: AnnotationPropsObject;
