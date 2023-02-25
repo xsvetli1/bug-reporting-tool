@@ -1,13 +1,13 @@
 import { useContext } from 'react';
-import { AnnotationProps } from '../tools/AnnotationProps';
-import { useArrow } from '../tools/Arrow';
-import { useFreeHand } from '../tools/FreeHand';
-import { useObfuscation } from '../tools/Obfuscation';
-import { useSelectArea } from '../tools/SelectArea';
-import { useText } from '../tools/Text';
-import { AllAnnotationTypes } from '../types';
-import { AnnotationMouseEventHandlers } from '../types/AnnotationMouseEventHandlers';
-import { AnnotationContext } from './AnnotationContext';
+import { AnnotationProps } from '../../tools/AnnotationProps';
+import { useArrow } from '../../tools/Arrow';
+import { useFreeHand } from '../../tools/FreeHand';
+import { useObfuscation } from '../../tools/Obfuscation';
+import { useSelectArea } from '../../tools/SelectArea';
+import { useText } from '../../tools/Text';
+import { AllAnnotationTypes } from '../../types';
+import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
+import { AnnotationContext } from '../AnnotationContext';
 
 export const useAnnotationCreateHandlers = (): {
     [key in AllAnnotationTypes]: AnnotationMouseEventHandlers;

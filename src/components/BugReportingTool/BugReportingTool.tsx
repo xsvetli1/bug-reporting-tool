@@ -6,7 +6,7 @@ import { PlatformProps } from '../../integration/PlatformProps';
 import ModalController from '../modals/ModalController';
 import ReportBugButton from '../ReportBugButton';
 import '../../styles/colors.css';
-import AnnotationToolWrapper from '../annotations/AnnotationTool/AnnotationToolWrapper';
+import AnnotationToolWrapper from '../annotations/AnnotationTool';
 
 export interface BugReportingToolProps {
     platform: Platform;

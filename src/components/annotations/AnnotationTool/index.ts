@@ -1,1 +1,1 @@
-export { default } from './AnnotationTool';
+export { default } from './AnnotationToolWrapper';
