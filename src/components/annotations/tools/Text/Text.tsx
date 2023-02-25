@@ -5,11 +5,9 @@ import { UseStateSetter } from '../../../../models/UseStateSetter';
 import { ISSUE_TYPE_BASED_DARK, ISSUE_TYPE_BASED_LIGHT } from '../../../../models/Colors';
 import CheckIcon from '@mui/icons-material/Check';
 import { getSVGHeigth, getSVGWidth } from '../CoordinatesHelper';
+import { AnnotationProps } from '../AnnotationProps';
 
-export interface TextProps {
-    TYPE: 'TEXT';
-    xShift: number;
-    yShift: number;
+export interface TextProps extends AnnotationProps<'TEXT'> {
     id: string;
     index: number;
     x: number;

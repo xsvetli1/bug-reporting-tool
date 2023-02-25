@@ -1,10 +1,8 @@
 import React from 'react';
 import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
+import { AnnotationProps } from '../AnnotationProps';
 
-export interface SelectAreaProps {
-    TYPE: 'SELECT_AREA';
-    xShift: number;
-    yShift: number;
+export interface SelectAreaProps extends AnnotationProps<'SELECT_AREA'> {
     x: number;
     y: number;
     width: number;

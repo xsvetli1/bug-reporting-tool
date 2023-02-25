@@ -1,10 +1,8 @@
 import React from 'react';
 import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
+import { AnnotationProps } from '../AnnotationProps';
 
-export interface ObfuscationProps {
-    TYPE: 'OBFUSCATION';
-    xShift: number;
-    yShift: number;
+export interface ObfuscationProps extends AnnotationProps<'OBFUSCATION'> {
     x: number;
     y: number;
     width: number;

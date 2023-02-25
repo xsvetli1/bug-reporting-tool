@@ -57,7 +57,7 @@ export const useObfuscation = (props: ObfuscationHookProps) => {
 
         props.annotate(
             {
-                TYPE: 'OBFUSCATION',
+                type: 'OBFUSCATION',
                 xShift: 0,
                 yShift: 0,
                 x: lowerX,

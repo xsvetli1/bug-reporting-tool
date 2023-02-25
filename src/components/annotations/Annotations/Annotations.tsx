@@ -24,7 +24,7 @@ const Annotations = ({ obtainAnnotationGrabHandlers }: AnnotationsProps) => {
                     ...annotations[key],
                     moveHandlers: obtainAnnotationGrabHandlers(key)
                 };
-                const type = annotationProps.TYPE;
+                const type = annotationProps.type;
                 return (
                     <React.Fragment key={index}>
                         {type == 'SELECT_AREA' && <SelectArea {...annotationProps} />}

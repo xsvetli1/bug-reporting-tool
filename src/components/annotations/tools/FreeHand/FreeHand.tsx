@@ -1,10 +1,8 @@
 import React from 'react';
 import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
+import { AnnotationProps } from '../AnnotationProps';
 
-export interface FreeHandProps {
-    TYPE: 'FREE_HAND';
-    xShift: number;
-    yShift: number;
+export interface FreeHandProps extends AnnotationProps<'FREE_HAND'> {
     path: [number, number][];
 }
 

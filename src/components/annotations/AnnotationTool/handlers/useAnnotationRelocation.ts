@@ -21,7 +21,7 @@ export const useAnnotationRelocation = (): [
 
             setAnnotationInHandId(id);
             setStartingCoordinates([getX(event), getY(event)]);
-            if (annotations[id].TYPE === 'TEXT') {
+            if (annotations[id].type === 'TEXT') {
                 setSelectedCommentIds((selectedCommentIds) => [...selectedCommentIds, id]);
             }
         },
@@ -47,7 +47,7 @@ export const useAnnotationRelocation = (): [
             setAnnotations({ ...annotations });
 
             const annotation = annotations[annotationInHandId];
-            if (annotation.TYPE === 'SELECT_AREA') {
+            if (annotation.type === 'SELECT_AREA') {
                 selectedAreas[annotationInHandId] = annotation;
                 setSelectedAreas({ ...selectedAreas });
             }

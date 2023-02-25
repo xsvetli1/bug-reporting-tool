@@ -24,7 +24,7 @@ export const useText = (props: TextHookProps) => {
 
             const [x, y] = [getX(event), getY(event)];
             annotateText({
-                TYPE: 'TEXT',
+                type: 'TEXT',
                 xShift: 0,
                 yShift: 0,
                 id: '',
@@ -48,7 +48,7 @@ export const useText = (props: TextHookProps) => {
 
             const [x, y] = [getX(event), getY(event)];
             annotateText({
-                TYPE: 'TEXT',
+                type: 'TEXT',
                 xShift: 0,
                 yShift: 0,
                 id: '',
