@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { AllAnnotationProps } from '../../tools/AnnotationProps';
+import { AllAnnotationProps } from '../../tools/AllAnnotationProps';
 import { useArrow } from '../../tools/Arrow';
 import { useFreeHand } from '../../tools/FreeHand';
 import { useObfuscation } from '../../tools/Obfuscation';

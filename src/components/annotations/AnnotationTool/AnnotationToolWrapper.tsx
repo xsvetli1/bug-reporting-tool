@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AnnotationPropsObject } from '../tools/AnnotationProps';
+import { AnnotationPropsObject } from '../tools/AllAnnotationProps';
 import { SelectedAreas } from '../types';
 import { AnnotationContext } from './AnnotationContext';
 import AnnotationTool from './AnnotationTool';
