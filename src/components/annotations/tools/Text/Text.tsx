@@ -44,12 +44,20 @@ const Text = ({
     x = Math.min(Math.max(x, CIRCLE_RADIUS), getSVGWidth() - CIRCLE_RADIUS);
     y = Math.min(Math.max(y, CIRCLE_RADIUS), getSVGHeigth() - CIRCLE_RADIUS);
 
+    // Condition x + xShift >= CIRCLE_RADIUS AND x + xShift < getSVGWidth() - CIRCLE_RADIUS
+    // impies following xShift and analogically yShift adjustments
+    xShift = Math.min(Math.max(xShift, CIRCLE_RADIUS - x), getSVGWidth() - CIRCLE_RADIUS - x);
+    yShift = Math.min(Math.max(yShift, CIRCLE_RADIUS - y), getSVGHeigth() - CIRCLE_RADIUS - y);
+
     const CARD_X =
-        x + CIRCLE_RADIUS + CARD_X_SHIFT + CARD_WIDTH + 2 * PADDING >= window.innerWidth
+        x + xShift + CIRCLE_RADIUS + CARD_X_SHIFT + CARD_WIDTH + 2 * PADDING >= window.innerWidth
             ? x - (CIRCLE_RADIUS + CARD_X_SHIFT + CARD_WIDTH + 2 * PADDING)
             : x + CIRCLE_RADIUS + CARD_X_SHIFT;
 
-    const CARD_Y = Math.min(y - CIRCLE_RADIUS, window.innerHeight - cardHeight - CIRCLE_RADIUS);
+    const CARD_Y =
+        y + yShift - CIRCLE_RADIUS > window.innerHeight - cardHeight - CIRCLE_RADIUS
+            ? window.innerHeight - cardHeight - CIRCLE_RADIUS - yShift
+            : y - CIRCLE_RADIUS;
 
     useEffect(() => {
         if (cardRef.current) {
