@@ -1,8 +1,7 @@
 import { AnnotationMouseEventHandlers } from '../types/AnnotationMouseEventHandlers';
+import { RelocationProps } from './RelocationProps';
 
-export interface AnnotationProps<TYPE> {
+export interface AnnotationProps<TYPE> extends RelocationProps {
     type: TYPE;
-    xShift: number;
-    yShift: number;
     moveHandlers?: AnnotationMouseEventHandlers;
 }

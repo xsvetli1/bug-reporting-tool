@@ -1,18 +1,19 @@
 import React from 'react';
 import { AnnotationProps } from '../AnnotationProps';
+import { getRelocationStyle } from '../helpers/RelocationHelper';
 
 export interface FreeHandProps extends AnnotationProps<'FREE_HAND'> {
     path: [number, number][];
 }
 
-const FreeHand = ({ xShift, yShift, path, moveHandlers }: FreeHandProps) => {
+const FreeHand = ({ shift, path, moveHandlers }: FreeHandProps) => {
     return (
         <polyline
             className="annotation"
             fill="none"
             strokeWidth="8"
             points={path.map(([x, y]) => `${x},${y}`).join(' ')}
-            style={{ transform: `matrix(1, 0, 0, 1, ${xShift}, ${yShift})` }}
+            style={getRelocationStyle({ shift })}
             {...moveHandlers}
         />
     );

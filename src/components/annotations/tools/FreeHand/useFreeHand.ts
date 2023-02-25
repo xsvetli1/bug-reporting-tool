@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ReactMouseEvent } from '../../types';
 import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
 import { AllAnnotationProps, AnnotationPropsObject } from '../AllAnnotationProps';
-import { getX, getY } from '../CoordinatesHelper';
+import { getX, getY } from '../helpers/CoordinatesHelper';
 
 export interface FreeHandHookProps {
     annotations: AnnotationPropsObject;
@@ -43,7 +43,7 @@ export const useFreeHand = (props: FreeHandHookProps) => {
         const newPath: [number, number][] = [...path, [x, y]];
         setPath(newPath);
 
-        props.annotate({ type: 'FREE_HAND', xShift: 0, yShift: 0, path: newPath }, id);
+        props.annotate({ type: 'FREE_HAND', shift: { x: 0, y: 0 }, path: newPath }, id);
     };
 
     return mouseEventHandlers;

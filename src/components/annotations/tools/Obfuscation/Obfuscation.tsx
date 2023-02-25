@@ -1,5 +1,6 @@
 import React from 'react';
 import { AnnotationProps } from '../AnnotationProps';
+import { getRelocationStyle } from '../helpers/RelocationHelper';
 
 export interface ObfuscationProps extends AnnotationProps<'OBFUSCATION'> {
     x: number;
@@ -8,7 +9,7 @@ export interface ObfuscationProps extends AnnotationProps<'OBFUSCATION'> {
     height: number;
 }
 
-const Obfuscation = ({ xShift, yShift, x, y, width, height, moveHandlers }: ObfuscationProps) => (
+const Obfuscation = ({ shift, x, y, width, height, moveHandlers }: ObfuscationProps) => (
     <rect
         x={x}
         y={y}
@@ -16,7 +17,7 @@ const Obfuscation = ({ xShift, yShift, x, y, width, height, moveHandlers }: Obfu
         height={height}
         stroke="none"
         className="annotation"
-        style={{ transform: `matrix(1, 0, 0, 1, ${xShift}, ${yShift})` }}
+        style={getRelocationStyle({ shift })}
         {...moveHandlers}
     />
 );

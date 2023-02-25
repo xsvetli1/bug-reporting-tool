@@ -4,7 +4,7 @@ import { UseStateSetter } from '../../../../models/UseStateSetter';
 import { ReactMouseEvent } from '../../types';
 import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
 import { AllAnnotationProps, AnnotationPropsObject } from '../AllAnnotationProps';
-import { getX, getY } from '../CoordinatesHelper';
+import { getX, getY } from '../helpers/CoordinatesHelper';
 
 export interface TextHookProps {
     annotations: AnnotationPropsObject;
@@ -25,8 +25,7 @@ export const useText = (props: TextHookProps) => {
             const [x, y] = [getX(event), getY(event)];
             annotateText({
                 type: 'TEXT',
-                xShift: 0,
-                yShift: 0,
+                shift: { x: 0, y: 0 },
                 id: '',
                 index: -1,
                 x,
@@ -49,8 +48,7 @@ export const useText = (props: TextHookProps) => {
             const [x, y] = [getX(event), getY(event)];
             annotateText({
                 type: 'TEXT',
-                xShift: 0,
-                yShift: 0,
+                shift: { x: 0, y: 0 },
                 id: '',
                 index: -1,
                 x,

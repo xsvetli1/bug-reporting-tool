@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { getX, getY } from '../../tools/CoordinatesHelper';
+import { getX, getY } from '../../tools/helpers/CoordinatesHelper';
 import { ReactMouseEvent } from '../../types';
 import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
 import { AnnotationContext } from '../AnnotationContext';
@@ -41,8 +41,8 @@ export const useAnnotationRelocation = (): [
             const diffX = currentX - startX;
             const diffY = currentY - startY;
 
-            annotations[annotationInHandId].xShift += diffX;
-            annotations[annotationInHandId].yShift += diffY;
+            annotations[annotationInHandId].shift.x += diffX;
+            annotations[annotationInHandId].shift.y += diffY;
 
             setAnnotations({ ...annotations });
 

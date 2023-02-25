@@ -3,8 +3,9 @@ import { Card, CardActions, CardContent, IconButton, TextField } from '@mui/mate
 import { UseStateSetter } from '../../../../models/UseStateSetter';
 import { ISSUE_TYPE_BASED_DARK, ISSUE_TYPE_BASED_LIGHT } from '../../../../models/Colors';
 import CheckIcon from '@mui/icons-material/Check';
-import { getSVGHeigth, getSVGWidth } from '../CoordinatesHelper';
+import { getSVGHeigth, getSVGWidth } from '../helpers/CoordinatesHelper';
 import { AnnotationProps } from '../AnnotationProps';
+import { getRelocationStyle } from '../helpers/RelocationHelper';
 
 export interface TextProps extends AnnotationProps<'TEXT'> {
     id: string;
@@ -19,8 +20,7 @@ interface ExtendedTextProps extends TextProps {
 }
 
 const Text = ({
-    xShift,
-    yShift,
+    shift,
     id,
     index,
     x,
@@ -44,17 +44,17 @@ const Text = ({
 
     // Condition x + xShift >= CIRCLE_RADIUS AND x + xShift < getSVGWidth() - CIRCLE_RADIUS
     // impies following xShift and analogically yShift adjustments
-    xShift = Math.min(Math.max(xShift, CIRCLE_RADIUS - x), getSVGWidth() - CIRCLE_RADIUS - x);
-    yShift = Math.min(Math.max(yShift, CIRCLE_RADIUS - y), getSVGHeigth() - CIRCLE_RADIUS - y);
+    shift.x = Math.min(Math.max(shift.x, CIRCLE_RADIUS - x), getSVGWidth() - CIRCLE_RADIUS - x);
+    shift.y = Math.min(Math.max(shift.y, CIRCLE_RADIUS - y), getSVGHeigth() - CIRCLE_RADIUS - y);
 
     const CARD_X =
-        x + xShift + CIRCLE_RADIUS + CARD_X_SHIFT + CARD_WIDTH + 2 * PADDING >= window.innerWidth
+        x + shift.x + CIRCLE_RADIUS + CARD_X_SHIFT + CARD_WIDTH + 2 * PADDING >= window.innerWidth
             ? x - (CIRCLE_RADIUS + CARD_X_SHIFT + CARD_WIDTH + 2 * PADDING)
             : x + CIRCLE_RADIUS + CARD_X_SHIFT;
 
     const CARD_Y =
-        y + yShift - CIRCLE_RADIUS > window.innerHeight - cardHeight - CIRCLE_RADIUS
-            ? window.innerHeight - cardHeight - CIRCLE_RADIUS - yShift
+        y + shift.y - CIRCLE_RADIUS > window.innerHeight - cardHeight - CIRCLE_RADIUS
+            ? window.innerHeight - cardHeight - CIRCLE_RADIUS - shift.y
             : y - CIRCLE_RADIUS;
 
     useEffect(() => {
@@ -66,7 +66,7 @@ const Text = ({
     const inPx = (size: number) => `${size}px`;
 
     return (
-        <g style={{ transform: `matrix(1, 0, 0, 1, ${xShift}, ${yShift})` }} {...moveHandlers}>
+        <g style={getRelocationStyle({ shift })} {...moveHandlers}>
             <g className="annotation">
                 <circle
                     cx={x}

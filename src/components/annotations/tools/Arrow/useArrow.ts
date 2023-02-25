@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ReactMouseEvent } from '../../types';
 import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
 import { AllAnnotationProps, AnnotationPropsObject } from '../AllAnnotationProps';
-import { getX, getY } from '../CoordinatesHelper';
+import { getX, getY } from '../helpers/CoordinatesHelper';
 import { ArrowProps } from './Arrow';
 
 export interface ArrowHookProps {
@@ -21,7 +21,7 @@ export const useArrow = (props: ArrowHookProps) => {
             setStartX(x);
             setStartY(y);
 
-            annotateArrow({ type: 'ARROW', xShift: 0, yShift: 0, x1: x, y1: y, x2: x, y2: y });
+            annotateArrow({ type: 'ARROW', shift: { x: 0, y: 0 }, x1: x, y1: y, x2: x, y2: y });
 
             setSelecting(true);
         },
@@ -38,8 +38,7 @@ export const useArrow = (props: ArrowHookProps) => {
             const [x, y] = [getX(event), getY(event)];
             annotateArrow({
                 type: 'ARROW',
-                xShift: 0,
-                yShift: 0,
+                shift: { x: 0, y: 0 },
                 x1: startX,
                 y1: startY,
                 x2: x,

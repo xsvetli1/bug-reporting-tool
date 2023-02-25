@@ -1,5 +1,6 @@
 import React from 'react';
 import { AnnotationProps } from '../AnnotationProps';
+import { getRelocationStyle } from '../helpers/RelocationHelper';
 
 export interface SelectAreaProps extends AnnotationProps<'SELECT_AREA'> {
     x: number;
@@ -8,7 +9,7 @@ export interface SelectAreaProps extends AnnotationProps<'SELECT_AREA'> {
     height: number;
 }
 
-const SelectArea = ({ xShift, yShift, x, y, width, height, moveHandlers }: SelectAreaProps) => (
+const SelectArea = ({ shift, x, y, width, height, moveHandlers }: SelectAreaProps) => (
     <rect
         x={x}
         y={y}
@@ -16,7 +17,7 @@ const SelectArea = ({ xShift, yShift, x, y, width, height, moveHandlers }: Selec
         height={height}
         fillOpacity="0"
         className="annotation"
-        style={{ transform: `matrix(1, 0, 0, 1, ${xShift}, ${yShift})` }}
+        style={getRelocationStyle({ shift })}
         {...moveHandlers}
     />
 );

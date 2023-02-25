@@ -1,7 +1,7 @@
 import React, { ReactNode, useContext } from 'react';
 import { ISSUE_TYPE_BASED } from '../../../models/Colors';
 import { AnnotationContext } from '../AnnotationTool/AnnotationContext';
-import { getSVGHeigth, getSVGWidth } from '../tools/CoordinatesHelper';
+import { getSVGHeigth, getSVGWidth } from '../tools/helpers/CoordinatesHelper';
 import { SelectAreaProps } from '../tools/SelectArea';
 import { AnnotationMouseEventHandlers } from '../types/AnnotationMouseEventHandlers';
 
@@ -13,8 +13,8 @@ export interface AnnotationAreaProps {
 const AnnotationArea = (props: AnnotationAreaProps) => {
     const { selectedAreas } = useContext(AnnotationContext);
 
-    const rectToPathData = ({ xShift, yShift, x, y, width, height }: SelectAreaProps) =>
-        `M ${x + xShift} ${y + yShift} h ${width} v ${height} h ${-width} Z`;
+    const rectToPathData = ({ shift, x, y, width, height }: SelectAreaProps) =>
+        `M ${x + shift.x} ${y + shift.y} h ${width} v ${height} h ${-width} Z`;
 
     const pathDataFromSelectedAreas = () =>
         Object.keys(selectedAreas).map((key: string) => {
@@ -23,8 +23,7 @@ const AnnotationArea = (props: AnnotationAreaProps) => {
 
     const background = rectToPathData({
         type: 'SELECT_AREA',
-        xShift: 0,
-        yShift: 0,
+        shift: { x: 0, y: 0 },
         x: 0,
         y: 0,
         width: getSVGWidth(),

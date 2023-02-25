@@ -1,5 +1,6 @@
 import React from 'react';
 import { AnnotationProps } from '../AnnotationProps';
+import { getRelocationStyle } from '../helpers/RelocationHelper';
 
 export interface ArrowProps extends AnnotationProps<'ARROW'> {
     x1: number;
@@ -8,7 +9,7 @@ export interface ArrowProps extends AnnotationProps<'ARROW'> {
     y2: number;
 }
 
-const Arrow = ({ xShift, yShift, x1, y1, x2, y2, moveHandlers }: ArrowProps) => {
+const Arrow = ({ shift, x1, y1, x2, y2, moveHandlers }: ArrowProps) => {
     return (
         <line
             x1={x1}
@@ -18,7 +19,7 @@ const Arrow = ({ xShift, yShift, x1, y1, x2, y2, moveHandlers }: ArrowProps) => 
             strokeWidth={4}
             markerEnd="url(#arrowhead)"
             className="annotation arrow-line"
-            style={{ transform: `matrix(1, 0, 0, 1, ${xShift}, ${yShift})` }}
+            style={getRelocationStyle({ shift })}
             {...moveHandlers}
         />
     );

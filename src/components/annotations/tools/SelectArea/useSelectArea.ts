@@ -4,7 +4,7 @@ import { ReactMouseEvent } from '../../types';
 import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
 import { SelectedAreas } from '../../types/SelectedAreas';
 import { AllAnnotationProps, AnnotationPropsObject } from '../AllAnnotationProps';
-import { getX, getY } from '../CoordinatesHelper';
+import { getX, getY } from '../helpers/CoordinatesHelper';
 
 export interface SelectAreaHookProps {
     annotations: AnnotationPropsObject;
@@ -57,8 +57,7 @@ export const useSelectArea = (props: SelectAreaHookProps) => {
 
         props.selectedAreas[id] = {
             type: 'SELECT_AREA',
-            xShift: 0,
-            yShift: 0,
+            shift: { x: 0, y: 0 },
             x: lowerX,
             y: lowerY,
             width: width,

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ReactMouseEvent } from '../../types';
 import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
 import { AllAnnotationProps, AnnotationPropsObject } from '../AllAnnotationProps';
-import { getX, getY } from '../CoordinatesHelper';
+import { getX, getY } from '../helpers/CoordinatesHelper';
 
 export interface ObfuscationHookProps {
     annotations: AnnotationPropsObject;
@@ -58,8 +58,7 @@ export const useObfuscation = (props: ObfuscationHookProps) => {
         props.annotate(
             {
                 type: 'OBFUSCATION',
-                xShift: 0,
-                yShift: 0,
+                shift: { x: 0, y: 0 },
                 x: lowerX,
                 y: lowerY,
                 width: width,
