@@ -6,6 +6,7 @@ import AnnotationAreaContent from '../AnnotationAreaContent';
 import { useAnnotationCreateHandlers } from './handlers/useAnnotationCreateHandlers';
 import { AllAnnotationTypes } from '../types';
 import Annotations from '../Annotations';
+import { takeScreenshot } from '../helpers/ScreenshotHelper';
 
 export interface AnnotationToolProps {
     isOngoingAnnotation: boolean;
@@ -34,8 +35,9 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
                     <AnnotationAreaContent
                         currentAnnotationType={currentAnnotationType}
                         setCurrentAnnotationType={setCurrentAnnotationType}
-                        handleClose={handleClose}
                         annotationInHandId={annotationInHandId}
+                        takeScreenshot={takeScreenshot}
+                        handleClose={handleClose}
                     />
                 </>
             )}

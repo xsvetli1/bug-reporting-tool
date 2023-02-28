@@ -93,6 +93,7 @@ const Text = ({
                     height={1}
                     className="text-annotation-comment-wrapper"
                     onMouseDown={(event) => event.stopPropagation()}
+                    data-html2canvas-ignore
                 >
                     <Card ref={cardRef} style={{ width: inPx(CARD_WIDTH), padding: inPx(PADDING) }}>
                         <CardContent sx={{ padding: '0' }}>
