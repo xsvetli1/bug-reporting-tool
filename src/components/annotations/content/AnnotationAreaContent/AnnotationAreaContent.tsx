@@ -1,5 +1,6 @@
 import { Button, ToggleButton, ToggleButtonGroup, Tooltip } from '@mui/material';
-import React from 'react';
+import React, { useRef } from 'react';
+import Draggable from 'react-draggable';
 import CloseButton from '../../CloseButton';
 import CropFreeSharpIcon from '@mui/icons-material/CropFreeSharp';
 import CallMadeSharpIcon from '@mui/icons-material/CallMadeSharp';
@@ -10,6 +11,7 @@ import DoneIcon from '@mui/icons-material/Done';
 import { UseStateSetter } from '../../../../models/UseStateSetter';
 import { AllAnnotationTypes } from '../../types';
 import AnnotationAreaBorder from '../AnnotationAreaBorder';
+import { getSVGHeigth } from '../../helpers/CoordinatesHelper';
 
 export interface AnnotationAreaContentProps {
     currentAnnotationType: AllAnnotationTypes;
@@ -47,44 +49,61 @@ const AnnotationAreaContent = ({
             TEXT: () => ({ icon: <ChatSharpIcon />, label: 'Text' })
         };
 
+    const toolbarRef = useRef<HTMLDivElement>(null);
+    console.log(getSVGHeigth());
+
     return (
         <div className="annotation-area-content" data-html2canvas-ignore>
             <AnnotationAreaBorder />
             <CloseButton onClick={handleClose} />
-            <div className="annotation-button-group">
-                <ToggleButtonGroup
-                    orientation="vertical"
-                    exclusive
-                    aria-label="tool button group"
-                    value={annotationInHandId ? '' : currentAnnotationType}
-                    onChange={handleAnnotationTypeId}
-                >
-                    {Object.keys(buttonIcons).map((annotationType) => {
-                        const { icon, label } = buttonIcons[annotationType as AllAnnotationTypes]();
-                        return (
-                            <ToggleButton
-                                key={annotationType}
-                                className="annotation-tools-button"
-                                value={annotationType}
-                            >
-                                <Tooltip title={label} placement="right">
-                                    {icon}
-                                </Tooltip>
-                            </ToggleButton>
-                        );
-                    })}
-                </ToggleButtonGroup>
-                <Tooltip title="Submit annotated screenshot" placement="right">
-                    <Button
-                        className="annotation-save-button"
-                        variant="contained"
-                        color="success"
-                        onClick={() => takeScreenshot()}
+            <Draggable
+                nodeRef={toolbarRef}
+                axis="y"
+                bounds={{
+                    top: 0,
+                    bottom: getSVGHeigth() - (toolbarRef.current?.clientHeight ?? 0)
+                }}
+            >
+                <div className="annotation-button-group" ref={toolbarRef}>
+                    <ToggleButtonGroup
+                        orientation="vertical"
+                        exclusive
+                        aria-label="tool button group"
+                        value={annotationInHandId ? '' : currentAnnotationType}
+                        onChange={handleAnnotationTypeId}
                     >
-                        <DoneIcon />
-                    </Button>
-                </Tooltip>
-            </div>
+                        {Object.keys(buttonIcons).map((annotationType) => {
+                            const { icon, label } =
+                                buttonIcons[annotationType as AllAnnotationTypes]();
+                            return (
+                                <ToggleButton
+                                    key={annotationType}
+                                    className="annotation-tools-button"
+                                    value={annotationType}
+                                >
+                                    <Tooltip title={label} placement="right" followCursor={true}>
+                                        {icon}
+                                    </Tooltip>
+                                </ToggleButton>
+                            );
+                        })}
+                    </ToggleButtonGroup>
+                    <Tooltip
+                        title="Submit annotated screenshot"
+                        placement="right"
+                        followCursor={true}
+                    >
+                        <Button
+                            className="annotation-save-button"
+                            variant="contained"
+                            color="success"
+                            onClick={() => takeScreenshot()}
+                        >
+                            <DoneIcon />
+                        </Button>
+                    </Tooltip>
+                </div>
+            </Draggable>
         </div>
     );
 };
