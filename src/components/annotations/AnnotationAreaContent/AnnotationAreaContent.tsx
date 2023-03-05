@@ -84,7 +84,6 @@ const AnnotationAreaContent = ({
                         <DoneIcon />
                     </Button>
                 </Tooltip>
-                {/* <Button className="annotation-save-button">Done</Button> */}
             </div>
         </div>
     );
