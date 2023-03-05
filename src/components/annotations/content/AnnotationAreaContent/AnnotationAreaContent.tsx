@@ -1,14 +1,14 @@
 import { Button, ToggleButton, ToggleButtonGroup, Tooltip } from '@mui/material';
 import React from 'react';
-import CloseButton from '../CloseButton';
+import CloseButton from '../../CloseButton';
 import CropFreeSharpIcon from '@mui/icons-material/CropFreeSharp';
 import CallMadeSharpIcon from '@mui/icons-material/CallMadeSharp';
 import ModeEditOutlineSharpIcon from '@mui/icons-material/ModeEditOutlineSharp';
 import DeselectIcon from '@mui/icons-material/Deselect';
 import ChatSharpIcon from '@mui/icons-material/ChatSharp';
 import DoneIcon from '@mui/icons-material/Done';
-import { UseStateSetter } from '../../../models/UseStateSetter';
-import { AllAnnotationTypes } from '../types';
+import { UseStateSetter } from '../../../../models/UseStateSetter';
+import { AllAnnotationTypes } from '../../types';
 import AnnotationAreaBorder from '../AnnotationAreaBorder';
 
 export interface AnnotationAreaContentProps {
