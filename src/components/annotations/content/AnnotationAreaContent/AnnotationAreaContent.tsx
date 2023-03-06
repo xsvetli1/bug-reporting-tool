@@ -11,7 +11,7 @@ import DoneIcon from '@mui/icons-material/Done';
 import { UseStateSetter } from '../../../../models/UseStateSetter';
 import { AllAnnotationTypes } from '../../types';
 import AnnotationAreaBorder from '../AnnotationAreaBorder';
-import { getSVGHeigth } from '../../helpers/CoordinatesHelper';
+import { getSVGHeigth, getSVGWidth } from '../../helpers/CoordinatesHelper';
 
 export interface AnnotationAreaContentProps {
     currentAnnotationType: AllAnnotationTypes;
@@ -50,7 +50,6 @@ const AnnotationAreaContent = ({
         };
 
     const toolbarRef = useRef<HTMLDivElement>(null);
-    console.log(getSVGHeigth());
 
     return (
         <div className="annotation-area-content" data-html2canvas-ignore>
@@ -58,11 +57,11 @@ const AnnotationAreaContent = ({
             <CloseButton onClick={handleClose} />
             <Draggable
                 nodeRef={toolbarRef}
-                axis="y"
                 bounds={{
                     top: 0,
                     bottom: getSVGHeigth() - (toolbarRef.current?.clientHeight ?? 0)
                 }}
+                grid={[getSVGWidth() - (toolbarRef.current?.clientWidth ?? 0), 1]}
             >
                 <div className="annotation-button-group" ref={toolbarRef}>
                     <ToggleButtonGroup

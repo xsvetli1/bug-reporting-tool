@@ -66,8 +66,8 @@ const Text = ({
     const inPx = (size: number) => `${size}px`;
 
     return (
-        <g style={getRelocationStyle({ shift })} {...moveHandlers}>
-            <g className="annotation">
+        <g style={getRelocationStyle({ shift })}>
+            <g className="annotation" {...moveHandlers}>
                 <circle
                     cx={x}
                     cy={y}

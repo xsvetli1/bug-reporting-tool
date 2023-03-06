@@ -6,8 +6,7 @@ import { getX, getY } from '../../helpers/CoordinatesHelper';
 import { AnnotationContext } from '../../AnnotationTool/AnnotationContext';
 
 export const useText = () => {
-    const { annotations, annotate, selectedCommentIds, setSelectedCommentIds } =
-        useContext(AnnotationContext);
+    const { annotations, annotate, selectedCommentIds } = useContext(AnnotationContext);
 
     const [selecting, setSelecting] = useState(false);
 
@@ -57,8 +56,6 @@ export const useText = () => {
         let id = Object.keys(annotations).length;
         if (selecting) {
             id--;
-        } else {
-            setSelectedCommentIds([...selectedCommentIds, id.toString()]);
         }
 
         annotate(annotation, id);

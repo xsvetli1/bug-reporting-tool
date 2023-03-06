@@ -13,19 +13,37 @@ export const useAnnotationRelocation = (): [
         useContext(AnnotationContext);
 
     const [annotationInHandId, setAnnotationInHandId] = useState<string>('');
+    const [previousCoordinates, setPreviousCoordinates] = useState<[number, number]>([-1, -1]);
     const [startingCoordinates, setStartingCoordinates] = useState<[number, number]>([-1, -1]);
 
     const obtainAnnotationGrabHandlers = (id: string): AnnotationMouseEventHandlers => ({
         onMouseDown: (event: ReactMouseEvent) => {
             event.stopPropagation();
-
             setAnnotationInHandId(id);
+            setPreviousCoordinates([getX(event), getY(event)]);
             setStartingCoordinates([getX(event), getY(event)]);
-            if (annotations[id].type === 'TEXT') {
-                setSelectedCommentIds((selectedCommentIds) => [...selectedCommentIds, id]);
-            }
         },
-        onMouseUp: () => setAnnotationInHandId('')
+        onMouseUp: (event: ReactMouseEvent) => {
+            const [currentX, currentY] = [getX(event), getY(event)];
+            const [startX, startY] =
+                startingCoordinates.toString() == [-1, -1].toString()
+                    ? [currentX, currentY]
+                    : startingCoordinates;
+            const annotationMoved =
+                Math.sqrt((startX - currentX) ** 2 + (startY - currentY) ** 2) > 5;
+
+            if (annotations[id].type === 'TEXT' && !annotationMoved) {
+                setSelectedCommentIds((selectedCommentIds) => {
+                    if (selectedCommentIds.includes(id)) {
+                        return selectedCommentIds.filter((found) => found != id);
+                    }
+
+                    return [...selectedCommentIds, id];
+                });
+            }
+            setAnnotationInHandId('');
+            setStartingCoordinates([-1, -1]);
+        }
     });
 
     const annotationMoveHandlers: AnnotationMouseEventHandlers = {
@@ -34,9 +52,9 @@ export const useAnnotationRelocation = (): [
                 return;
             }
 
-            const [startX, startY] = startingCoordinates;
+            const [startX, startY] = previousCoordinates;
             const [currentX, currentY] = [getX(event), getY(event)];
-            setStartingCoordinates([currentX, currentY]);
+            setPreviousCoordinates([currentX, currentY]);
 
             const diffX = currentX - startX;
             const diffY = currentY - startY;
