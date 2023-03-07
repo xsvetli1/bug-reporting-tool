@@ -56,15 +56,15 @@ const Text = ({
             : x + CIRCLE_RADIUS + CARD_X_SHIFT;
 
     const CARD_Y =
-        y + shift.y - CIRCLE_RADIUS > window.innerHeight - cardHeight - CIRCLE_RADIUS
-            ? window.innerHeight - cardHeight - CIRCLE_RADIUS - shift.y
+        y + shift.y > window.innerHeight - cardHeight + CIRCLE_RADIUS
+            ? window.innerHeight - cardHeight - shift.y
             : y - CIRCLE_RADIUS;
 
     useEffect(() => {
         if (cardRef.current) {
             setCardHeight(cardRef.current.clientHeight);
         }
-    }, []);
+    }, [open]);
 
     const inPx = (size: number) => `${size}px`;
 
