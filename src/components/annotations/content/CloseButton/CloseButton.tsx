@@ -1,7 +1,7 @@
 import React from 'react';
 import { Fab } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import '../styles/annotations.css';
+import '../../styles/annotations.css';
 
 export interface CloseButtonProps {
     onClick: () => void;

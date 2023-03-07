@@ -1,7 +1,7 @@
 import { Button, ToggleButton, ToggleButtonGroup, Tooltip } from '@mui/material';
 import React, { useRef } from 'react';
 import Draggable from 'react-draggable';
-import CloseButton from '../../CloseButton';
+import CloseButton from '../CloseButton';
 import CropFreeSharpIcon from '@mui/icons-material/CropFreeSharp';
 import CallMadeSharpIcon from '@mui/icons-material/CallMadeSharp';
 import ModeEditOutlineSharpIcon from '@mui/icons-material/ModeEditOutlineSharp';
