@@ -10,6 +10,7 @@ export interface AnnotationToolWrapperProps {
 }
 
 const AnnotationToolWrapper = (props: AnnotationToolWrapperProps) => {
+    const [annotationNextId, setAnnotationNextId] = useState(0);
     const [annotations, setAnnotations] = useState<AnnotationPropsObject>({});
     const [selectedAreas, setSelectedAreas] = useState<SelectedAreas>({});
     const [selectedCommentIds, setSelectedCommentIds] = useState<string[]>([]);
@@ -17,11 +18,16 @@ const AnnotationToolWrapper = (props: AnnotationToolWrapperProps) => {
     const annotate = (annotation: AllAnnotationProps, id: number) => {
         annotations[id] = annotation;
         setAnnotations({ ...annotations });
+        if (id == annotationNextId) {
+            setAnnotationNextId(annotationNextId + 1);
+        }
     };
 
     return (
         <AnnotationContext.Provider
             value={{
+                annotationNextId,
+                setAnnotationNextId,
                 annotations,
                 setAnnotations,
                 annotate,

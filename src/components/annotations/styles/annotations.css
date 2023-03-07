@@ -41,8 +41,12 @@
     flex-direction: column;
 }
 
+.sharp-corners,
 .annotation-tools-button {
     border-radius: 0 !important;
+}
+
+.annotation-tools-button {
     background: var(--issue-type-based-light) !important;
 }
 
@@ -52,6 +56,12 @@
 
 .annotation-tools-button.Mui-selected {
     background: var(--issue-type-based-dark) !important;
+}
+
+.comment-button {
+    min-width: 0 !important;
+    padding: 0 !important;
+    margin: 0 5px !important;
 }
 
 .MuiSvgIcon-root {

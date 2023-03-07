@@ -4,6 +4,8 @@ import { AllAnnotationProps, AnnotationPropsObject } from '../tools/AllAnnotatio
 import { SelectedAreas } from '../types';
 
 export const AnnotationContext = createContext<{
+    annotationNextId: number;
+    setAnnotationNextId: UseStateSetter<number>;
     annotations: AnnotationPropsObject;
     setAnnotations: UseStateSetter<AnnotationPropsObject>;
     annotate: (annotation: AllAnnotationProps, id: number) => void;
@@ -12,6 +14,9 @@ export const AnnotationContext = createContext<{
     selectedCommentIds: string[];
     setSelectedCommentIds: UseStateSetter<string[]>;
 }>({
+    annotationNextId: 0,
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    setAnnotationNextId: () => {},
     annotations: {},
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     setAnnotations: () => {},

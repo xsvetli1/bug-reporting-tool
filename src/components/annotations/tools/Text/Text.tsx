@@ -1,8 +1,9 @@
 import React, { createRef, useEffect, useState } from 'react';
-import { Card, CardActions, CardContent, IconButton, TextField } from '@mui/material';
+import { Button, Card, CardActions, CardContent, IconButton, TextField } from '@mui/material';
 import { UseStateSetter } from '../../../../models/UseStateSetter';
 import { ISSUE_TYPE_BASED_DARK, ISSUE_TYPE_BASED_LIGHT } from '../../../../models/Colors';
 import CheckIcon from '@mui/icons-material/Check';
+import DeleteForeverSharpIcon from '@mui/icons-material/DeleteForeverSharp';
 import { getSVGHeigth, getSVGWidth } from '../../helpers/CoordinatesHelper';
 import { AnnotationProps } from '../AnnotationProps';
 import { getRelocationStyle } from '../../helpers/RelocationHelper';
@@ -17,6 +18,7 @@ export interface TextProps extends AnnotationProps<'TEXT'> {
 
 interface ExtendedTextProps extends TextProps {
     setSelectedCommentIds: UseStateSetter<string[]>;
+    deleteCallback: () => void;
 }
 
 const Text = ({
@@ -27,7 +29,8 @@ const Text = ({
     y,
     open,
     moveHandlers,
-    setSelectedCommentIds
+    setSelectedCommentIds,
+    deleteCallback
 }: ExtendedTextProps) => {
     const cardRef = createRef<HTMLDivElement>();
     const [cardHeight, setCardHeight] = useState(0);
@@ -115,10 +118,11 @@ const Text = ({
                                 flexDirection: 'row-reverse'
                             }}
                         >
-                            <IconButton
+                            <Button
                                 aria-label="submit comment"
-                                className="annotation-tools-button"
-                                sx={{ padding: 0 }}
+                                className="sharp-corners comment-button"
+                                color="success"
+                                variant="contained"
                                 onClick={() =>
                                     setSelectedCommentIds((selectedCommentIds) =>
                                         selectedCommentIds.filter((commentId) => commentId != id)
@@ -126,7 +130,16 @@ const Text = ({
                                 }
                             >
                                 <CheckIcon />
-                            </IconButton>
+                            </Button>
+                            <Button
+                                aria-label="delete comment"
+                                className="sharp-corners comment-button"
+                                color="error"
+                                variant="contained"
+                                onClick={deleteCallback}
+                            >
+                                <DeleteForeverSharpIcon />
+                            </Button>
                         </CardActions>
                     </Card>
                 </foreignObject>

@@ -6,16 +6,12 @@ import { getX, getY } from '../../helpers/CoordinatesHelper';
 import { AnnotationContext } from '../../AnnotationTool/AnnotationContext';
 
 export const useText = () => {
-    const { annotations, annotate, selectedCommentIds } = useContext(AnnotationContext);
+    const { annotationNextId, annotate } = useContext(AnnotationContext);
 
     const [selecting, setSelecting] = useState(false);
 
     const mouseEventHandlers: AnnotationMouseEventHandlers = {
         onMouseDown: (event: ReactMouseEvent) => {
-            if (selectedCommentIds.length) {
-                return;
-            }
-
             const [x, y] = [getX(event), getY(event)];
             annotateText({
                 type: 'TEXT',
@@ -53,7 +49,7 @@ export const useText = () => {
     };
 
     const annotateText = (annotation: TextProps) => {
-        let id = Object.keys(annotations).length;
+        let id = annotationNextId;
         if (selecting) {
             id--;
         }

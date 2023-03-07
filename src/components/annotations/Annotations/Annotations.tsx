@@ -12,8 +12,13 @@ export interface AnnotationsProps {
 }
 
 const Annotations = ({ obtainAnnotationGrabHandlers }: AnnotationsProps) => {
-    const { annotations, selectedCommentIds, setSelectedCommentIds } =
-        useContext(AnnotationContext);
+    const {
+        annotations,
+        setAnnotations,
+        setSelectedAreas,
+        selectedCommentIds,
+        setSelectedCommentIds
+    } = useContext(AnnotationContext);
 
     let textCommentIndex = 1;
 
@@ -22,7 +27,20 @@ const Annotations = ({ obtainAnnotationGrabHandlers }: AnnotationsProps) => {
             {Object.keys(annotations).map((key, index) => {
                 const annotationProps = {
                     ...annotations[key],
-                    moveHandlers: obtainAnnotationGrabHandlers(key)
+                    moveHandlers: obtainAnnotationGrabHandlers(key),
+                    deleteCallback: () => {
+                        if (annotations[key].type == 'SELECT_AREA') {
+                            setSelectedAreas((selectedAreas) => {
+                                delete selectedAreas[key];
+                                return selectedAreas;
+                            });
+                        } else if (annotations[key].type == 'TEXT') {
+                            setSelectedCommentIds(selectedCommentIds.filter((id) => id != key));
+                        }
+
+                        delete annotations[key];
+                        setAnnotations({ ...annotations });
+                    }
                 };
                 const type = annotationProps.type;
                 return (
