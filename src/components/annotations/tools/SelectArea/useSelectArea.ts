@@ -5,7 +5,7 @@ import { getX, getY } from '../../helpers/CoordinatesHelper';
 import { AnnotationContext } from '../../AnnotationTool/AnnotationContext';
 
 export const useSelectArea = () => {
-    const { annotations, annotate, selectedAreas, setSelectedAreas } =
+    const { annotationNextId, annotate, selectedAreas, setSelectedAreas } =
         useContext(AnnotationContext);
 
     const [startX, setStartX] = useState(0);
@@ -37,7 +37,7 @@ export const useSelectArea = () => {
     };
 
     const selectArea = (event: ReactMouseEvent, currentStartX = startX, currentStartY = startY) => {
-        let id = Object.keys(annotations).length;
+        let id = annotationNextId;
         if (selecting) {
             id--;
         }

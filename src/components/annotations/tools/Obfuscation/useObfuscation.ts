@@ -5,7 +5,7 @@ import { getX, getY } from '../../helpers/CoordinatesHelper';
 import { AnnotationContext } from '../../AnnotationTool/AnnotationContext';
 
 export const useObfuscation = () => {
-    const { annotations, annotate } = useContext(AnnotationContext);
+    const { annotationNextId, annotate } = useContext(AnnotationContext);
 
     const [startX, setStartX] = useState(0);
     const [startY, setStartY] = useState(0);
@@ -40,7 +40,7 @@ export const useObfuscation = () => {
         currentStartX = startX,
         currentStartY = startY
     ) => {
-        let id = Object.keys(annotations).length;
+        let id = annotationNextId;
         if (selecting) {
             id--;
         }

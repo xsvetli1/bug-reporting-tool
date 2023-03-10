@@ -5,7 +5,7 @@ import { getX, getY } from '../../helpers/CoordinatesHelper';
 import { AnnotationContext } from '../../AnnotationTool/AnnotationContext';
 
 export const useFreeHand = () => {
-    const { annotations, annotate } = useContext(AnnotationContext);
+    const { annotationNextId, annotate } = useContext(AnnotationContext);
 
     const [path, setPath] = useState<[number, number][]>([]);
     const [selecting, setSelecting] = useState(false);
@@ -31,7 +31,7 @@ export const useFreeHand = () => {
     };
 
     const annotateFreeHand = (event: ReactMouseEvent) => {
-        let id = Object.keys(annotations).length;
+        let id = annotationNextId;
         if (selecting) {
             id--;
         }

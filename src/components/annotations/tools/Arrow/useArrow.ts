@@ -6,7 +6,7 @@ import { ArrowProps } from './Arrow';
 import { AnnotationContext } from '../../AnnotationTool/AnnotationContext';
 
 export const useArrow = () => {
-    const { annotations, annotate } = useContext(AnnotationContext);
+    const { annotationNextId, annotate } = useContext(AnnotationContext);
 
     const [startX, setStartX] = useState(0);
     const [startY, setStartY] = useState(0);
@@ -45,7 +45,7 @@ export const useArrow = () => {
     };
 
     const annotateArrow = (annotation: ArrowProps) => {
-        let id = Object.keys(annotations).length;
+        let id = annotationNextId;
         if (selecting) {
             id--;
         }
