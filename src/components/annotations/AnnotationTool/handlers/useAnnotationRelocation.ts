@@ -9,8 +9,14 @@ export const useAnnotationRelocation = (): [
     (id: string) => AnnotationMouseEventHandlers,
     AnnotationMouseEventHandlers
 ] => {
-    const { annotations, setAnnotations, selectedAreas, setSelectedAreas, setSelectedCommentIds } =
-        useContext(AnnotationContext);
+    const {
+        annotations,
+        setAnnotations,
+        selectedAreas,
+        setSelectedAreas,
+        setSelectedCommentIds,
+        creating
+    } = useContext(AnnotationContext);
 
     const [annotationInHandId, setAnnotationInHandId] = useState<string>('');
     const [previousCoordinates, setPreviousCoordinates] = useState<[number, number]>([-1, -1]);
@@ -45,10 +51,16 @@ export const useAnnotationRelocation = (): [
             setStartingCoordinates([-1, -1]);
         },
         onMouseEnter: () => {
+            if (creating || annotationInHandId.length) {
+                return;
+            }
             annotations[id].isHover = true;
             setAnnotations({ ...annotations });
         },
         onMouseLeave: () => {
+            if (creating || annotationInHandId.length) {
+                return;
+            }
             annotations[id].isHover = false;
             setAnnotations({ ...annotations });
         }

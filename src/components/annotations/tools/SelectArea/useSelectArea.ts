@@ -5,12 +5,17 @@ import { getX, getY } from '../../helpers/CoordinatesHelper';
 import { AnnotationContext } from '../../AnnotationTool/AnnotationContext';
 
 export const useSelectArea = () => {
-    const { annotationNextId, annotate, selectedAreas, setSelectedAreas } =
-        useContext(AnnotationContext);
+    const {
+        currentAnnotationId,
+        annotate,
+        selectedAreas,
+        setSelectedAreas,
+        creating,
+        setCreating
+    } = useContext(AnnotationContext);
 
     const [startX, setStartX] = useState(0);
     const [startY, setStartY] = useState(0);
-    const [selecting, setSelecting] = useState(false);
 
     const mouseEventHandlers: AnnotationMouseEventHandlers = {
         onMouseDown: (event: ReactMouseEvent) => {
@@ -20,15 +25,15 @@ export const useSelectArea = () => {
 
             selectArea(event, x, y);
 
-            setSelecting(true);
+            setCreating(true);
         },
 
         onMouseUp: () => {
-            setSelecting(false);
+            setCreating(false);
         },
 
         onMouseMove: (event: ReactMouseEvent) => {
-            if (!selecting) {
+            if (!creating) {
                 return;
             }
 
@@ -37,11 +42,6 @@ export const useSelectArea = () => {
     };
 
     const selectArea = (event: ReactMouseEvent, currentStartX = startX, currentStartY = startY) => {
-        let id = annotationNextId;
-        if (selecting) {
-            id--;
-        }
-
         const [x, y] = [getX(event), getY(event)];
         const width = Math.abs(x - currentStartX);
         const height = Math.abs(y - currentStartY);
@@ -49,7 +49,7 @@ export const useSelectArea = () => {
         const lowerX = Math.min(x, currentStartX);
         const lowerY = Math.min(y, currentStartY);
 
-        selectedAreas[id] = {
+        selectedAreas[currentAnnotationId] = {
             type: 'SELECT_AREA',
             shift: { x: 0, y: 0 },
             x: lowerX,
@@ -59,7 +59,7 @@ export const useSelectArea = () => {
         };
 
         setSelectedAreas({ ...selectedAreas });
-        annotate(selectedAreas[id], id);
+        annotate(selectedAreas[currentAnnotationId], currentAnnotationId);
     };
 
     return mouseEventHandlers;

@@ -5,11 +5,10 @@ import { getX, getY } from '../../helpers/CoordinatesHelper';
 import { AnnotationContext } from '../../AnnotationTool/AnnotationContext';
 
 export const useObfuscation = () => {
-    const { annotationNextId, annotate } = useContext(AnnotationContext);
+    const { currentAnnotationId, annotate, creating, setCreating } = useContext(AnnotationContext);
 
     const [startX, setStartX] = useState(0);
     const [startY, setStartY] = useState(0);
-    const [selecting, setSelecting] = useState(false);
 
     const mouseEventHandlers: AnnotationMouseEventHandlers = {
         onMouseDown: (event: ReactMouseEvent) => {
@@ -19,15 +18,15 @@ export const useObfuscation = () => {
 
             annotateObfuscation(event, x, y);
 
-            setSelecting(true);
+            setCreating(true);
         },
 
         onMouseUp: () => {
-            setSelecting(false);
+            setCreating(false);
         },
 
         onMouseMove: (event: ReactMouseEvent) => {
-            if (!selecting) {
+            if (!creating) {
                 return;
             }
 
@@ -40,11 +39,6 @@ export const useObfuscation = () => {
         currentStartX = startX,
         currentStartY = startY
     ) => {
-        let id = annotationNextId;
-        if (selecting) {
-            id--;
-        }
-
         const [x, y] = [getX(event), getY(event)];
         const width = Math.abs(x - currentStartX);
         const height = Math.abs(y - currentStartY);
@@ -61,7 +55,7 @@ export const useObfuscation = () => {
                 width: width,
                 height: height
             },
-            id
+            currentAnnotationId
         );
     };
 

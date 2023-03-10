@@ -6,11 +6,10 @@ import { ArrowProps } from './Arrow';
 import { AnnotationContext } from '../../AnnotationTool/AnnotationContext';
 
 export const useArrow = () => {
-    const { annotationNextId, annotate } = useContext(AnnotationContext);
+    const { currentAnnotationId, annotate, creating, setCreating } = useContext(AnnotationContext);
 
     const [startX, setStartX] = useState(0);
     const [startY, setStartY] = useState(0);
-    const [selecting, setSelecting] = useState(false);
 
     const mouseEventHandlers: AnnotationMouseEventHandlers = {
         onMouseDown: (event: ReactMouseEvent) => {
@@ -20,15 +19,15 @@ export const useArrow = () => {
 
             annotateArrow({ type: 'ARROW', shift: { x: 0, y: 0 }, x1: x, y1: y, x2: x, y2: y });
 
-            setSelecting(true);
+            setCreating(true);
         },
 
         onMouseUp: () => {
-            setSelecting(false);
+            setCreating(false);
         },
 
         onMouseMove: (event: ReactMouseEvent) => {
-            if (!selecting) {
+            if (!creating) {
                 return;
             }
 
@@ -44,14 +43,7 @@ export const useArrow = () => {
         }
     };
 
-    const annotateArrow = (annotation: ArrowProps) => {
-        let id = annotationNextId;
-        if (selecting) {
-            id--;
-        }
-
-        annotate(annotation, id);
-    };
+    const annotateArrow = (annotation: ArrowProps) => annotate(annotation, currentAnnotationId);
 
     return mouseEventHandlers;
 };

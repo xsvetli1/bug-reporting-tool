@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { TextProps } from '.';
 import { ReactMouseEvent } from '../../types';
 import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
@@ -6,9 +6,7 @@ import { getX, getY } from '../../helpers/CoordinatesHelper';
 import { AnnotationContext } from '../../AnnotationTool/AnnotationContext';
 
 export const useText = () => {
-    const { annotationNextId, annotate } = useContext(AnnotationContext);
-
-    const [selecting, setSelecting] = useState(false);
+    const { currentAnnotationId, annotate, creating, setCreating } = useContext(AnnotationContext);
 
     const mouseEventHandlers: AnnotationMouseEventHandlers = {
         onMouseDown: (event: ReactMouseEvent) => {
@@ -23,15 +21,15 @@ export const useText = () => {
                 open: true
             });
 
-            setSelecting(true);
+            setCreating(true);
         },
 
         onMouseUp: () => {
-            setSelecting(false);
+            setCreating(false);
         },
 
         onMouseMove: (event: ReactMouseEvent) => {
-            if (!selecting) {
+            if (!creating) {
                 return;
             }
 
@@ -48,14 +46,7 @@ export const useText = () => {
         }
     };
 
-    const annotateText = (annotation: TextProps) => {
-        let id = annotationNextId;
-        if (selecting) {
-            id--;
-        }
-
-        annotate(annotation, id);
-    };
+    const annotateText = (annotation: TextProps) => annotate(annotation, currentAnnotationId);
 
     return mouseEventHandlers;
 };

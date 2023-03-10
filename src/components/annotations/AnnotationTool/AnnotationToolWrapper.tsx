@@ -14,6 +14,7 @@ const AnnotationToolWrapper = (props: AnnotationToolWrapperProps) => {
     const [annotations, setAnnotations] = useState<AnnotationPropsObject>({});
     const [selectedAreas, setSelectedAreas] = useState<SelectedAreas>({});
     const [selectedCommentIds, setSelectedCommentIds] = useState<string[]>([]);
+    const [creating, setCreating] = useState(false);
 
     const annotate = (annotation: AllAnnotationProps, id: number) => {
         annotations[id] = annotation;
@@ -23,18 +24,21 @@ const AnnotationToolWrapper = (props: AnnotationToolWrapperProps) => {
         }
     };
 
+    const currentAnnotationId = creating ? annotationNextId - 1 : annotationNextId;
+
     return (
         <AnnotationContext.Provider
             value={{
-                annotationNextId,
-                setAnnotationNextId,
+                currentAnnotationId,
                 annotations,
                 setAnnotations,
                 annotate,
                 selectedAreas,
                 setSelectedAreas,
                 selectedCommentIds,
-                setSelectedCommentIds
+                setSelectedCommentIds,
+                creating,
+                setCreating
             }}
         >
             <AnnotationTool {...props} />

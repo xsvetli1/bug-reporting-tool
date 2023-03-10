@@ -5,24 +5,23 @@ import { getX, getY } from '../../helpers/CoordinatesHelper';
 import { AnnotationContext } from '../../AnnotationTool/AnnotationContext';
 
 export const useFreeHand = () => {
-    const { annotationNextId, annotate } = useContext(AnnotationContext);
+    const { currentAnnotationId, annotate, creating, setCreating } = useContext(AnnotationContext);
 
     const [path, setPath] = useState<[number, number][]>([]);
-    const [selecting, setSelecting] = useState(false);
 
     const mouseEventHandlers: AnnotationMouseEventHandlers = {
         onMouseDown: (event: ReactMouseEvent) => {
             annotateFreeHand(event);
-            setSelecting(true);
+            setCreating(true);
         },
 
         onMouseUp: () => {
-            setSelecting(false);
+            setCreating(false);
             setPath([]);
         },
 
         onMouseMove: (event: ReactMouseEvent) => {
-            if (!selecting) {
+            if (!creating) {
                 return;
             }
 
@@ -31,16 +30,11 @@ export const useFreeHand = () => {
     };
 
     const annotateFreeHand = (event: ReactMouseEvent) => {
-        let id = annotationNextId;
-        if (selecting) {
-            id--;
-        }
-
         const [x, y] = [getX(event), getY(event)];
         const newPath: [number, number][] = [...path, [x, y]];
         setPath(newPath);
 
-        annotate({ type: 'FREE_HAND', shift: { x: 0, y: 0 }, path: newPath }, id);
+        annotate({ type: 'FREE_HAND', shift: { x: 0, y: 0 }, path: newPath }, currentAnnotationId);
     };
 
     return mouseEventHandlers;
