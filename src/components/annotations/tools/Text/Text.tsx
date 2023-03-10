@@ -1,12 +1,12 @@
 import React, { createRef, useEffect, useState } from 'react';
-import { Button, Card, CardActions, CardContent, IconButton, TextField } from '@mui/material';
+import { Button, Card, CardActions, CardContent, TextField } from '@mui/material';
 import { UseStateSetter } from '../../../../models/UseStateSetter';
 import { ISSUE_TYPE_BASED_DARK, ISSUE_TYPE_BASED_LIGHT } from '../../../../models/Colors';
 import CheckIcon from '@mui/icons-material/Check';
-import DeleteForeverSharpIcon from '@mui/icons-material/DeleteForeverSharp';
 import { getSVGHeigth, getSVGWidth } from '../../helpers/CoordinatesHelper';
 import { AnnotationProps } from '../AnnotationProps';
 import { getRelocationStyle } from '../../helpers/RelocationHelper';
+import { DeleteButton } from '../DeleteButton';
 
 export interface TextProps extends AnnotationProps<'TEXT'> {
     id: string;
@@ -18,7 +18,6 @@ export interface TextProps extends AnnotationProps<'TEXT'> {
 
 interface ExtendedTextProps extends TextProps {
     setSelectedCommentIds: UseStateSetter<string[]>;
-    deleteCallback: () => void;
 }
 
 const Text = ({
@@ -94,7 +93,7 @@ const Text = ({
                     y={CARD_Y}
                     width={1}
                     height={1}
-                    className="text-annotation-comment-wrapper"
+                    className="svg-foreign-object"
                     onMouseDown={(event) => event.stopPropagation()}
                     data-html2canvas-ignore
                 >
@@ -120,7 +119,7 @@ const Text = ({
                         >
                             <Button
                                 aria-label="submit comment"
-                                className="sharp-corners comment-button"
+                                className="comment-button"
                                 color="success"
                                 variant="contained"
                                 onClick={() =>
@@ -131,15 +130,7 @@ const Text = ({
                             >
                                 <CheckIcon />
                             </Button>
-                            <Button
-                                aria-label="delete comment"
-                                className="sharp-corners comment-button"
-                                color="error"
-                                variant="contained"
-                                onClick={deleteCallback}
-                            >
-                                <DeleteForeverSharpIcon />
-                            </Button>
+                            <DeleteButton deleteCallback={deleteCallback} />
                         </CardActions>
                     </Card>
                 </foreignObject>

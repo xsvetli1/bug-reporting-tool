@@ -43,6 +43,14 @@ export const useAnnotationRelocation = (): [
             }
             setAnnotationInHandId('');
             setStartingCoordinates([-1, -1]);
+        },
+        onMouseEnter: () => {
+            annotations[id].isHover = true;
+            setAnnotations({ ...annotations });
+        },
+        onMouseLeave: () => {
+            annotations[id].isHover = false;
+            setAnnotations({ ...annotations });
         }
     });
 

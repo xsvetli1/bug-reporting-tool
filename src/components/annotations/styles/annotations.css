@@ -21,11 +21,20 @@
     background: var(--issue-type-based);
 }
 
+/* .sharp-corners,
+.annotation-tools-button,
+.annotation-close-button,
+.annotation-save-button,
+.comment-button,
+.delete-button { */
+button {
+    border-radius: 0 !important;
+}
+
 .annotation-close-button {
     position: fixed !important;
     top: 0;
     right: 0;
-    border-radius: 0 !important;
     width: 25px !important;
     height: 25px !important;
     min-height: 25px !important;
@@ -41,11 +50,6 @@
     flex-direction: column;
 }
 
-.sharp-corners,
-.annotation-tools-button {
-    border-radius: 0 !important;
-}
-
 .annotation-tools-button {
     background: var(--issue-type-based-light) !important;
 }
@@ -58,10 +62,15 @@
     background: var(--issue-type-based-dark) !important;
 }
 
-.comment-button {
+.comment-button,
+.delete-button {
     min-width: 0 !important;
     padding: 0 !important;
-    margin: 0 5px !important;
+    float: right;
+}
+
+.comment-button {
+    margin-left: 10px !important;
 }
 
 .MuiSvgIcon-root {
@@ -69,7 +78,6 @@
 }
 
 .annotation-save-button {
-    border-radius: 0 !important;
     padding: 11px 0 !important;
     min-width: 0 !important;
 }
@@ -91,7 +99,7 @@
     user-select: none;
 }
 
-.text-annotation-comment-wrapper {
+.svg-foreign-object {
     overflow: visible;
     stroke: none;
     fill: white;
