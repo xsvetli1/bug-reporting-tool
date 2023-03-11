@@ -12,7 +12,7 @@ export interface ArrowProps extends AnnotationProps<'ARROW'> {
 
 const Arrow = ({ isHover, shift, x1, y1, x2, y2, moveHandlers, deleteCallback }: ArrowProps) => {
     return (
-        <g style={getRelocationStyle({ shift })} {...moveHandlers}>
+        <g className="annotation" style={getRelocationStyle({ shift })} {...moveHandlers}>
             <line
                 x1={x1}
                 y1={y1}
@@ -20,8 +20,9 @@ const Arrow = ({ isHover, shift, x1, y1, x2, y2, moveHandlers, deleteCallback }:
                 y2={y2}
                 strokeWidth={4}
                 markerEnd="url(#arrowhead)"
-                className="annotation arrow-line"
+                className="arrow-line"
             />
+            <line x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={20} strokeOpacity={0} />
             {isHover && (
                 <WrappedDeleteButton x={x1 + 12} y={y1 - 12} deleteCallback={deleteCallback} />
             )}

@@ -8,14 +8,11 @@ export interface FreeHandProps extends AnnotationProps<'FREE_HAND'> {
 }
 
 const FreeHand = ({ isHover, shift, path, moveHandlers, deleteCallback }: FreeHandProps) => {
+    const points = path.map(([x, y]) => `${x},${y}`).join(' ');
     return (
-        <g style={getRelocationStyle({ shift })} {...moveHandlers}>
-            <polyline
-                fill="none"
-                strokeWidth="8"
-                points={path.map(([x, y]) => `${x},${y}`).join(' ')}
-                className="annotation"
-            />
+        <g className="annotation" style={getRelocationStyle({ shift })} {...moveHandlers}>
+            <polyline fill="none" strokeWidth="8" points={points} />
+            <polyline fill="none" strokeWidth="20" strokeOpacity={0} points={points} />
             {isHover && (
                 <WrappedDeleteButton
                     x={path[path.length - 1][0] + 12}
