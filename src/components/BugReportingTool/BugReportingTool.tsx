@@ -7,6 +7,7 @@ import ModalController from '../modals/ModalController';
 import ReportBugButton from '../ReportBugButton';
 import '../../styles/colors.css';
 import AnnotationToolWrapper from '../annotations/AnnotationTool';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 
 export interface BugReportingToolProps {
     platform: Platform;
@@ -19,6 +20,7 @@ const BugReportingTool = ({ platform, platformProps, children }: BugReportingToo
     const [isBugAnnotationOpen, setIsBugAnnotationOpen] = useState(false);
     const [isIdeaAnnotationOpen, setIsIdeaAnnotationOpen] = useState(false);
     const [isOngoingAnnotation, setIsOngoingAnnotation] = useState(false);
+    const [isCloseAnnotationToolDialogOpen, setIsCloseAnnotationDialogOpen] = useState(false);
     const [theme, setTheme] = useState('');
     const issueController = IssueControllerFactory.get(platform, platformProps);
 
@@ -37,12 +39,32 @@ const BugReportingTool = ({ platform, platformProps, children }: BugReportingToo
                 setTheme={setTheme}
                 newIssue={(issueInfo: IssueInfo) => issueController.newIssue(issueInfo)}
             />
-            {isToolOpen && (
+            {isOngoingAnnotation && (
                 <AnnotationToolWrapper
                     isOngoingAnnotation={isOngoingAnnotation}
-                    handleClose={() => setIsOngoingAnnotation(false)}
+                    handleClose={() => setIsCloseAnnotationDialogOpen(true)}
                 />
             )}
+            <Dialog open={isCloseAnnotationToolDialogOpen}>
+                <DialogTitle>Close Annotation Tool</DialogTitle>
+                <DialogContent>
+                    Do you really want to close Annotation tool without saving?
+                </DialogContent>
+                <DialogActions>
+                    <Button autoFocus onClick={() => setIsCloseAnnotationDialogOpen(false)}>
+                        No
+                    </Button>
+                    <Button
+                        onClick={() => {
+                            setIsCloseAnnotationDialogOpen(false);
+                            setIsOngoingAnnotation(false);
+                        }}
+                    >
+                        Yes
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
             {children}
         </div>
     );
