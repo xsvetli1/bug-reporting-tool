@@ -102,6 +102,7 @@ const Text = ({
                             <TextField
                                 id={`comment-${index}`}
                                 variant="standard"
+                                autoFocus
                                 fullWidth
                                 multiline
                                 rows={MIN_ROWS}
