@@ -8,6 +8,7 @@ import ReportBugButton from '../ReportBugButton';
 import '../../styles/colors.css';
 import AnnotationToolWrapper from '../annotations/AnnotationTool';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { ToolContext } from './ToolContext';
 
 export interface BugReportingToolProps {
     platform: Platform;
@@ -22,51 +23,54 @@ const BugReportingTool = ({ platform, platformProps, children }: BugReportingToo
     const [isOngoingAnnotation, setIsOngoingAnnotation] = useState(false);
     const [isCloseAnnotationToolDialogOpen, setIsCloseAnnotationDialogOpen] = useState(false);
     const [theme, setTheme] = useState('');
+    const [screenshots, setScreenshots] = useState<string[]>([]);
     const issueController = IssueControllerFactory.get(platform, platformProps);
 
     return (
-        <div data-theme={theme}>
-            {!isToolOpen && <ReportBugButton setIsToolOpen={setIsToolOpen} />}
-            <ModalController
-                isToolOpen={isToolOpen}
-                setIsToolOpen={setIsToolOpen}
-                isBugAnnotationOpen={isBugAnnotationOpen}
-                setIsBugAnnotationOpen={setIsBugAnnotationOpen}
-                isIdeaAnnotationOpen={isIdeaAnnotationOpen}
-                setIsIdeaAnnotationOpen={setIsIdeaAnnotationOpen}
-                isOngoingAnnotation={isOngoingAnnotation}
-                setIsOngoingAnnotation={setIsOngoingAnnotation}
-                setTheme={setTheme}
-                newIssue={(issueInfo: IssueInfo) => issueController.newIssue(issueInfo)}
-            />
-            {isOngoingAnnotation && (
-                <AnnotationToolWrapper
+        <ToolContext.Provider value={{ screenshots, setScreenshots }}>
+            <div data-theme={theme}>
+                {!isToolOpen && <ReportBugButton setIsToolOpen={setIsToolOpen} />}
+                <ModalController
+                    isToolOpen={isToolOpen}
+                    setIsToolOpen={setIsToolOpen}
+                    isBugAnnotationOpen={isBugAnnotationOpen}
+                    setIsBugAnnotationOpen={setIsBugAnnotationOpen}
+                    isIdeaAnnotationOpen={isIdeaAnnotationOpen}
+                    setIsIdeaAnnotationOpen={setIsIdeaAnnotationOpen}
                     isOngoingAnnotation={isOngoingAnnotation}
-                    handleClose={() => setIsCloseAnnotationDialogOpen(true)}
+                    setIsOngoingAnnotation={setIsOngoingAnnotation}
+                    setTheme={setTheme}
+                    newIssue={(issueInfo: IssueInfo) => issueController.newIssue(issueInfo)}
                 />
-            )}
-            <Dialog open={isCloseAnnotationToolDialogOpen}>
-                <DialogTitle>Close Annotation Tool</DialogTitle>
-                <DialogContent>
-                    Do you really want to close Annotation tool without saving?
-                </DialogContent>
-                <DialogActions>
-                    <Button autoFocus onClick={() => setIsCloseAnnotationDialogOpen(false)}>
-                        No
-                    </Button>
-                    <Button
-                        onClick={() => {
-                            setIsCloseAnnotationDialogOpen(false);
-                            setIsOngoingAnnotation(false);
-                        }}
-                    >
-                        Yes
-                    </Button>
-                </DialogActions>
-            </Dialog>
+                {isOngoingAnnotation && (
+                    <AnnotationToolWrapper
+                        isOngoingAnnotation={isOngoingAnnotation}
+                        handleClose={() => setIsCloseAnnotationDialogOpen(true)}
+                    />
+                )}
+                <Dialog open={isCloseAnnotationToolDialogOpen}>
+                    <DialogTitle>Close Annotation Tool</DialogTitle>
+                    <DialogContent>
+                        Do you really want to close Annotation tool without saving?
+                    </DialogContent>
+                    <DialogActions>
+                        <Button autoFocus onClick={() => setIsCloseAnnotationDialogOpen(false)}>
+                            No
+                        </Button>
+                        <Button
+                            onClick={() => {
+                                setIsCloseAnnotationDialogOpen(false);
+                                setIsOngoingAnnotation(false);
+                            }}
+                        >
+                            Yes
+                        </Button>
+                    </DialogActions>
+                </Dialog>
 
-            {children}
-        </div>
+                {children}
+            </div>
+        </ToolContext.Provider>
     );
 };
 

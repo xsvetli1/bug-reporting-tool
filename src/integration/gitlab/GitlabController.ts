@@ -10,10 +10,11 @@ class GitlabController implements IIssueController {
     }
 
     async newIssue(issueInfo: IssueInfo): Promise<boolean> {
+        const query = await this.queryFromIssueInfo(issueInfo);
         const response = await fetch(
             `https://${this.props.server.hostname}` +
                 `/api/v4/projects/${this.props.projectId}` +
-                `/issues?${this.queryFromIssueInfo(issueInfo)}`,
+                `/issues?${query}`,
             {
                 method: 'POST',
                 headers: {
@@ -25,11 +26,27 @@ class GitlabController implements IIssueController {
         return response.ok;
     }
 
-    queryFromIssueInfo(issueInfo: IssueInfo): string {
+    async queryFromIssueInfo(issueInfo: IssueInfo): Promise<string> {
+        const screenshots = await Promise.all(
+            issueInfo.screenshots.map(async (screenshot) => await this.uploadScreenshot(screenshot))
+        );
+
         return (
-            `title=${issueInfo.title}` +
-            `&description=${issueInfo.description}` +
+            `title=${this.issueTitle(issueInfo)}` +
+            `&description=${this.issueDescription(issueInfo.description, screenshots)}` +
             `&labels=${issueInfo.type.getLabel()}`
+        );
+    }
+
+    issueTitle(issueInfo: IssueInfo) {
+        return `[Annotate-Report] ${issueInfo.type.getName()}: ${issueInfo.title}`;
+    }
+
+    issueDescription(description: string, screenshotMarkdowns: string[]): string {
+        return (
+            `Description:<br />${description}<br />` +
+            `Screenshots:<br />` +
+            `${screenshotMarkdowns.join('<br />')}`
         );
     }
 

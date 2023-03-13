@@ -1,13 +1,19 @@
 class IssueType {
-    static Bug = new IssueType('Report a bug', 'bug');
-    static Idea = new IssueType('Suggest a new idea', 'enhancement');
+    static Bug = new IssueType('Bug', 'Report a bug', 'bug');
+    static Idea = new IssueType('Enhancement', 'Suggest a new idea', 'enhancement');
 
+    name: string;
     title: string;
     label: string;
 
-    constructor(title: string, label: string) {
+    constructor(name: string, title: string, label: string) {
+        this.name = name;
         this.title = title;
         this.label = label;
+    }
+
+    getName() {
+        return this.name;
     }
 
     getTitle() {

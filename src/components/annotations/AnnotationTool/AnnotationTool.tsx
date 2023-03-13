@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import AnnotationArea from '../AnnotationArea';
 import '../styles/annotations.css';
 import { useAnnotationRelocation } from './handlers/useAnnotationRelocation';
@@ -7,6 +7,7 @@ import { useAnnotationCreateHandlers } from './handlers/useAnnotationCreateHandl
 import { AllAnnotationTypes } from '../types';
 import Annotations from '../Annotations';
 import { takeScreenshot } from '../helpers/ScreenshotHelper';
+import { ToolContext } from '../../BugReportingTool/ToolContext';
 
 export interface AnnotationToolProps {
     isOngoingAnnotation: boolean;
@@ -14,6 +15,7 @@ export interface AnnotationToolProps {
 }
 
 const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProps) => {
+    const { setScreenshots } = useContext(ToolContext);
     const allAnnotationCreateHandlers = useAnnotationCreateHandlers();
     const [annotationInHandId, obtainAnnotationGrabHandlers, annotationMoveHandlers] =
         useAnnotationRelocation();
@@ -36,7 +38,14 @@ const AnnotationTool = ({ isOngoingAnnotation, handleClose }: AnnotationToolProp
                         currentAnnotationType={currentAnnotationType}
                         setCurrentAnnotationType={setCurrentAnnotationType}
                         annotationInHandId={annotationInHandId}
-                        takeScreenshot={takeScreenshot}
+                        takeScreenshot={async () =>
+                            takeScreenshot().then((screenshot) =>
+                                setScreenshots((allScreenshots) => {
+                                    allScreenshots.push(screenshot);
+                                    return allScreenshots;
+                                })
+                            )
+                        }
                         handleClose={handleClose}
                     />
                 </>

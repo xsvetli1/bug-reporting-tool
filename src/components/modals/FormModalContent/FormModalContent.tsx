@@ -1,4 +1,4 @@
-import React, { RefObject, useEffect, useRef } from 'react';
+import React, { RefObject, useContext, useEffect, useRef } from 'react';
 import {
     Button,
     DialogActions,
@@ -11,6 +11,7 @@ import IssueType from '../../../models/IssueType';
 import { IssueInfo } from '../../../integration/IssueInfo';
 import { FormFields, FormProps } from '../../../models/FormProps';
 import { UseStateSetter } from '../../../models/UseStateSetter';
+import { ToolContext } from '../../BugReportingTool/ToolContext';
 
 export interface FormModalContentProps {
     formState: FormProps;
@@ -25,6 +26,8 @@ export interface FormModalContentProps {
 }
 
 const FormModalContent = (props: FormModalContentProps) => {
+    const { screenshots } = useContext(ToolContext);
+
     const emailRef = useRef<HTMLInputElement>(null);
     const titleRef = useRef<HTMLInputElement>(null);
     const descriptionRef = useRef<HTMLInputElement>(null);
@@ -33,10 +36,11 @@ const FormModalContent = (props: FormModalContentProps) => {
         props.handleClose();
         props.setFormState({});
         const success = await props.newIssue({
+            type: props.type,
             email: emailRef.current?.value ?? '',
             title: titleRef.current?.value ?? '',
             description: descriptionRef.current?.value ?? '',
-            type: props.type
+            screenshots
         });
         props.setSnackbarSuccess(success);
         props.setSnackbarShown(true);
