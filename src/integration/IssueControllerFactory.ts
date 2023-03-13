@@ -3,8 +3,8 @@ import { GithubProps } from './github/GithubProps';
 import GitlabController from './gitlab/GitlabController';
 import { GitlabProps } from './gitlab/GitlabProps';
 import IIssueController from './IIssueController';
-import Platform from './Platform';
-import { PlatformProps } from './PlatformProps';
+import Platform from './models/Platform';
+import { PlatformProps } from './models/PlatformProps';
 
 class IssueControllerFactory {
     static get(platform: Platform, props: PlatformProps): IIssueController {

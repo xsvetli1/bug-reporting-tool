@@ -1,4 +1,4 @@
-import IssueType from '../models/IssueType';
+import IssueType from '../../models/IssueType';
 
 export type IssueInfo = {
     type: IssueType;

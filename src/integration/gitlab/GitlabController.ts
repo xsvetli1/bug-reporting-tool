@@ -1,5 +1,6 @@
 import IIssueController from '../IIssueController';
-import { IssueInfo } from '../IssueInfo';
+import IssueFormatter from '../IssueFormatter';
+import { IssueInfo } from '../models/IssueInfo';
 import { GitlabProps } from './GitlabProps';
 
 class GitlabController implements IIssueController {
@@ -27,26 +28,17 @@ class GitlabController implements IIssueController {
     }
 
     async queryFromIssueInfo(issueInfo: IssueInfo): Promise<string> {
-        const screenshots = await Promise.all(
+        const screenshotsMarkdowns = await Promise.all(
             issueInfo.screenshots.map(async (screenshot) => await this.uploadScreenshot(screenshot))
         );
 
         return (
-            `title=${this.issueTitle(issueInfo)}` +
-            `&description=${this.issueDescription(issueInfo.description, screenshots)}` +
+            `title=${IssueFormatter.issueTitle(issueInfo)}` +
+            `&description=${IssueFormatter.issueDescription(
+                issueInfo.description,
+                screenshotsMarkdowns
+            )}` +
             `&labels=${issueInfo.type.getLabel()}`
-        );
-    }
-
-    issueTitle(issueInfo: IssueInfo) {
-        return `[Annotate-Report] ${issueInfo.type.getName()}: ${issueInfo.title}`;
-    }
-
-    issueDescription(description: string, screenshotMarkdowns: string[]): string {
-        return (
-            `Description:<br />${description}<br />` +
-            `Screenshots:<br />` +
-            `${screenshotMarkdowns.join('<br />')}`
         );
     }
 

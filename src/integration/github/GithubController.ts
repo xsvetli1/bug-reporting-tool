@@ -1,5 +1,5 @@
 import IIssueController from '../IIssueController';
-import { IssueInfo } from '../IssueInfo';
+import { IssueInfo } from '../models/IssueInfo';
 import { GithubProps } from './GithubProps';
 
 class GithubController implements IIssueController {

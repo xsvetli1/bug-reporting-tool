@@ -8,7 +8,7 @@ import {
     TextFieldProps
 } from '@mui/material';
 import IssueType from '../../../models/IssueType';
-import { IssueInfo } from '../../../integration/IssueInfo';
+import { IssueInfo } from '../../../integration/models/IssueInfo';
 import { FormFields, FormProps } from '../../../models/FormProps';
 import { UseStateSetter } from '../../../models/UseStateSetter';
 import { ToolContext } from '../../BugReportingTool/ToolContext';

@@ -1,8 +1,8 @@
 import React, { ReactNode, useState } from 'react';
 import IssueControllerFactory from '../../integration/IssueControllerFactory';
-import { IssueInfo } from '../../integration/IssueInfo';
-import Platform from '../../integration/Platform';
-import { PlatformProps } from '../../integration/PlatformProps';
+import { IssueInfo } from '../../integration/models/IssueInfo';
+import Platform from '../../integration/models/Platform';
+import { PlatformProps } from '../../integration/models/PlatformProps';
 import ModalController from '../modals/ModalController';
 import ReportBugButton from '../ReportBugButton';
 import '../../styles/colors.css';

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Alert, Dialog, Snackbar, SnackbarOrigin } from '@mui/material';
 import IssueType from '../../../models/IssueType';
-import { IssueInfo } from '../../../integration/IssueInfo';
+import { IssueInfo } from '../../../integration/models/IssueInfo';
 import FormModalContent from '../FormModalContent';
 import OptionsModalContent from '../OptionsModalContent';
 import { FormProps } from '../../../models/FormProps';
