@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Alert, Dialog, Snackbar, SnackbarOrigin } from '@mui/material';
 import IssueType from '../../../models/IssueType';
 import { IssueInfo } from '../../../integration/models/IssueInfo';
@@ -6,6 +6,7 @@ import FormModalContent from '../FormModalContent';
 import OptionsModalContent from '../OptionsModalContent';
 import { FormProps } from '../../../models/FormProps';
 import { UseStateSetter } from '../../../models/UseStateSetter';
+import { ToolContext } from '../../BugReportingTool/ToolContext';
 
 export interface ModalControllerProps {
     isToolOpen: boolean;
@@ -14,13 +15,12 @@ export interface ModalControllerProps {
     setIsBugAnnotationOpen: UseStateSetter<boolean>;
     isIdeaAnnotationOpen: boolean;
     setIsIdeaAnnotationOpen: UseStateSetter<boolean>;
-    isOngoingAnnotation: boolean;
-    setIsOngoingAnnotation: UseStateSetter<boolean>;
     setTheme: UseStateSetter<string>;
     newIssue: (issueInfo: IssueInfo) => Promise<boolean>;
 }
 
 const ModalController = (props: ModalControllerProps) => {
+    const { isOngoingAnnotation, setIsOngoingAnnotation } = useContext(ToolContext);
     const [formState, setFormState] = useState<FormProps>({});
     const [snackbarShown, setSnackbarShown] = useState(false);
     const [snackbarSuccess, setSnackbarSuccess] = useState(false);
@@ -43,7 +43,7 @@ const ModalController = (props: ModalControllerProps) => {
             setSnackbarShown: setSnackbarShown,
             setSnackbarSuccess: setSnackbarSuccess,
             setTheme: props.setTheme,
-            handleAnnotate: () => props.setIsOngoingAnnotation(true),
+            handleAnnotate: () => setIsOngoingAnnotation(true),
             handleClose: handleClose
         };
     };
@@ -52,7 +52,7 @@ const ModalController = (props: ModalControllerProps) => {
 
     return (
         <div>
-            <Dialog open={props.isToolOpen && !props.isOngoingAnnotation} onClose={handleClose}>
+            <Dialog open={props.isToolOpen && !isOngoingAnnotation} onClose={handleClose}>
                 {props.isToolOpen && !props.isBugAnnotationOpen && !props.isIdeaAnnotationOpen && (
                     <OptionsModalContent
                         setIsBugAnnotationOpen={props.setIsBugAnnotationOpen}

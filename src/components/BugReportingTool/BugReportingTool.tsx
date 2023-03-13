@@ -27,7 +27,9 @@ const BugReportingTool = ({ platform, platformProps, children }: BugReportingToo
     const issueController = IssueControllerFactory.get(platform, platformProps);
 
     return (
-        <ToolContext.Provider value={{ screenshots, setScreenshots }}>
+        <ToolContext.Provider
+            value={{ screenshots, setScreenshots, isOngoingAnnotation, setIsOngoingAnnotation }}
+        >
             <div data-theme={theme}>
                 {!isToolOpen && <ReportBugButton setIsToolOpen={setIsToolOpen} />}
                 <ModalController
@@ -37,8 +39,6 @@ const BugReportingTool = ({ platform, platformProps, children }: BugReportingToo
                     setIsBugAnnotationOpen={setIsBugAnnotationOpen}
                     isIdeaAnnotationOpen={isIdeaAnnotationOpen}
                     setIsIdeaAnnotationOpen={setIsIdeaAnnotationOpen}
-                    isOngoingAnnotation={isOngoingAnnotation}
-                    setIsOngoingAnnotation={setIsOngoingAnnotation}
                     setTheme={setTheme}
                     newIssue={(issueInfo: IssueInfo) => issueController.newIssue(issueInfo)}
                 />
