@@ -32,6 +32,38 @@ class GitlabController implements IIssueController {
             `&labels=${issueInfo.type.getLabel()}`
         );
     }
+
+    /**
+     * Returns markdown, ready to be placed to issue body.
+     *
+     * @param screenshot base64 encoded string of screenshot in PNG format
+     * @returns markdown of uploaded screenshot
+     */
+    async uploadScreenshot(screenshot: string): Promise<string> {
+        const screenshotBlob = await fetch(screenshot).then((res) => res.blob());
+
+        const file = new File([screenshotBlob], 'screenshot.png', {
+            type: 'image/png'
+        });
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const response = await fetch(
+            `https://${this.props.server.hostname}` +
+                `/api/v4/projects/${this.props.projectId}` +
+                `/uploads`,
+            {
+                method: 'POST',
+                headers: {
+                    'PRIVATE-TOKEN': `${this.props.authToken}`
+                },
+                body: formData
+            }
+        );
+
+        return await response.json().then((jsonResponse) => jsonResponse.markdown);
+    }
 }
 
 export default GitlabController;
