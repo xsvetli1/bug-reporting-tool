@@ -39,7 +39,7 @@ const AnnotationTool = ({ handleClose }: AnnotationToolProps) => {
                         currentAnnotationType={currentAnnotationType}
                         setCurrentAnnotationType={setCurrentAnnotationType}
                         annotationInHandId={annotationInHandId}
-                        takeScreenshot={async () =>
+                        submit={async () =>
                             takeScreenshot().then((screenshot) => {
                                 setScreenshots((allScreenshots) => {
                                     allScreenshots.push(screenshot);

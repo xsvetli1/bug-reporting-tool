@@ -22,8 +22,9 @@ const BugReportingTool = ({ platform, platformProps, children }: BugReportingToo
     const [isIdeaAnnotationOpen, setIsIdeaAnnotationOpen] = useState(false);
     const [isOngoingAnnotation, setIsOngoingAnnotation] = useState(false);
     const [isCloseAnnotationToolDialogOpen, setIsCloseAnnotationDialogOpen] = useState(false);
-    const [theme, setTheme] = useState('');
     const [screenshots, setScreenshots] = useState<string[]>([]);
+    const [theme, setTheme] = useState('');
+
     const issueController = IssueControllerFactory.get(platform, platformProps);
 
     return (

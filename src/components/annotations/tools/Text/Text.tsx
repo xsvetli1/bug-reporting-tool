@@ -1,4 +1,4 @@
-import React, { createRef, useEffect, useState } from 'react';
+import React, { createRef, useContext, useEffect, useState } from 'react';
 import { Button, Card, CardActions, CardContent, TextField } from '@mui/material';
 import { UseStateSetter } from '../../../../models/UseStateSetter';
 import { ISSUE_TYPE_BASED_DARK, ISSUE_TYPE_BASED_LIGHT } from '../../../../models/Colors';
@@ -7,6 +7,7 @@ import { getSVGHeigth, getSVGWidth } from '../../helpers/CoordinatesHelper';
 import { AnnotationProps } from '../AnnotationProps';
 import { getRelocationStyle } from '../../helpers/RelocationHelper';
 import { DeleteButton } from '../DeleteButton';
+import { AnnotationContext } from '../../AnnotationTool/AnnotationContext';
 
 export interface TextProps extends AnnotationProps<'TEXT'> {
     id: string;
@@ -14,6 +15,7 @@ export interface TextProps extends AnnotationProps<'TEXT'> {
     x: number;
     y: number;
     open: boolean;
+    comment?: string;
 }
 
 interface ExtendedTextProps extends TextProps {
@@ -27,13 +29,14 @@ const Text = ({
     x,
     y,
     open,
+    comment,
     moveHandlers,
     setSelectedCommentIds,
     deleteCallback
 }: ExtendedTextProps) => {
+    const { setAnnotations } = useContext(AnnotationContext);
     const cardRef = createRef<HTMLDivElement>();
     const [cardHeight, setCardHeight] = useState(0);
-    const [comment, setComment] = useState('');
 
     const MIN_ROWS = 3;
     const CARD_WIDTH = 250;
@@ -108,7 +111,15 @@ const Text = ({
                                 rows={MIN_ROWS}
                                 placeholder="Write your comment here..."
                                 defaultValue={comment}
-                                onChange={(event) => setComment(event.currentTarget.value)}
+                                onChange={(event) =>
+                                    setAnnotations((annotations) => {
+                                        const annotation = annotations[id];
+                                        if (annotation.type === 'TEXT') {
+                                            annotation.comment = event.currentTarget.value;
+                                        }
+                                        return annotations;
+                                    })
+                                }
                             />
                         </CardContent>
                         <CardActions

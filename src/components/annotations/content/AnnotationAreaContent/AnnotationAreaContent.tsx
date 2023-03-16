@@ -17,7 +17,7 @@ export interface AnnotationAreaContentProps {
     currentAnnotationType: AllAnnotationTypes;
     setCurrentAnnotationType: UseStateSetter<AllAnnotationTypes>;
     annotationInHandId: string;
-    takeScreenshot: () => void;
+    submit: () => void;
     handleClose: () => void;
 }
 
@@ -25,7 +25,7 @@ const AnnotationAreaContent = ({
     currentAnnotationType,
     setCurrentAnnotationType,
     annotationInHandId,
-    takeScreenshot,
+    submit,
     handleClose
 }: AnnotationAreaContentProps) => {
     const handleAnnotationTypeId = (
@@ -96,7 +96,7 @@ const AnnotationAreaContent = ({
                             className="annotation-save-button"
                             variant="contained"
                             color="success"
-                            onClick={() => takeScreenshot()}
+                            onClick={() => submit()}
                         >
                             <DoneIcon />
                         </Button>
