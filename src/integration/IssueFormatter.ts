@@ -5,11 +5,13 @@ class IssueFormatter {
         return `[Annotate-Report] ${issueInfo.type.getName()}: ${issueInfo.title}`;
     }
 
-    static issueDescription(description: string, screenshotMarkdowns: string[]): string {
+    static issueDescription(issueInfo: IssueInfo, screenshotMarkdowns: string[]): string {
         return (
-            `Description:<br />${description}<br />` +
-            `Screenshots:<br />` +
-            `${screenshotMarkdowns.join('<br />')}`
+            `## Description\n${issueInfo.description}\n` +
+            `## Screenshots\n` +
+            `${screenshotMarkdowns.join('\n')}\n` +
+            `## Environment\n` +
+            `## Contact info\n ${issueInfo.email}`
         );
     }
 }

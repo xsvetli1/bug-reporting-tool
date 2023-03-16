@@ -33,10 +33,9 @@ class GitlabController implements IIssueController {
         );
 
         return (
-            `title=${IssueFormatter.issueTitle(issueInfo)}` +
-            `&description=${IssueFormatter.issueDescription(
-                issueInfo.description,
-                screenshotsMarkdowns
+            `title=${encodeURIComponent(IssueFormatter.issueTitle(issueInfo))}` +
+            `&description=${encodeURIComponent(
+                IssueFormatter.issueDescription(issueInfo, screenshotsMarkdowns)
             )}` +
             `&labels=${issueInfo.type.getLabel()}`
         );
