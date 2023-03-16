@@ -26,11 +26,21 @@ export interface FormModalContentProps {
 }
 
 const FormModalContent = (props: FormModalContentProps) => {
-    const { screenshots } = useContext(ToolContext);
+    const { annotations, screenshots } = useContext(ToolContext);
 
     const emailRef = useRef<HTMLInputElement>(null);
     const titleRef = useRef<HTMLInputElement>(null);
     const descriptionRef = useRef<HTMLInputElement>(null);
+
+    const extractComments = () => {
+        const comments: string[] = [];
+        Object.values(annotations).forEach((annotation) => {
+            if (annotation.type === 'TEXT') {
+                comments.push(annotation.comment ?? '');
+            }
+        });
+        return comments;
+    };
 
     const handleSend = async () => {
         props.handleClose();
@@ -40,7 +50,8 @@ const FormModalContent = (props: FormModalContentProps) => {
             email: emailRef.current?.value ?? '',
             title: titleRef.current?.value ?? '',
             description: descriptionRef.current?.value ?? '',
-            screenshots
+            screenshots,
+            comments: extractComments()
         });
         props.setSnackbarSuccess(success);
         props.setSnackbarShown(true);

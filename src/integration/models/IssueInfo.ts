@@ -6,4 +6,5 @@ export type IssueInfo = {
     title: string;
     description: string;
     screenshots: string[];
+    comments: string[];
 };

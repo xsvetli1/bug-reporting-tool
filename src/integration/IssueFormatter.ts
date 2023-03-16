@@ -6,8 +6,15 @@ class IssueFormatter {
     }
 
     static issueDescription(issueInfo: IssueInfo, screenshotMarkdowns: string[]): string {
+        const comments = issueInfo.comments.length
+            ? `### Comments\n` +
+              issueInfo.comments.map((comment, i) => `${i + 1}. ${comment}`).join('\n') +
+              '\n'
+            : '';
+
         return (
             `## Description\n${issueInfo.description}\n` +
+            comments +
             `## Screenshots\n` +
             `${screenshotMarkdowns.join('\n')}\n` +
             `## Environment\n` +
