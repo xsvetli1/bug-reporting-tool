@@ -71,6 +71,7 @@ const BugReportingTool = ({ platform, platformProps, children }: BugReportingToo
                             onClick={() => {
                                 setIsCloseAnnotationDialogOpen(false);
                                 setIsOngoingAnnotation(false);
+                                setAnnotations({});
                             }}
                         >
                             Yes
