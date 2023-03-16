@@ -9,6 +9,7 @@ import '../../styles/colors.css';
 import AnnotationToolWrapper from '../annotations/AnnotationTool';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { ToolContext } from './ToolContext';
+import { AnnotationPropsObject } from '../annotations/tools/AllAnnotationProps';
 
 export interface BugReportingToolProps {
     platform: Platform;
@@ -22,6 +23,7 @@ const BugReportingTool = ({ platform, platformProps, children }: BugReportingToo
     const [isIdeaAnnotationOpen, setIsIdeaAnnotationOpen] = useState(false);
     const [isOngoingAnnotation, setIsOngoingAnnotation] = useState(false);
     const [isCloseAnnotationToolDialogOpen, setIsCloseAnnotationDialogOpen] = useState(false);
+    const [annotations, setAnnotations] = useState<AnnotationPropsObject>({});
     const [screenshots, setScreenshots] = useState<string[]>([]);
     const [theme, setTheme] = useState('');
 
@@ -29,7 +31,14 @@ const BugReportingTool = ({ platform, platformProps, children }: BugReportingToo
 
     return (
         <ToolContext.Provider
-            value={{ screenshots, setScreenshots, isOngoingAnnotation, setIsOngoingAnnotation }}
+            value={{
+                annotations,
+                setAnnotations,
+                screenshots,
+                setScreenshots,
+                isOngoingAnnotation,
+                setIsOngoingAnnotation
+            }}
         >
             <div data-theme={theme}>
                 {!isToolOpen && <ReportBugButton setIsToolOpen={setIsToolOpen} />}

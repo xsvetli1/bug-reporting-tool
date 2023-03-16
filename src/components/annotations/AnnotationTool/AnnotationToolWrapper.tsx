@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { AllAnnotationProps, AnnotationPropsObject } from '../tools/AllAnnotationProps';
+import React, { useContext, useState } from 'react';
+import { ToolContext } from '../../BugReportingTool/ToolContext';
+import { AllAnnotationProps } from '../tools/AllAnnotationProps';
 import { SelectedAreas } from '../types';
 import { AnnotationContext } from './AnnotationContext';
 import AnnotationTool from './AnnotationTool';
@@ -10,8 +11,8 @@ export interface AnnotationToolWrapperProps {
 }
 
 const AnnotationToolWrapper = (props: AnnotationToolWrapperProps) => {
+    const { annotations, setAnnotations } = useContext(ToolContext);
     const [annotationNextId, setAnnotationNextId] = useState(0);
-    const [annotations, setAnnotations] = useState<AnnotationPropsObject>({});
     const [selectedAreas, setSelectedAreas] = useState<SelectedAreas>({});
     const [selectedCommentIds, setSelectedCommentIds] = useState<string[]>([]);
     const [creating, setCreating] = useState(false);
@@ -30,8 +31,6 @@ const AnnotationToolWrapper = (props: AnnotationToolWrapperProps) => {
         <AnnotationContext.Provider
             value={{
                 currentAnnotationId,
-                annotations,
-                setAnnotations,
                 annotate,
                 selectedAreas,
                 setSelectedAreas,

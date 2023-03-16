@@ -7,7 +7,7 @@ import { getSVGHeigth, getSVGWidth } from '../../helpers/CoordinatesHelper';
 import { AnnotationProps } from '../AnnotationProps';
 import { getRelocationStyle } from '../../helpers/RelocationHelper';
 import { DeleteButton } from '../DeleteButton';
-import { AnnotationContext } from '../../AnnotationTool/AnnotationContext';
+import { ToolContext } from '../../../BugReportingTool/ToolContext';
 
 export interface TextProps extends AnnotationProps<'TEXT'> {
     id: string;
@@ -34,7 +34,7 @@ const Text = ({
     setSelectedCommentIds,
     deleteCallback
 }: ExtendedTextProps) => {
-    const { setAnnotations } = useContext(AnnotationContext);
+    const { setAnnotations } = useContext(ToolContext);
     const cardRef = createRef<HTMLDivElement>();
     const [cardHeight, setCardHeight] = useState(0);
 

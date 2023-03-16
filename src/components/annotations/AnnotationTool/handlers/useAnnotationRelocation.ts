@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react';
+import { ToolContext } from '../../../BugReportingTool/ToolContext';
 import { getX, getY } from '../../helpers/CoordinatesHelper';
 import { ReactMouseEvent } from '../../types';
 import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
@@ -9,14 +10,9 @@ export const useAnnotationRelocation = (): [
     (id: string) => AnnotationMouseEventHandlers,
     AnnotationMouseEventHandlers
 ] => {
-    const {
-        annotations,
-        setAnnotations,
-        selectedAreas,
-        setSelectedAreas,
-        setSelectedCommentIds,
-        creating
-    } = useContext(AnnotationContext);
+    const { annotations, setAnnotations } = useContext(ToolContext);
+    const { selectedAreas, setSelectedAreas, setSelectedCommentIds, creating } =
+        useContext(AnnotationContext);
 
     const [annotationInHandId, setAnnotationInHandId] = useState<string>('');
     const [previousCoordinates, setPreviousCoordinates] = useState<[number, number]>([-1, -1]);

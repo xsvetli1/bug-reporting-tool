@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { ToolContext } from '../../BugReportingTool/ToolContext';
 import { AnnotationContext } from '../AnnotationTool/AnnotationContext';
 import Arrow from '../tools/Arrow';
 import FreeHand from '../tools/FreeHand';
@@ -12,13 +13,9 @@ export interface AnnotationsProps {
 }
 
 const Annotations = ({ obtainAnnotationGrabHandlers }: AnnotationsProps) => {
-    const {
-        annotations,
-        setAnnotations,
-        setSelectedAreas,
-        selectedCommentIds,
-        setSelectedCommentIds
-    } = useContext(AnnotationContext);
+    const { annotations, setAnnotations } = useContext(ToolContext);
+    const { setSelectedAreas, selectedCommentIds, setSelectedCommentIds } =
+        useContext(AnnotationContext);
 
     let textCommentIndex = 1;
 
