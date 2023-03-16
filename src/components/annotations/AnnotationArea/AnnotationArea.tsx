@@ -1,6 +1,6 @@
 import React, { ReactNode, useContext } from 'react';
 import { ISSUE_TYPE_BASED } from '../../../models/Colors';
-import { AnnotationContext } from '../AnnotationTool/AnnotationContext';
+import { AnnotationContext } from '../../../contexts/AnnotationContext';
 import { getSVGHeigth, getSVGWidth } from '../helpers/CoordinatesHelper';
 import { SelectAreaProps } from '../tools/SelectArea';
 import { AnnotationMouseEventHandlers } from '../types/AnnotationMouseEventHandlers';

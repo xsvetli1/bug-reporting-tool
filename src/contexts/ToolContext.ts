@@ -1,6 +1,6 @@
 import { createContext } from 'react';
-import { UseStateSetter } from '../../models/UseStateSetter';
-import { AnnotationPropsObject } from '../annotations/tools/AllAnnotationProps';
+import { UseStateSetter } from '../models/UseStateSetter';
+import { AnnotationPropsObject } from '../components/annotations/tools/AllAnnotationProps';
 
 export const ToolContext = createContext<{
     annotations: AnnotationPropsObject;

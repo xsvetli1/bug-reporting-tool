@@ -1,9 +1,9 @@
 import { useContext, useState } from 'react';
-import { ToolContext } from '../../../BugReportingTool/ToolContext';
+import { ToolContext } from '../../../../contexts/ToolContext';
 import { getX, getY } from '../../helpers/CoordinatesHelper';
 import { ReactMouseEvent } from '../../types';
 import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
-import { AnnotationContext } from '../AnnotationContext';
+import { AnnotationContext } from '../../../../contexts/AnnotationContext';
 
 export const useAnnotationRelocation = (): [
     string,

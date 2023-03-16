@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
-import { ToolContext } from '../../BugReportingTool/ToolContext';
+import { ToolContext } from '../../../contexts/ToolContext';
 import { AllAnnotationProps } from '../tools/AllAnnotationProps';
 import { SelectedAreas } from '../types';
-import { AnnotationContext } from './AnnotationContext';
+import { AnnotationContext } from '../../../contexts/AnnotationContext';
 import AnnotationTool from './AnnotationTool';
 
 export interface AnnotationToolWrapperProps {

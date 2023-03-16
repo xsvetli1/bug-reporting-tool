@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import { ReactMouseEvent } from '../../types';
 import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
 import { getX, getY } from '../../helpers/CoordinatesHelper';
-import { AnnotationContext } from '../../AnnotationTool/AnnotationContext';
+import { AnnotationContext } from '../../../../contexts/AnnotationContext';
 
 export const useSelectArea = () => {
     const {

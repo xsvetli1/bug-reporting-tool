@@ -7,7 +7,7 @@ import { getSVGHeigth, getSVGWidth } from '../../helpers/CoordinatesHelper';
 import { AnnotationProps } from '../AnnotationProps';
 import { getRelocationStyle } from '../../helpers/RelocationHelper';
 import { DeleteButton } from '../DeleteButton';
-import { ToolContext } from '../../../BugReportingTool/ToolContext';
+import { ToolContext } from '../../../../contexts/ToolContext';
 
 export interface TextProps extends AnnotationProps<'TEXT'> {
     id: string;

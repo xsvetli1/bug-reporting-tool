@@ -8,7 +8,7 @@ import ReportBugButton from '../ReportBugButton';
 import '../../styles/colors.css';
 import AnnotationToolWrapper from '../annotations/AnnotationTool';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
-import { ToolContext } from './ToolContext';
+import { ToolContext } from '../../contexts/ToolContext';
 import { AnnotationPropsObject } from '../annotations/tools/AllAnnotationProps';
 
 export interface BugReportingToolProps {

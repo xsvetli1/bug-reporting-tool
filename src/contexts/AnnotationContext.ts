@@ -1,7 +1,7 @@
 import { createContext } from 'react';
-import { UseStateSetter } from '../../../models/UseStateSetter';
-import { AllAnnotationProps } from '../tools/AllAnnotationProps';
-import { SelectedAreas } from '../types';
+import { UseStateSetter } from '../models/UseStateSetter';
+import { AllAnnotationProps } from '../components/annotations/tools/AllAnnotationProps';
+import { SelectedAreas } from '../components/annotations/types';
 
 export const AnnotationContext = createContext<{
     currentAnnotationId: number;

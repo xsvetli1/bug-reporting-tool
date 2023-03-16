@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { ToolContext } from '../../BugReportingTool/ToolContext';
-import { AnnotationContext } from '../AnnotationTool/AnnotationContext';
+import { ToolContext } from '../../../contexts/ToolContext';
+import { AnnotationContext } from '../../../contexts/AnnotationContext';
 import Arrow from '../tools/Arrow';
 import FreeHand from '../tools/FreeHand';
 import Obfuscation from '../tools/Obfuscation';

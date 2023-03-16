@@ -7,7 +7,7 @@ import { useAnnotationCreateHandlers } from './handlers/useAnnotationCreateHandl
 import { AllAnnotationTypes } from '../types';
 import Annotations from '../Annotations';
 import { takeScreenshot } from '../helpers/ScreenshotHelper';
-import { ToolContext } from '../../BugReportingTool/ToolContext';
+import { ToolContext } from '../../../contexts/ToolContext';
 
 export interface AnnotationToolProps {
     isOngoingAnnotation: boolean;

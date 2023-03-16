@@ -6,7 +6,7 @@ import FormModalContent from '../FormModalContent';
 import OptionsModalContent from '../OptionsModalContent';
 import { FormProps } from '../../../models/FormProps';
 import { UseStateSetter } from '../../../models/UseStateSetter';
-import { ToolContext } from '../../BugReportingTool/ToolContext';
+import { ToolContext } from '../../../contexts/ToolContext';
 
 export interface ModalControllerProps {
     isToolOpen: boolean;
