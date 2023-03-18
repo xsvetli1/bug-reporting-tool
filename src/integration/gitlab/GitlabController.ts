@@ -1,5 +1,5 @@
 import IIssueController from '../IIssueController';
-import IssueFormatter from '../IssueFormatter';
+import IssueFormatter from '../utils/IssueFormatter';
 import { IssueInfo } from '../models/IssueInfo';
 import { GitlabProps } from './GitlabProps';
 

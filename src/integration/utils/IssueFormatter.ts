@@ -1,4 +1,5 @@
-import { IssueInfo } from './models/IssueInfo';
+import { IssueInfo } from '../models/IssueInfo';
+import EnvironmentInfoHelper from './EnvironmentInfoHelper';
 
 class IssueFormatter {
     static issueTitle(issueInfo: IssueInfo) {
@@ -18,6 +19,11 @@ class IssueFormatter {
             `## Screenshots\n` +
             `${screenshotMarkdowns.join('\n')}\n` +
             `## Environment\n` +
+            `- Date & Time: ${EnvironmentInfoHelper.obtainDateTime()}\n` +
+            `- Browser: ${EnvironmentInfoHelper.obtainBrowser()}\n` +
+            `- OS: ${EnvironmentInfoHelper.obtainOperatingSystem()}\n` +
+            `- Screen: ${EnvironmentInfoHelper.obtainScreenSize()}\n` +
+            `- Viewport: ${EnvironmentInfoHelper.obtainViewportSize()}\n` +
             `## Contact info\n ${issueInfo.email}`
         );
     }
