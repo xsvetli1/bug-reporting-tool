@@ -73,7 +73,7 @@ button {
     margin-left: 10px !important;
 }
 
-.MuiSvgIcon-root {
+.annotation-area-content .MuiSvgIcon-root {
     color: white;
 }
 
