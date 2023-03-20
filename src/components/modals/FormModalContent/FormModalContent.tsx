@@ -26,7 +26,7 @@ export interface FormModalContentProps {
 }
 
 const FormModalContent = (props: FormModalContentProps) => {
-    const { annotations, screenshots } = useContext(ToolContext);
+    const { annotations, setAnnotations, screenshots, setScreenshots } = useContext(ToolContext);
 
     const emailRef = useRef<HTMLInputElement>(null);
     const titleRef = useRef<HTMLInputElement>(null);
@@ -55,6 +55,8 @@ const FormModalContent = (props: FormModalContentProps) => {
         });
         props.setSnackbarSuccess(success);
         props.setSnackbarShown(true);
+        setAnnotations({});
+        setScreenshots([]);
     };
 
     const textFieldProps = (
