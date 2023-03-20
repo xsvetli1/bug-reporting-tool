@@ -39,15 +39,15 @@ const AnnotationTool = ({ handleClose }: AnnotationToolProps) => {
                         currentAnnotationType={currentAnnotationType}
                         setCurrentAnnotationType={setCurrentAnnotationType}
                         annotationInHandId={annotationInHandId}
-                        submit={async () =>
+                        submit={async () => {
                             takeScreenshot().then((screenshot) => {
                                 setScreenshots((allScreenshots) => {
                                     allScreenshots.push(screenshot);
                                     return allScreenshots;
                                 });
-                                setIsOngoingAnnotation(false);
-                            })
-                        }
+                            });
+                            setIsOngoingAnnotation(false);
+                        }}
                         handleClose={handleClose}
                     />
                 </>
