@@ -3,7 +3,7 @@ import EnvironmentInfoHelper from './EnvironmentInfoHelper';
 
 class IssueFormatter {
     static issueTitle(issueInfo: IssueInfo) {
-        return `[Annotate-Report] ${issueInfo.type.getName()}: ${issueInfo.title}`;
+        return `[Annotate-Report] ${issueInfo.title}`;
     }
 
     static issueDescription(issueInfo: IssueInfo, screenshotMarkdowns: string[]): string {
