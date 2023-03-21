@@ -15,7 +15,8 @@ export interface AnnotationToolProps {
 }
 
 const AnnotationTool = ({ handleClose }: AnnotationToolProps) => {
-    const { setScreenshots, isOngoingAnnotation, setIsOngoingAnnotation } = useContext(ToolContext);
+    const { setAnnotations, setScreenshots, isOngoingAnnotation, setIsOngoingAnnotation } =
+        useContext(ToolContext);
 
     const allAnnotationCreateHandlers = useAnnotationCreateHandlers();
     const [annotationInHandId, obtainAnnotationGrabHandlers, annotationMoveHandlers] =
@@ -40,13 +41,15 @@ const AnnotationTool = ({ handleClose }: AnnotationToolProps) => {
                         setCurrentAnnotationType={setCurrentAnnotationType}
                         annotationInHandId={annotationInHandId}
                         submit={async () => {
+                            // TODO: pass deeper
                             takeScreenshot().then((screenshot) => {
                                 setScreenshots((allScreenshots) => {
                                     allScreenshots.push(screenshot);
-                                    return allScreenshots;
+                                    return [...allScreenshots];
                                 });
                             });
                             setIsOngoingAnnotation(false);
+                            setAnnotations({});
                         }}
                         handleClose={handleClose}
                     />

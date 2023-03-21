@@ -1,6 +1,7 @@
 import React, { RefObject, useContext, useEffect, useRef } from 'react';
 import {
     Button,
+    Chip,
     DialogActions,
     DialogContent,
     DialogTitle,
@@ -12,6 +13,7 @@ import { IssueInfo } from '../../../integration/models/IssueInfo';
 import { FormFields, FormProps } from '../../../models/FormProps';
 import { UseStateSetter } from '../../../models/UseStateSetter';
 import { ToolContext } from '../../../contexts/ToolContext';
+import '../../../styles/modals.css';
 
 export interface FormModalContentProps {
     formState: FormProps;
@@ -96,6 +98,20 @@ const FormModalContent = (props: FormModalContentProps) => {
                 <TextField
                     {...textFieldProps('description', 'Description', 'text', descriptionRef, true)}
                 />
+                <div className="screenshot-chips">
+                    {screenshots.map((screenshot, i) => (
+                        <Chip
+                            key={i}
+                            label={`Screenshot ${i + 1}`}
+                            onClick={() => window.open(screenshot, '_blank', 'noreferrer')}
+                            onDelete={() => {
+                                setScreenshots([
+                                    ...screenshots.filter((_, current_i) => current_i != i)
+                                ]);
+                            }}
+                        />
+                    ))}
+                </div>
             </DialogContent>
             <DialogActions>
                 <Button onClick={props.handleAnnotate}>Annotate</Button>
