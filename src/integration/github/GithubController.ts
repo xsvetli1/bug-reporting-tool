@@ -116,7 +116,7 @@ class GithubController implements IIssueController {
         const release = (await this.obtainReleaseInfo()) ?? (await this.createRelease());
 
         issueInfo.screenshots.map(async (screenshot) => {
-            const screenshotBlob = await fetch(screenshot).then((res) => res.blob());
+            const screenshotBlob = await fetch(screenshot.dataUrl).then((res) => res.blob());
             const success = await this.uploadScreenshot(release.id, screenshotBlob);
             console.log('Screenshot uploaded succesfully: ', success);
         });

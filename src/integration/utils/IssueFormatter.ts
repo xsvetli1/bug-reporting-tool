@@ -7,17 +7,22 @@ class IssueFormatter {
     }
 
     static issueDescription(issueInfo: IssueInfo, screenshotMarkdowns: string[]): string {
-        const comments = issueInfo.comments.length
-            ? `### Comments\n` +
-              issueInfo.comments.map((comment, i) => `${i + 1}. ${comment}`).join('\n') +
-              '\n'
-            : '';
-
         return (
             `## Description\n${issueInfo.description}\n` +
-            comments +
             `## Screenshots\n` +
-            `${screenshotMarkdowns.join('\n')}\n` +
+            `${screenshotMarkdowns
+                .map((markdown, i) => {
+                    return (
+                        `${markdown}\n` +
+                        (issueInfo.screenshots[i].comments.length
+                            ? `### Comments\n` +
+                              `${issueInfo.screenshots[i].comments
+                                  .map((comment, j) => `${j + 1}. ${comment}`)
+                                  .join('\n')}\n\n`
+                            : '')
+                    );
+                })
+                .join('\n')}\n` +
             `## Environment\n` +
             `- Date & Time: ${EnvironmentInfoHelper.obtainDateTime()}\n` +
             `- Browser: ${EnvironmentInfoHelper.obtainBrowser()}\n` +

@@ -29,7 +29,9 @@ class GitlabController implements IIssueController {
 
     async queryFromIssueInfo(issueInfo: IssueInfo): Promise<string> {
         const screenshotsMarkdowns = await Promise.all(
-            issueInfo.screenshots.map(async (screenshot) => await this.uploadScreenshot(screenshot))
+            issueInfo.screenshots.map(
+                async (screenshot) => await this.uploadScreenshot(screenshot.dataUrl)
+            )
         );
 
         return (

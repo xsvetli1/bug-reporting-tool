@@ -10,6 +10,7 @@ import AnnotationToolWrapper from '../annotations/AnnotationTool';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { ToolContext } from '../../contexts/ToolContext';
 import { AnnotationPropsObject } from '../annotations/tools/AllAnnotationProps';
+import { ScreenshotInfo } from '../../models/ScreenshotInfo';
 
 export interface BugReportingToolProps {
     platform: Platform;
@@ -24,7 +25,7 @@ const BugReportingTool = ({ platform, platformProps, children }: BugReportingToo
     const [isOngoingAnnotation, setIsOngoingAnnotation] = useState(false);
     const [isCloseAnnotationToolDialogOpen, setIsCloseAnnotationDialogOpen] = useState(false);
     const [annotations, setAnnotations] = useState<AnnotationPropsObject>({});
-    const [screenshots, setScreenshots] = useState<string[]>([]);
+    const [screenshots, setScreenshots] = useState<ScreenshotInfo[]>([]);
     const [theme, setTheme] = useState('');
 
     const issueController = IssueControllerFactory.get(platform, platformProps);

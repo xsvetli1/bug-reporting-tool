@@ -28,21 +28,11 @@ export interface FormModalContentProps {
 }
 
 const FormModalContent = (props: FormModalContentProps) => {
-    const { annotations, setAnnotations, screenshots, setScreenshots } = useContext(ToolContext);
+    const { setAnnotations, screenshots, setScreenshots } = useContext(ToolContext);
 
     const emailRef = useRef<HTMLInputElement>(null);
     const titleRef = useRef<HTMLInputElement>(null);
     const descriptionRef = useRef<HTMLInputElement>(null);
-
-    const extractComments = () => {
-        const comments: string[] = [];
-        Object.values(annotations).forEach((annotation) => {
-            if (annotation.type === 'TEXT') {
-                comments.push(annotation.comment ?? '');
-            }
-        });
-        return comments;
-    };
 
     const handleSend = async () => {
         props.handleClose();
@@ -52,8 +42,7 @@ const FormModalContent = (props: FormModalContentProps) => {
             email: emailRef.current?.value ?? '',
             title: titleRef.current?.value ?? '',
             description: descriptionRef.current?.value ?? '',
-            screenshots,
-            comments: extractComments()
+            screenshots
         });
         props.setSnackbarSuccess(success);
         props.setSnackbarShown(true);
@@ -103,7 +92,7 @@ const FormModalContent = (props: FormModalContentProps) => {
                         <Chip
                             key={i}
                             label={`Screenshot ${i + 1}`}
-                            onClick={() => window.open(screenshot, '_blank', 'noreferrer')}
+                            onClick={() => window.open(screenshot.dataUrl, '_blank', 'noreferrer')}
                             onDelete={() => {
                                 setScreenshots([
                                     ...screenshots.filter((_, current_i) => current_i != i)

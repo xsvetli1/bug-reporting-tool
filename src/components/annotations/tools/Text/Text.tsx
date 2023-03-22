@@ -111,15 +111,16 @@ const Text = ({
                                 rows={MIN_ROWS}
                                 placeholder="Write your comment here..."
                                 defaultValue={comment}
-                                onChange={(event) =>
+                                onChange={(event) => {
+                                    const currentValue = event.currentTarget.value;
                                     setAnnotations((annotations) => {
                                         const annotation = annotations[id];
                                         if (annotation.type === 'TEXT') {
-                                            annotation.comment = event.currentTarget.value;
+                                            annotation.comment = currentValue;
                                         }
                                         return annotations;
-                                    })
-                                }
+                                    });
+                                }}
                             />
                         </CardContent>
                         <CardActions

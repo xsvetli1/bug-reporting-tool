@@ -1,12 +1,13 @@
 import { createContext } from 'react';
 import { UseStateSetter } from '../models/UseStateSetter';
 import { AnnotationPropsObject } from '../components/annotations/tools/AllAnnotationProps';
+import { ScreenshotInfo } from '../models/ScreenshotInfo';
 
 export const ToolContext = createContext<{
     annotations: AnnotationPropsObject;
     setAnnotations: UseStateSetter<AnnotationPropsObject>;
-    screenshots: string[];
-    setScreenshots: UseStateSetter<string[]>;
+    screenshots: ScreenshotInfo[];
+    setScreenshots: UseStateSetter<ScreenshotInfo[]>;
     isOngoingAnnotation: boolean;
     setIsOngoingAnnotation: UseStateSetter<boolean>;
 }>({

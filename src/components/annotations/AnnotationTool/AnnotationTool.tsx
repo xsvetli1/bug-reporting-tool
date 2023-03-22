@@ -15,8 +15,13 @@ export interface AnnotationToolProps {
 }
 
 const AnnotationTool = ({ handleClose }: AnnotationToolProps) => {
-    const { setAnnotations, setScreenshots, isOngoingAnnotation, setIsOngoingAnnotation } =
-        useContext(ToolContext);
+    const {
+        annotations,
+        setAnnotations,
+        setScreenshots,
+        isOngoingAnnotation,
+        setIsOngoingAnnotation
+    } = useContext(ToolContext);
 
     const allAnnotationCreateHandlers = useAnnotationCreateHandlers();
     const [annotationInHandId, obtainAnnotationGrabHandlers, annotationMoveHandlers] =
@@ -42,9 +47,16 @@ const AnnotationTool = ({ handleClose }: AnnotationToolProps) => {
                         annotationInHandId={annotationInHandId}
                         submit={async () => {
                             // TODO: pass deeper
+                            const comments: string[] = [];
+                            Object.values(annotations).forEach((annotation) => {
+                                if (annotation.type === 'TEXT') {
+                                    comments.push(annotation.comment ?? '');
+                                }
+                            });
+
                             takeScreenshot().then((screenshot) => {
                                 setScreenshots((allScreenshots) => {
-                                    allScreenshots.push(screenshot);
+                                    allScreenshots.push({ dataUrl: screenshot, comments });
                                     return [...allScreenshots];
                                 });
                             });
