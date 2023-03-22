@@ -8,7 +8,14 @@ class IssueFormatter {
 
     static issueDescription(issueInfo: IssueInfo, screenshotMarkdowns: string[]): string {
         return (
+            `_Created by ${issueInfo.email}_\n` +
             `## Description\n${issueInfo.description}\n` +
+            `## Environment\n` +
+            `- **Date & Time:** ${EnvironmentInfoHelper.obtainDateTime()}\n` +
+            `- **Browser:** ${EnvironmentInfoHelper.obtainBrowser()}\n` +
+            `- **OS:** ${EnvironmentInfoHelper.obtainOperatingSystem()}\n` +
+            `- **Screen:** ${EnvironmentInfoHelper.obtainScreenSize()}\n` +
+            `- **Viewport:** ${EnvironmentInfoHelper.obtainViewportSize()}\n` +
             `## Screenshots\n` +
             `${screenshotMarkdowns
                 .map((markdown, i) => {
@@ -22,14 +29,7 @@ class IssueFormatter {
                             : '')
                     );
                 })
-                .join('\n')}\n` +
-            `## Environment\n` +
-            `- Date & Time: ${EnvironmentInfoHelper.obtainDateTime()}\n` +
-            `- Browser: ${EnvironmentInfoHelper.obtainBrowser()}\n` +
-            `- OS: ${EnvironmentInfoHelper.obtainOperatingSystem()}\n` +
-            `- Screen: ${EnvironmentInfoHelper.obtainScreenSize()}\n` +
-            `- Viewport: ${EnvironmentInfoHelper.obtainViewportSize()}\n` +
-            `## Contact info\n ${issueInfo.email}`
+                .join('\n---\n')}\n`
         );
     }
 }
