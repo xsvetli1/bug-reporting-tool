@@ -13,22 +13,11 @@ export interface AnnotationAreaProps {
 const AnnotationArea = (props: AnnotationAreaProps) => {
     const { selectedAreas } = useContext(AnnotationContext);
 
-    const rectToPathData = ({ shift, x, y, width, height }: SelectAreaProps) =>
-        `M ${x + shift.x} ${y + shift.y} h ${width} v ${height} h ${-width} Z`;
-
     const pathDataFromSelectedAreas = () =>
         Object.keys(selectedAreas).map((key: string) => {
             return rectToPathData(selectedAreas[key]);
         });
 
-    const background = rectToPathData({
-        type: 'SELECT_AREA',
-        shift: { x: 0, y: 0 },
-        x: 0,
-        y: 0,
-        width: getSVGWidth(),
-        height: getSVGHeigth()
-    });
     const d = [background, ...pathDataFromSelectedAreas()].join('\n');
 
     return (
@@ -50,5 +39,17 @@ const AnnotationArea = (props: AnnotationAreaProps) => {
         </svg>
     );
 };
+
+const rectToPathData = ({ shift, x, y, width, height }: SelectAreaProps) =>
+    `M ${x + shift.x} ${y + shift.y} h ${width} v ${height} h ${-width} Z`;
+
+const background = rectToPathData({
+    type: 'SELECT_AREA',
+    shift: { x: 0, y: 0 },
+    x: 0,
+    y: 0,
+    width: getSVGWidth(),
+    height: getSVGHeigth()
+});
 
 export default AnnotationArea;
