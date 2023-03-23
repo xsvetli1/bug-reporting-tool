@@ -1,3 +1,4 @@
+import { ScreenshotInfo } from '../../models/ScreenshotInfo';
 import { IssueInfo } from '../models/IssueInfo';
 import EnvironmentInfoHelper from './EnvironmentInfoHelper';
 
@@ -7,6 +8,14 @@ class IssueFormatter {
     }
 
     static issueDescription(issueInfo: IssueInfo, screenshotMarkdowns: string[]): string {
+        const screenshotComments = (screenshotInfo: ScreenshotInfo) =>
+            screenshotInfo.comments.length
+                ? `### Comments\n` +
+                  `${screenshotInfo.comments
+                      .map((comment, j) => `${j + 1}. ${comment}`)
+                      .join('\n')}\n\n`
+                : '';
+
         return (
             `_Created by ${issueInfo.email}_\n` +
             `## Description\n${issueInfo.description}\n` +
@@ -18,17 +27,9 @@ class IssueFormatter {
             `- **Viewport:** ${EnvironmentInfoHelper.obtainViewportSize()}\n` +
             `## Screenshots\n` +
             `${screenshotMarkdowns
-                .map((markdown, i) => {
-                    return (
-                        `${markdown}\n` +
-                        (issueInfo.screenshots[i].comments.length
-                            ? `### Comments\n` +
-                              `${issueInfo.screenshots[i].comments
-                                  .map((comment, j) => `${j + 1}. ${comment}`)
-                                  .join('\n')}\n\n`
-                            : '')
-                    );
-                })
+                .map(
+                    (markdown, i) => `${markdown}\n` + screenshotComments(issueInfo.screenshots[i])
+                )
                 .join('\n---\n')}\n`
         );
     }
