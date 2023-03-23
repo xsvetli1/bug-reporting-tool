@@ -7,7 +7,11 @@ class IssueFormatter {
         return `[Annotate-Report] ${issueInfo.title}`;
     }
 
-    static issueDescription(issueInfo: IssueInfo, screenshotMarkdowns: string[]): string {
+    static issueDescription(
+        issueInfo: IssueInfo,
+        screenshotMarkdowns: string[],
+        consoleHistoryMarkdown: string
+    ): string {
         const screenshotComments = (screenshotInfo: ScreenshotInfo) =>
             screenshotInfo.comments.length
                 ? `### Comments\n` +
@@ -25,6 +29,7 @@ class IssueFormatter {
             `- **OS:** ${EnvironmentInfoHelper.obtainOperatingSystem()}\n` +
             `- **Screen:** ${EnvironmentInfoHelper.obtainScreenSize()}\n` +
             `- **Viewport:** ${EnvironmentInfoHelper.obtainViewportSize()}\n` +
+            `- **Console:** ${consoleHistoryMarkdown}\n` +
             `## Screenshots\n` +
             `${screenshotMarkdowns
                 .map(

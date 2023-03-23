@@ -2,6 +2,7 @@ import IIssueController from '../IIssueController';
 import IssueFormatter from '../utils/IssueFormatter';
 import { IssueInfo } from '../models/IssueInfo';
 import { GitlabProps } from './GitlabProps';
+import { ConsoleOutput } from '../../models/ConsoleOutput';
 
 class GitlabController implements IIssueController {
     props: GitlabProps;
@@ -34,13 +35,30 @@ class GitlabController implements IIssueController {
             )
         );
 
+        const consoleHistoryMarkdown = await this.uploadConsoleHistory(issueInfo.consoleOutput);
+
         return (
             `title=${encodeURIComponent(IssueFormatter.issueTitle(issueInfo))}` +
             `&description=${encodeURIComponent(
-                IssueFormatter.issueDescription(issueInfo, screenshotsMarkdowns)
+                IssueFormatter.issueDescription(
+                    issueInfo,
+                    screenshotsMarkdowns,
+                    consoleHistoryMarkdown
+                )
             )}` +
             `&labels=${issueInfo.type.getLabel()}`
         );
+    }
+
+    async uploadConsoleHistory(history: ConsoleOutput): Promise<string> {
+        const file = new File([new Blob([JSON.stringify(history)])], 'console-output.json', {
+            type: 'application/json'
+        });
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        return await this.uploadFile(file);
     }
 
     /**
@@ -56,6 +74,13 @@ class GitlabController implements IIssueController {
             type: 'image/png'
         });
 
+        const formData = new FormData();
+        formData.append('file', file);
+
+        return await this.uploadFile(file);
+    }
+
+    async uploadFile(file: File): Promise<string> {
         const formData = new FormData();
         formData.append('file', file);
 

@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import IssueControllerFactory from '../../integration/IssueControllerFactory';
 import { IssueInfo } from '../../integration/models/IssueInfo';
 import Platform from '../../integration/models/Platform';
@@ -11,6 +11,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/
 import { ToolContext } from '../../contexts/ToolContext';
 import { AnnotationPropsObject } from '../annotations/tools/AllAnnotationProps';
 import { ScreenshotInfo } from '../../models/ScreenshotInfo';
+import { ConsoleOutput } from '../../models/ConsoleOutput';
 
 export interface BugReportingToolProps {
     platform: Platform;
@@ -27,8 +28,36 @@ const BugReportingTool = ({ platform, platformProps, children }: BugReportingToo
     const [annotations, setAnnotations] = useState<AnnotationPropsObject>({});
     const [screenshots, setScreenshots] = useState<ScreenshotInfo[]>([]);
     const [theme, setTheme] = useState('');
+    const [consoleOutput, setConsoleOutput] = useState<ConsoleOutput>({
+        log: [],
+        debug: [],
+        info: [],
+        warn: [],
+        error: []
+    });
 
     const issueController = IssueControllerFactory.get(platform, platformProps);
+
+    useEffect(() => {
+        const consoleOutputRedefine = (
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            originalOutput: (...data: any[]) => void,
+            outputChannel: 'log' | 'debug' | 'info' | 'warn' | 'error'
+        ) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            return (...args: any[]) => {
+                originalOutput(...args);
+                consoleOutput[outputChannel].push(...args.map((arg) => `${arg}`));
+                setConsoleOutput(consoleOutput);
+            };
+        };
+
+        console.log = consoleOutputRedefine(console.log, 'log');
+        console.debug = consoleOutputRedefine(console.debug, 'debug');
+        console.info = consoleOutputRedefine(console.info, 'info');
+        console.warn = consoleOutputRedefine(console.warn, 'warn');
+        console.error = consoleOutputRedefine(console.error, 'error');
+    }, []);
 
     return (
         <ToolContext.Provider
@@ -38,7 +67,8 @@ const BugReportingTool = ({ platform, platformProps, children }: BugReportingToo
                 screenshots,
                 setScreenshots,
                 isOngoingAnnotation,
-                setIsOngoingAnnotation
+                setIsOngoingAnnotation,
+                consoleOutput
             }}
         >
             <div data-theme={theme}>

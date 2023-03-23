@@ -28,7 +28,7 @@ export interface FormModalContentProps {
 }
 
 const FormModalContent = (props: FormModalContentProps) => {
-    const { setAnnotations, screenshots, setScreenshots } = useContext(ToolContext);
+    const { setAnnotations, screenshots, setScreenshots, consoleOutput } = useContext(ToolContext);
 
     const emailRef = useRef<HTMLInputElement>(null);
     const titleRef = useRef<HTMLInputElement>(null);
@@ -42,7 +42,8 @@ const FormModalContent = (props: FormModalContentProps) => {
             email: emailRef.current?.value ?? '',
             title: titleRef.current?.value ?? '',
             description: descriptionRef.current?.value ?? '',
-            screenshots
+            screenshots,
+            consoleOutput
         });
         props.setSnackbarSuccess(success);
         props.setSnackbarShown(true);
