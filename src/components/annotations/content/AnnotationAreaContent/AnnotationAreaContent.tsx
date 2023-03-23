@@ -1,5 +1,5 @@
 import { Button, ToggleButton, ToggleButtonGroup, Tooltip } from '@mui/material';
-import React, { useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import Draggable from 'react-draggable';
 import CloseButton from '../CloseButton';
 import CropFreeSharpIcon from '@mui/icons-material/CropFreeSharp';
@@ -12,12 +12,13 @@ import { UseStateSetter } from '../../../../models/UseStateSetter';
 import { AllAnnotationTypes } from '../../types';
 import AnnotationAreaBorder from '../AnnotationAreaBorder';
 import { getSVGHeigth, getSVGWidth } from '../../helpers/CoordinatesHelper';
+import { ToolContext } from '../../../../contexts/ToolContext';
+import { takeScreenshot } from '../../helpers/ScreenshotHelper';
 
 export interface AnnotationAreaContentProps {
     currentAnnotationType: AllAnnotationTypes;
     setCurrentAnnotationType: UseStateSetter<AllAnnotationTypes>;
     annotationInHandId: string;
-    submit: () => void;
     handleClose: () => void;
 }
 
@@ -25,9 +26,13 @@ const AnnotationAreaContent = ({
     currentAnnotationType,
     setCurrentAnnotationType,
     annotationInHandId,
-    submit,
     handleClose
 }: AnnotationAreaContentProps) => {
+    const { annotations, setAnnotations, setScreenshots, setIsOngoingAnnotation } =
+        useContext(ToolContext);
+
+    const toolbarRef = useRef<HTMLDivElement>(null);
+
     const handleAnnotationTypeId = (
         _: React.MouseEvent<HTMLElement>,
         newId: AllAnnotationTypes
@@ -37,19 +42,23 @@ const AnnotationAreaContent = ({
         }
     };
 
-    const buttonIcons: { [key in AllAnnotationTypes]: () => { icon: JSX.Element; label: string } } =
-        {
-            SELECT_AREA: () => ({
-                icon: <CropFreeSharpIcon />,
-                label: 'Select Area'
-            }),
-            ARROW: () => ({ icon: <CallMadeSharpIcon />, label: 'Arrow' }),
-            FREE_HAND: () => ({ icon: <ModeEditOutlineSharpIcon />, label: 'Free Hand' }),
-            OBFUSCATION: () => ({ icon: <DeselectIcon />, label: 'Obfuscation' }),
-            TEXT: () => ({ icon: <ChatSharpIcon />, label: 'Text' })
-        };
+    const submit = async () => {
+        const comments: string[] = [];
+        Object.values(annotations).forEach((annotation) => {
+            if (annotation.type === 'TEXT') {
+                comments.push(annotation.comment ?? '');
+            }
+        });
 
-    const toolbarRef = useRef<HTMLDivElement>(null);
+        takeScreenshot().then((screenshot) => {
+            setScreenshots((allScreenshots) => {
+                allScreenshots.push({ dataUrl: screenshot, comments });
+                return [...allScreenshots];
+            });
+        });
+        setIsOngoingAnnotation(false);
+        setAnnotations({});
+    };
 
     return (
         <div className="annotation-area-content" data-html2canvas-ignore>
@@ -73,7 +82,7 @@ const AnnotationAreaContent = ({
                     >
                         {Object.keys(buttonIcons).map((annotationType) => {
                             const { icon, label } =
-                                buttonIcons[annotationType as AllAnnotationTypes]();
+                                buttonIcons[annotationType as AllAnnotationTypes];
                             return (
                                 <ToggleButton
                                     key={annotationType}
@@ -96,7 +105,7 @@ const AnnotationAreaContent = ({
                             className="annotation-save-button"
                             variant="contained"
                             color="success"
-                            onClick={() => submit()}
+                            onClick={submit}
                         >
                             <DoneIcon />
                         </Button>
@@ -105,6 +114,17 @@ const AnnotationAreaContent = ({
             </Draggable>
         </div>
     );
+};
+
+const buttonIcons: { [key in AllAnnotationTypes]: { icon: JSX.Element; label: string } } = {
+    SELECT_AREA: {
+        icon: <CropFreeSharpIcon />,
+        label: 'Select Area'
+    },
+    ARROW: { icon: <CallMadeSharpIcon />, label: 'Arrow' },
+    FREE_HAND: { icon: <ModeEditOutlineSharpIcon />, label: 'Free Hand' },
+    OBFUSCATION: { icon: <DeselectIcon />, label: 'Obfuscation' },
+    TEXT: { icon: <ChatSharpIcon />, label: 'Text' }
 };
 
 export default AnnotationAreaContent;

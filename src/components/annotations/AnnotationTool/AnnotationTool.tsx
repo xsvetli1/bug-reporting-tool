@@ -6,7 +6,6 @@ import AnnotationAreaContent from '../content/AnnotationAreaContent';
 import { useAnnotationCreateHandlers } from './handlers/useAnnotationCreateHandlers';
 import { AllAnnotationTypes } from '../types';
 import Annotations from '../Annotations';
-import { takeScreenshot } from '../helpers/ScreenshotHelper';
 import { ToolContext } from '../../../contexts/ToolContext';
 
 export interface AnnotationToolProps {
@@ -15,13 +14,7 @@ export interface AnnotationToolProps {
 }
 
 const AnnotationTool = ({ handleClose }: AnnotationToolProps) => {
-    const {
-        annotations,
-        setAnnotations,
-        setScreenshots,
-        isOngoingAnnotation,
-        setIsOngoingAnnotation
-    } = useContext(ToolContext);
+    const { isOngoingAnnotation } = useContext(ToolContext);
 
     const allAnnotationCreateHandlers = useAnnotationCreateHandlers();
     const [annotationInHandId, obtainAnnotationGrabHandlers, annotationMoveHandlers] =
@@ -45,24 +38,6 @@ const AnnotationTool = ({ handleClose }: AnnotationToolProps) => {
                         currentAnnotationType={currentAnnotationType}
                         setCurrentAnnotationType={setCurrentAnnotationType}
                         annotationInHandId={annotationInHandId}
-                        submit={async () => {
-                            // TODO: pass deeper
-                            const comments: string[] = [];
-                            Object.values(annotations).forEach((annotation) => {
-                                if (annotation.type === 'TEXT') {
-                                    comments.push(annotation.comment ?? '');
-                                }
-                            });
-
-                            takeScreenshot().then((screenshot) => {
-                                setScreenshots((allScreenshots) => {
-                                    allScreenshots.push({ dataUrl: screenshot, comments });
-                                    return [...allScreenshots];
-                                });
-                            });
-                            setIsOngoingAnnotation(false);
-                            setAnnotations({});
-                        }}
                         handleClose={handleClose}
                     />
                 </>
