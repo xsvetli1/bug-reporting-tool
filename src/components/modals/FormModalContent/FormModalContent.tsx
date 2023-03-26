@@ -34,7 +34,28 @@ const FormModalContent = (props: FormModalContentProps) => {
     const titleRef = useRef<HTMLInputElement>(null);
     const descriptionRef = useRef<HTMLInputElement>(null);
 
+    const validateFields = () => {
+        let areValid = true;
+
+        Object.entries(props.formState).forEach(([key, fieldProps]) => {
+            if (!fieldProps.required) return;
+            if (fieldProps.value.length === 0) {
+                areValid = false;
+                if (!fieldProps.error) {
+                    fieldProps.error = true;
+                    props.setFormState((state) => ({
+                        ...state,
+                        ...{ [key]: fieldProps }
+                    }));
+                }
+            }
+        });
+
+        return areValid;
+    };
+
     const handleSend = async () => {
+        if (!validateFields()) return;
         props.handleClose();
         props.setFormState({});
         const success = await props.newIssue({
@@ -58,6 +79,7 @@ const FormModalContent = (props: FormModalContentProps) => {
         ref: RefObject<HTMLInputElement>,
         multiline = false
     ): TextFieldProps => {
+        const required = props.formState[id]?.required;
         return {
             margin: 'dense',
             id: id,
@@ -66,18 +88,34 @@ const FormModalContent = (props: FormModalContentProps) => {
             fullWidth: true,
             multiline: multiline,
             rows: 8,
+            required: required,
+            error: required && props.formState[id]?.error,
+            helperText: required && props.formState[id]?.error ? 'This field is required' : '',
             variant: 'standard',
             inputRef: ref,
-            defaultValue: props.formState[id],
+            defaultValue: props.formState[id]?.value,
             onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
                 props.setFormState((state) => ({
                     ...state,
-                    ...{ [id]: event.target.value }
+                    ...{
+                        [id]: {
+                            value: event.target.value,
+                            required: required,
+                            error: event.target.value.length === 0
+                        }
+                    }
                 }))
         };
     };
 
-    useEffect(() => props.setTheme(props.type.getLabel()), []);
+    useEffect(() => {
+        props.setTheme(props.type.getLabel());
+        props.setFormState({
+            email: { value: '', required: false, error: false },
+            title: { value: '', required: true, error: false },
+            description: { value: '', required: true, error: false }
+        });
+    }, []);
 
     return (
         <div>
