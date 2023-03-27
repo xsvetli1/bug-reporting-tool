@@ -30,7 +30,7 @@ const AnnotationTool = ({ handleClose }: AnnotationToolProps) => {
     return (
         <>
             {isOngoingAnnotation && (
-                <>
+                <div className="annotation-tool">
                     <AnnotationArea mouseEventHandlers={mouseEventHandlers}>
                         <Annotations obtainAnnotationGrabHandlers={obtainAnnotationGrabHandlers} />
                     </AnnotationArea>
@@ -40,7 +40,7 @@ const AnnotationTool = ({ handleClose }: AnnotationToolProps) => {
                         annotationInHandId={annotationInHandId}
                         handleClose={handleClose}
                     />
-                </>
+                </div>
             )}
         </>
     );

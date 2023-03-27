@@ -96,7 +96,7 @@ const BugReportingTool = ({
                         handleClose={() => setIsCloseAnnotationDialogOpen(true)}
                     />
                 )}
-                <Dialog open={isCloseAnnotationToolDialogOpen}>
+                <Dialog open={isCloseAnnotationToolDialogOpen} sx={{ zIndex: 2147483647 }}>
                     <DialogTitle>Close Annotation Tool</DialogTitle>
                     <DialogContent>
                         Do you really want to close Annotation tool without saving?

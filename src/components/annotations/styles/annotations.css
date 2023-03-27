@@ -2,6 +2,15 @@
     --border-width: 3px;
 }
 
+.annotation-tool {
+    position: fixed;
+    z-index: 2147483646;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
 .annotation-area {
     position: absolute;
     top: 0;
