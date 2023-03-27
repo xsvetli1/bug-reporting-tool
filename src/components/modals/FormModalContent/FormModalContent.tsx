@@ -16,6 +16,7 @@ import { ToolContext } from '../../../contexts/ToolContext';
 import '../../../styles/modals.css';
 
 export interface FormModalContentProps {
+    isEmailRequired: boolean;
     formState: FormProps;
     setFormState: React.Dispatch<React.SetStateAction<FormProps>>;
     type: IssueType;
@@ -111,7 +112,7 @@ const FormModalContent = (props: FormModalContentProps) => {
     useEffect(() => {
         props.setTheme(props.type.getLabel());
         props.setFormState({
-            email: { value: '', required: false, error: false },
+            email: { value: '', required: props.isEmailRequired, error: false },
             title: { value: '', required: true, error: false },
             description: { value: '', required: true, error: false }
         });

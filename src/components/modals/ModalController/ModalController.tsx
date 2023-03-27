@@ -9,6 +9,7 @@ import { UseStateSetter } from '../../../models/UseStateSetter';
 import { ToolContext } from '../../../contexts/ToolContext';
 
 export interface ModalControllerProps {
+    isEmailRequired: boolean;
     isToolOpen: boolean;
     setIsToolOpen: UseStateSetter<boolean>;
     isBugAnnotationOpen: boolean;
@@ -36,6 +37,7 @@ const ModalController = (props: ModalControllerProps) => {
 
     const formModalProps = (type: IssueType) => {
         return {
+            isEmailRequired: props.isEmailRequired,
             formState: formState,
             setFormState: setFormState,
             type: type,
