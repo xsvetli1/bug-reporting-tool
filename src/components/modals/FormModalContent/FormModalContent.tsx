@@ -110,6 +110,11 @@ const FormModalContent = (props: FormModalContentProps) => {
     };
 
     useEffect(() => {
+        if (Object.keys(props.formState).length) {
+            // useEffect has been already called once
+            return;
+        }
+
         props.setTheme(props.type.getLabel());
         props.setFormState({
             email: { value: '', required: props.isEmailRequired, error: false },

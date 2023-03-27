@@ -21,7 +21,7 @@ class IssueFormatter {
                 : '';
 
         return (
-            `_Created by ${issueInfo.email}_\n` +
+            `_Created by ${issueInfo.email.length ? issueInfo.email : 'anonymous user'}_\n` +
             `## Description\n${issueInfo.description}\n` +
             `## Environment\n` +
             `- **Date & Time:** ${EnvironmentInfoHelper.obtainDateTime()}\n` +
