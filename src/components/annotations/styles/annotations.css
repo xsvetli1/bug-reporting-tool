@@ -30,13 +30,12 @@
     background: var(--issue-type-based);
 }
 
-/* .sharp-corners,
+.sharp-corners,
 .annotation-tools-button,
 .annotation-close-button,
 .annotation-save-button,
 .comment-button,
-.delete-button { */
-button {
+.delete-button {
     border-radius: 0 !important;
 }
 

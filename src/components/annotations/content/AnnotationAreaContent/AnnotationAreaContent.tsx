@@ -1,5 +1,5 @@
 import { Button, ToggleButton, ToggleButtonGroup, Tooltip } from '@mui/material';
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import CloseButton from '../CloseButton';
 import CropFreeSharpIcon from '@mui/icons-material/CropFreeSharp';
@@ -31,6 +31,7 @@ const AnnotationAreaContent = ({
     const { annotations, setAnnotations, setScreenshots, setIsOngoingAnnotation } =
         useContext(ToolContext);
 
+    const [toolbarSize, setToolbarSize] = useState<{ width: number; height: number } | null>(null);
     const toolbarRef = useRef<HTMLDivElement>(null);
 
     const handleAnnotationTypeId = (
@@ -60,17 +61,27 @@ const AnnotationAreaContent = ({
         setAnnotations({});
     };
 
+    useEffect(() => {
+        if (toolbarRef.current) {
+            setToolbarSize({
+                width: toolbarRef.current.clientWidth,
+                height: toolbarRef.current.clientHeight
+            });
+        }
+    }, [toolbarRef]);
+
     return (
         <div className="annotation-area-content" data-html2canvas-ignore>
             <AnnotationAreaBorder />
             <CloseButton onClick={handleClose} />
             <Draggable
-                nodeRef={toolbarRef}
                 bounds={{
                     top: 0,
-                    bottom: getSVGHeigth() - (toolbarRef.current?.clientHeight ?? 0)
+                    bottom: toolbarSize ? getSVGHeigth() - toolbarSize.height : 0,
+                    left: 0,
+                    right: toolbarSize ? getSVGWidth() - (toolbarSize.width ?? 0) : 0
                 }}
-                grid={[getSVGWidth() - (toolbarRef.current?.clientWidth ?? 0), 1]}
+                grid={[getSVGWidth() - (toolbarSize?.width ?? 0), 1]}
             >
                 <div className="annotation-button-group" ref={toolbarRef}>
                     <ToggleButtonGroup
