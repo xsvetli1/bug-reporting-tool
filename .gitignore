@@ -1,3 +1,6 @@
-dist
+dist/*
+!dist/iife
+dist/iife/types
+dist/iife/index.js.map
 node_modules
 .DS_Store
