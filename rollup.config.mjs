@@ -5,6 +5,7 @@ import dts from 'rollup-plugin-dts';
 import postcss from 'rollup-plugin-postcss';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import json from '@rollup/plugin-json';
+import replace from 'rollup-plugin-replace';
 
 export default [
     {
@@ -35,5 +36,25 @@ export default [
         output: [{ file: 'dist/index.d.ts', format: 'esm' }],
         plugins: [dts()],
         external: [/\.css$/]
+    },
+    {
+        input: 'src/widget.tsx',
+        output: [
+            {
+                file: 'dist/iife/index.js',
+                format: 'iife',
+                sourcemap: true
+            }
+        ],
+        plugins: [
+            resolve(),
+            commonjs(),
+            typescript({ tsconfig: './tsconfig.json' }),
+            postcss(),
+            json(),
+            replace({
+                'process.env.NODE_ENV': JSON.stringify('production')
+            })
+        ]
     }
 ];

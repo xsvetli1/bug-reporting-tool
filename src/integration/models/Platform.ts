@@ -1,6 +1,3 @@
-class Platform {
-    static Github = new Platform();
-    static Gitlab = new Platform();
-}
+type Platform = 'Github' | 'Gitlab';
 
 export default Platform;

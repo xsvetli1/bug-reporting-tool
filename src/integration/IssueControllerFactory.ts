@@ -8,9 +8,9 @@ import { PlatformProps } from './models/PlatformProps';
 
 class IssueControllerFactory {
     static get(platform: Platform, props: PlatformProps): IIssueController {
-        if (platform == Platform.Github) {
+        if (platform == 'Github') {
             return new GithubController(props as GithubProps);
-        } else if (platform == Platform.Gitlab) {
+        } else if (platform == 'Gitlab') {
             return new GitlabController(props as GitlabProps);
         }
 
