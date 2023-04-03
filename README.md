@@ -8,8 +8,12 @@ Web application component for bugs and enhancements reporting to your desired is
 Users can annotate website multiple times, creating multiple screenshots with their annotations, or do not have to at all.
 
 You can currently integrate this tool with following issue-tracking systems:
-- [x] Gitlab
-- [x] Github _(functionality is limited - annotation tool is unavailable)_
+
+&nbsp;&nbsp;&nbsp;<a href="https://gitlab.com/"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968853.png" width="20px" height="20px"></a>
+ Gitlab
+ 
+&nbsp;&nbsp;&nbsp;<a href="https://github.com/"><img src="https://github.com/favicon.ico" width="20px" height="20px"></a>
+Github _(functionality is limited - annotation tool is unavailable)_
 
 ### Usage
 1. Click on floating **Feedback** button
