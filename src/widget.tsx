@@ -8,6 +8,7 @@ declare global {
         BugReportingToolProps: {
             platform: Platform;
             platformProps: PlatformProps;
+            isEmailRequired: boolean;
         };
     }
 }
@@ -19,6 +20,7 @@ function mountTool() {
         <BugReportingTool
             platform={window.BugReportingToolProps.platform}
             platformProps={window.BugReportingToolProps.platformProps}
+            isEmailRequired={window.BugReportingToolProps.isEmailRequired}
         />,
         mountNode
     );

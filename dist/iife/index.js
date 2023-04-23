@@ -37301,7 +37301,7 @@
 	function mountTool() {
 	    const mountNode = document.createElement('div');
 	    document.body.appendChild(mountNode);
-	    ReactDOM.render(React$1.createElement(BugReportingTool, { platform: window.BugReportingToolProps.platform, platformProps: window.BugReportingToolProps.platformProps }), mountNode);
+	    ReactDOM.render(React$1.createElement(BugReportingTool, { platform: window.BugReportingToolProps.platform, platformProps: window.BugReportingToolProps.platformProps, isEmailRequired: window.BugReportingToolProps.isEmailRequired }), mountNode);
 	}
 	if (document.body) {
 	    mountTool();
