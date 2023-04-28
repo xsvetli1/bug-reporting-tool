@@ -53,6 +53,8 @@ Wrap your application with **BugReportingTool** component:
     projectId: PROJECT_ID,
     authToken: AUTHENTICATION_TOKEN
   }}
+  // uncomment following line to make email required
+  // isRequiredEmail
 >
   // ... your app code goes here
 </BugReportingTool>
@@ -69,6 +71,8 @@ Wrap your application with **BugReportingTool** component:
     repository: GITHUB_REPOSITORY_NAME,
     authToken: AUTHENTICATION_TOKEN,
   }}
+  // uncomment following line to make email required
+  // isRequiredEmail
 >
   // ... your app code goes here
 </BugReportingTool>
@@ -89,6 +93,8 @@ Based on issue-tracking system using, choose and add one of the following script
     BugReportingToolProps.platformProps.server = new URL(GITLAB_SERVER_URL);
     BugReportingToolProps.platformProps.projectId = PROJECT_ID;
     BugReportingToolProps.platformProps.authToken = AUTHENTICATION_TOKEN;
+    // uncomment following line to make email required
+    // BugReportingToolProps.isEmailRequired = true;
     (function () {
       var script = document.createElement("script");
       script.async = true;
@@ -107,6 +113,8 @@ Based on issue-tracking system using, choose and add one of the following script
     BugReportingToolProps.platformProps.owner = GITHUB_USERNAME;
     BugReportingToolProps.platformProps.repository = GITHUB_REPOSITORY_NAME;
     BugReportingToolProps.platformProps.authToken = AUTHENTICATION_TOKEN;
+    // uncomment following line to make email required
+    // BugReportingToolProps.isEmailRequired = true;
     (function () {
       var script = document.createElement("script");
       script.async = true;
