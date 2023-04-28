@@ -4,7 +4,7 @@ import EnvironmentInfoHelper from './EnvironmentInfoHelper';
 
 class IssueFormatter {
     static issueTitle(issueInfo: IssueInfo) {
-        return `[Annotate-Report] ${issueInfo.title}`;
+        return `[BugReportingTool] ${issueInfo.title}`;
     }
 
     static issueDescription(
