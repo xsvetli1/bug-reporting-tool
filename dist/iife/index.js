@@ -1607,7 +1607,7 @@
 
 	class IssueFormatter {
 	    static issueTitle(issueInfo) {
-	        return `[Annotate-Report] ${issueInfo.title}`;
+	        return `[BugReportingTool] ${issueInfo.title}`;
 	    }
 	    static issueDescription(issueInfo, screenshotMarkdowns, consoleHistoryMarkdown) {
 	        const screenshotComments = (screenshotInfo) => screenshotInfo.comments.length
