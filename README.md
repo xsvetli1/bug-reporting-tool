@@ -32,6 +32,20 @@ Github _(functionality is limited - annotation tool is unavailable)_
 
 For all approaches below don't forget to put your own values in place of `GITLAB_SERVER_URL`, `PROJECT_ID`, `AUTHENTICATION_TOKEN` `GITHUB_USERNAME` and `GITHUB_REPOSITORY_NAME` based on issue-tracking system you chose.
 
+In case of Gitlab, the `PROJECT_ID` can be found in the General tab of repository settings.
+
+`AUTHENTICATION_TOKEN` must be generated with proper scope:
+- Gitlab repositories
+  - Can be generated in Access Tokens tab of repository settings.
+  - Required scope: `api`
+- Github repositories
+  - To generate one, the developer must click on their own profile photo and navigate to Settings
+        > Developer Settings > Personal access tokens > Tokens (classic) > Generate new token
+        > Generate new token (classic).
+  - Required scope:
+    - `public_repo` - for public repositories
+    - `repo` - for private repositories
+
 ### React app
 ```shell
 npm install @xsvetli1/bug-reporting-tool
