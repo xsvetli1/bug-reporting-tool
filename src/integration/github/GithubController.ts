@@ -1,5 +1,6 @@
 import IIssueController from '../IIssueController';
 import { IssueInfo } from '../models/IssueInfo';
+import IssueFormatter from '../utils/IssueFormatter';
 import { GithubProps } from './GithubProps';
 
 type ReleaseInfo = { id: number; htmlUrl: string };
@@ -32,8 +33,8 @@ class GithubController implements IIssueController {
                 body: JSON.stringify({
                     owner: this.props.owner,
                     repo: this.props.repository,
-                    title: issueInfo.title,
-                    body: `From: ${issueInfo.email}\n${issueInfo.description}`,
+                    title: IssueFormatter.issueTitle(issueInfo),
+                    body: IssueFormatter.issueDescription(issueInfo, [], null),
                     assignees: [],
                     labels: [issueInfo.type.getLabel()]
                 })

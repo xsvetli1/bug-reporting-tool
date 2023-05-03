@@ -10,7 +10,7 @@ class IssueFormatter {
     static issueDescription(
         issueInfo: IssueInfo,
         screenshotMarkdowns: string[],
-        consoleHistoryMarkdown: string
+        consoleHistoryMarkdown: string | null
     ): string {
         const screenshotComments = (screenshotInfo: ScreenshotInfo) =>
             screenshotInfo.comments.length
@@ -29,7 +29,7 @@ class IssueFormatter {
             `- **OS:** ${EnvironmentInfoHelper.obtainOperatingSystem()}\n` +
             `- **Screen:** ${EnvironmentInfoHelper.obtainScreenSize()}\n` +
             `- **Viewport:** ${EnvironmentInfoHelper.obtainViewportSize()}\n` +
-            `- **Console:** ${consoleHistoryMarkdown}\n` +
+            (consoleHistoryMarkdown ? `- **Console:** ${consoleHistoryMarkdown}\n` : '') +
             `## Screenshots\n` +
             `${screenshotMarkdowns
                 .map(

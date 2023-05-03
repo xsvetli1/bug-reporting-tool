@@ -3,8 +3,10 @@ import { UseStateSetter } from '../models/UseStateSetter';
 import { AnnotationPropsObject } from '../components/annotations/tools/AllAnnotationProps';
 import { ScreenshotInfo } from '../models/ScreenshotInfo';
 import { ConsoleOutput } from '../models/ConsoleOutput';
+import { Platform } from '../integration';
 
 export const ToolContext = createContext<{
+    platform?: Platform;
     annotations: AnnotationPropsObject;
     setAnnotations: UseStateSetter<AnnotationPropsObject>;
     screenshots: ScreenshotInfo[];

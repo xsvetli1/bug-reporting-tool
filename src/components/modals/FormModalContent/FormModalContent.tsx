@@ -29,7 +29,8 @@ export interface FormModalContentProps {
 }
 
 const FormModalContent = (props: FormModalContentProps) => {
-    const { setAnnotations, screenshots, setScreenshots, consoleOutput } = useContext(ToolContext);
+    const { platform, setAnnotations, screenshots, setScreenshots, consoleOutput } =
+        useContext(ToolContext);
 
     const emailRef = useRef<HTMLInputElement>(null);
     const titleRef = useRef<HTMLInputElement>(null);
@@ -148,7 +149,9 @@ const FormModalContent = (props: FormModalContentProps) => {
                 </div>
             </DialogContent>
             <DialogActions>
-                <Button onClick={props.handleAnnotate}>Annotate</Button>
+                {platform && platform != 'Github' && (
+                    <Button onClick={props.handleAnnotate}>Annotate</Button>
+                )}
                 <Button onClick={handleSend}>Send</Button>
             </DialogActions>
         </div>

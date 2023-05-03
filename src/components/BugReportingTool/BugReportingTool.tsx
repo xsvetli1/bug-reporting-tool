@@ -68,6 +68,7 @@ const BugReportingTool = ({
     return (
         <ToolContext.Provider
             value={{
+                platform,
                 annotations,
                 setAnnotations,
                 screenshots,
