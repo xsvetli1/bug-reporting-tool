@@ -26748,7 +26748,7 @@
 	  }
 	}
 
-	var css_248z$2 = ".screenshot-chips {\n    display: flex;\n    flex-wrap: wrap;\n    gap: 6px;\n    margin-top: 10px;\n    justify-content: center;\n}\n";
+	var css_248z$2 = ".screenshot-chips {\n    display: flex;\n    flex-wrap: wrap;\n    gap: 6px;\n    margin-top: 10px;\n    justify-content: center;\n}\n\n.ongoing-annotation {\n    overflow: hidden;\n}\n";
 	styleInject(css_248z$2);
 
 	const FormModalContent = (props) => {
@@ -37272,6 +37272,11 @@
 	        console.warn = consoleOutputRedefine(console.warn, 'warn');
 	        console.error = consoleOutputRedefine(console.error, 'error');
 	    }, []);
+	    react.exports.useEffect(() => {
+	        isOngoingAnnotation
+	            ? document.body.classList.add('ongoing-annotation')
+	            : document.body.classList.remove('ongoing-annotation');
+	    }, [isOngoingAnnotation]);
 	    return (React$1.createElement(ToolContext.Provider, { value: {
 	            platform,
 	            annotations,

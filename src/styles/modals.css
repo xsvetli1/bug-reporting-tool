@@ -5,3 +5,7 @@
     margin-top: 10px;
     justify-content: center;
 }
+
+.ongoing-annotation {
+    overflow: hidden;
+}

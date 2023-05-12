@@ -65,6 +65,12 @@ const BugReportingTool = ({
         console.error = consoleOutputRedefine(console.error, 'error');
     }, []);
 
+    useEffect(() => {
+        isOngoingAnnotation
+            ? document.body.classList.add('ongoing-annotation')
+            : document.body.classList.remove('ongoing-annotation');
+    }, [isOngoingAnnotation]);
+
     return (
         <ToolContext.Provider
             value={{
