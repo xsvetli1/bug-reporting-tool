@@ -53,6 +53,7 @@ Based on the issue-tracking system you chose, for all approaches below, don't fo
     - `repo` - for private repositories
 
 ### React app
+_Compatible with React 18+._
 ```shell
 # Prerequisites
 # You need to be authenticated to GitHub Packages and add Github registry to your npm configuration. If you already
