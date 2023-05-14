@@ -28,11 +28,17 @@ Github _(functionality is limited - annotation tool is unavailable)_
 - [x] Obfuscate
 - [x] Comment
 
+### Annotation tool in action
+<img width="797" alt="GoogleFeedback" src="https://github.com/xsvetli1/bug-reporting-tool/assets/67949682/5e846c15-9e99-48a0-bceb-61e0f77a45ff">
+
 ## How to install
 
-For all approaches below don't forget to put your own values in place of `GITLAB_SERVER_URL`, `PROJECT_ID`, `AUTHENTICATION_TOKEN` `GITHUB_USERNAME` and `GITHUB_REPOSITORY_NAME` based on issue-tracking system you chose.
-
-In case of Gitlab, the `PROJECT_ID` can be found in the General tab of repository settings.
+Based on the issue-tracking system you chose, for all approaches below, don't forget to put your own values in place of:
+- `GITLAB_SERVER_URL` (should be domain name with a protocol e.g. `https://gitlab.gnome.org/`),
+- `PROJECT_ID` (can be found in the General tab of repository settings),
+- `AUTHENTICATION_TOKEN`,
+- `GITHUB_USERNAME` (e.g. for facebook/react it is `facebook`) and
+- `GITHUB_REPOSITORY_NAME` (e.g. for facebook/react it is `react`)
 
 `AUTHENTICATION_TOKEN` must be generated with proper scope:
 - Gitlab repositories
@@ -48,6 +54,20 @@ In case of Gitlab, the `PROJECT_ID` can be found in the General tab of repositor
 
 ### React app
 ```shell
+# Prerequisites
+# You need to be authenticated to GitHub Packages and add Github registry to your npm configuration. If you already
+# meet these conditions, you can continue with Actual Installation.
+
+# To authenticate, generate GitHub Access Token GITHUB_PACKAGES_TOKEN with scope 'read:packages'
+# (not the same as AUTHENTICATION_TOKEN for bug-reporting-tool integration) and add it to your ~/.npmrc config file
+# by running the following command:
+npm config set //npm.pkg.github.com/:_authToken=GITHUB_PACKAGES_TOKEN
+
+# To add GitHub registry to your NPM configuration run the following command (YOUR_GITHUB_USERNAME is your own GitHub
+# username, it may differ from GITHUB_USERNAME of integrated repository):
+npm config set @YOUR_GITHUB_USERNAME:registry=https://npm.pkg.github.com
+
+# Actual Installation:
 npm install @xsvetli1/bug-reporting-tool
 ```
 Wrap your application with **BugReportingTool** component:
@@ -60,6 +80,8 @@ Wrap your application with **BugReportingTool** component:
 <td>
 
 ```javascript
+import { BugReportingTool } from "@xsvetli1/bug-reporting-tool";
+ 
 <BugReportingTool
   platform={"Gitlab"}
   platformProps={{
@@ -78,6 +100,8 @@ Wrap your application with **BugReportingTool** component:
 <td>
 
 ```javascript
+import { BugReportingTool } from "@xsvetli1/bug-reporting-tool";
+ 
 <BugReportingTool
   platform={"Github"}
   platformProps={{
