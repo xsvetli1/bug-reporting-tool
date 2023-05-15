@@ -1,7 +1,7 @@
 # bug-reporting-tool
-
 _Not only to report bugs..._
 
+[![ESLint](https://github.com/xsvetli1/bug-reporting-tool/actions/workflows/eslint.yml/badge.svg)](https://github.com/xsvetli1/bug-reporting-tool/actions/workflows/eslint.yml)
 ## Description
 
 Web application component for bugs and enhancements reporting to your desired issue-tracking system with refined **annotation tool**.
