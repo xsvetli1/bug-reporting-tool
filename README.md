@@ -2,6 +2,7 @@
 _Not only to report bugs..._
 
 [![ESLint](https://github.com/xsvetli1/bug-reporting-tool/actions/workflows/eslint.yml/badge.svg)](https://github.com/xsvetli1/bug-reporting-tool/actions/workflows/eslint.yml)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 ## Description
 
 Web application component for bugs and enhancements reporting to your desired issue-tracking system with refined **annotation tool**.
