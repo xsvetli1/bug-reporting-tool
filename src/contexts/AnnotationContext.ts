@@ -3,6 +3,9 @@ import { UseStateSetter } from '../models/UseStateSetter';
 import { AllAnnotationProps } from '../components/annotations/tools/AllAnnotationProps';
 import { SelectedAreas } from '../components/annotations/types';
 
+/**
+ * React Context with annotations-related states and their setters.
+ */
 export const AnnotationContext = createContext<{
     currentAnnotationId: number;
     annotate: (annotation: AllAnnotationProps, id: number) => void;

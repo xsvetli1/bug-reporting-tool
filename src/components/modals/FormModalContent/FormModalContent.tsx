@@ -28,6 +28,10 @@ export interface FormModalContentProps {
     handleClose: () => void;
 }
 
+/**
+ * Component wrapping content for MUI Dialog component. This content is specific
+ * for the report form of the Bug Reporting Tool.
+ */
 const FormModalContent = (props: FormModalContentProps) => {
     const { platform, setAnnotations, screenshots, setScreenshots, consoleOutput } =
         useContext(ToolContext);

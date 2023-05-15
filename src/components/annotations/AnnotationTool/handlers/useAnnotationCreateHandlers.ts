@@ -6,6 +6,9 @@ import { useText } from '../../tools/Text';
 import { AllAnnotationTypes } from '../../types';
 import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
 
+/**
+ * Hook returning creation handlers for all annotation types.
+ */
 export const useAnnotationCreateHandlers = (): {
     [key in AllAnnotationTypes]: AnnotationMouseEventHandlers;
 } => {

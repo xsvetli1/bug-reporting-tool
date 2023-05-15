@@ -4,6 +4,9 @@ import { IssueInfo } from '../models/IssueInfo';
 import { GitlabProps } from './GitlabProps';
 import { ConsoleOutput } from '../../models/ConsoleOutput';
 
+/**
+ * Implementation of IIssueController for Gitlab.
+ */
 class GitlabController implements IIssueController {
     props: GitlabProps;
 

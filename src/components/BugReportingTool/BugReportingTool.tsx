@@ -20,6 +20,10 @@ export interface BugReportingToolProps {
     children?: ReactNode;
 }
 
+/**
+ * The main component of Bug Reporting Tool. It can be used as a wrapper
+ * around the whole application.
+ */
 const BugReportingTool = ({
     platform,
     platformProps,

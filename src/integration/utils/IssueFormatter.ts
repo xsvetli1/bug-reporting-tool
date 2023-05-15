@@ -2,6 +2,9 @@ import { ScreenshotInfo } from '../../models/ScreenshotInfo';
 import { IssueInfo } from '../models/IssueInfo';
 import EnvironmentInfoHelper from './EnvironmentInfoHelper';
 
+/**
+ * Class defining methods for uniformly formatted issue titles and descriptions.
+ */
 class IssueFormatter {
     static issueTitle(issueInfo: IssueInfo) {
         return `[BugReportingTool] ${issueInfo.title}`;

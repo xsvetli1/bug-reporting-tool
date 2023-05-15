@@ -22,6 +22,12 @@ export interface AnnotationAreaContentProps {
     handleClose: () => void;
 }
 
+/**
+ * Component managing all content for control of annotation tool:
+ * - annotation area border
+ * - annotation tool close button
+ * - toolbars
+ */
 const AnnotationAreaContent = ({
     currentAnnotationType,
     setCurrentAnnotationType,

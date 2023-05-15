@@ -1,5 +1,8 @@
 import React from 'react';
 
+/**
+ * Component rendering annotation tool borders.
+ */
 const AnnotationAreaBorder = () => (
     <>
         <div

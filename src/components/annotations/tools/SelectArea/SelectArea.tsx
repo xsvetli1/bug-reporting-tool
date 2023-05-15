@@ -10,6 +10,9 @@ export interface SelectAreaProps extends AnnotationProps<'SELECT_AREA'> {
     height: number;
 }
 
+/**
+ * Component returning the SelectArea annotation type.
+ */
 const SelectArea = ({
     isHover,
     shift,

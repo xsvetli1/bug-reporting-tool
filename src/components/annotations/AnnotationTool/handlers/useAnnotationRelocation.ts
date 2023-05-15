@@ -5,6 +5,12 @@ import { ReactMouseEvent } from '../../types';
 import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHandlers';
 import { AnnotationContext } from '../../../../contexts/AnnotationContext';
 
+/**
+ * Hook returning list containing:
+ * - ID of annotation in hand (grabbed one),
+ * - function for obtaining annotation grab handlers,
+ * - annotation move handlers
+ */
 export const useAnnotationRelocation = (): [
     string,
     (id: string) => AnnotationMouseEventHandlers,

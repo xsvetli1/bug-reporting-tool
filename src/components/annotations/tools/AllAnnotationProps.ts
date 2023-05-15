@@ -11,6 +11,10 @@ export type AllAnnotationProps =
     | ObfuscationProps
     | TextProps;
 
+/**
+ * Dictionary type with key being annotation ID and value being properties
+ * object of given annotation
+ */
 export type AnnotationPropsObject = {
     [id: string]: AllAnnotationProps;
 };

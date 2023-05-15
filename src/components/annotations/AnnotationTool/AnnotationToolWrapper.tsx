@@ -10,6 +10,9 @@ export interface AnnotationToolWrapperProps {
     handleClose: () => void;
 }
 
+/**
+ * Component wrapping AnnotationTool component with AnnotationContext.Provider.
+ */
 const AnnotationToolWrapper = (props: AnnotationToolWrapperProps) => {
     const { annotations, setAnnotations } = useContext(ToolContext);
     const [annotationNextId, setAnnotationNextId] = useState(0);

@@ -1,6 +1,10 @@
 import { BORDER_WIDTH } from '../styles/Constants';
 import { ReactMouseEvent } from '../types/ReactMouseEvent';
 
+/**
+ * File defining helper functions for mouse cursor coordinates.
+ */
+
 export const getX = (event: ReactMouseEvent) => {
     return event.clientX;
 };

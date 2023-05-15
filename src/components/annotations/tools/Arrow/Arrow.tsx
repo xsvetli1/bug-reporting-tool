@@ -10,6 +10,9 @@ export interface ArrowProps extends AnnotationProps<'ARROW'> {
     y2: number;
 }
 
+/**
+ * Component returning the Arrow annotation type.
+ */
 const Arrow = ({ isHover, shift, x1, y1, x2, y2, moveHandlers, deleteCallback }: ArrowProps) => {
     return (
         <g className="annotation" style={getRelocationStyle({ shift })} {...moveHandlers}>

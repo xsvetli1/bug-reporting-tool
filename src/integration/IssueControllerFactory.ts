@@ -6,6 +6,10 @@ import IIssueController from './IIssueController';
 import Platform from './models/Platform';
 import { PlatformProps } from './models/PlatformProps';
 
+/**
+ * Factory returning correct IIssueController implementation based on the provided
+ * platform and platformProps.
+ */
 class IssueControllerFactory {
     static get(platform: Platform, props: PlatformProps): IIssueController {
         if (platform == 'Github') {

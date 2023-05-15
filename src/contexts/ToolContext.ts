@@ -5,6 +5,9 @@ import { ScreenshotInfo } from '../models/ScreenshotInfo';
 import { ConsoleOutput } from '../models/ConsoleOutput';
 import { Platform } from '../integration';
 
+/**
+ * React Context with global states and their setters.
+ */
 export const ToolContext = createContext<{
     platform?: Platform;
     annotations: AnnotationPropsObject;

@@ -2,6 +2,9 @@
 import { ReactMouseEvent } from './ReactMouseEvent';
 import { ReactTouchEvent } from './ReactTouchEvent';
 
+/**
+ * Type with all mouse and touch event listeners being optional.
+ */
 export type AnnotationMouseEventHandlers = {
     onMouseDown?: (event: ReactMouseEvent) => void;
     onMouseUp?: (event: ReactMouseEvent) => void;

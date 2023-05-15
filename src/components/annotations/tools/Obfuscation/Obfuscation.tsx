@@ -10,6 +10,9 @@ export interface ObfuscationProps extends AnnotationProps<'OBFUSCATION'> {
     height: number;
 }
 
+/**
+ * Component returning the Obfuscation annotation type.
+ */
 const Obfuscation = ({
     isHover,
     shift,

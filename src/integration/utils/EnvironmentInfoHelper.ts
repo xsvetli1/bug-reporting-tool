@@ -1,5 +1,8 @@
 import UAParser from 'ua-parser-js';
 
+/**
+ * Class defining methods returning uniformly formatted environment information.
+ */
 class EnvironmentInfoHelper {
     static obtainDateTime() {
         const now = new Date();

@@ -6,6 +6,9 @@ export interface DeleteButtonProps {
     deleteCallback?: () => void;
 }
 
+/**
+ * Annotation delete button.
+ */
 export const DeleteButton = ({ deleteCallback }: DeleteButtonProps) => {
     return (
         <Button

@@ -3,6 +3,13 @@ import ReactDOM from 'react-dom';
 import { BugReportingTool } from './components';
 import { Platform, PlatformProps } from './integration';
 
+/**
+ * This file defines logic to append Bug Reporting Tool to the webpage
+ * based on the global properties passed to BugReportingToolProps.
+ *
+ * It is used in IIFE Rollup bundle build format for HTML script snippet
+ * installation.
+ */
 declare global {
     interface Window {
         BugReportingToolProps: {

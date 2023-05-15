@@ -8,6 +8,10 @@ export interface OptionsModalContentProps {
     handleClose: () => void;
 }
 
+/**
+ * Component wrapping content for MUI Dialog component. This content is specific
+ * for the issue type options modal of the Bug Reporting Tool.
+ */
 const OptionsModalContent = (props: OptionsModalContentProps) => {
     const onReportBugClick = () => {
         props.setIsBugAnnotationOpen(true);

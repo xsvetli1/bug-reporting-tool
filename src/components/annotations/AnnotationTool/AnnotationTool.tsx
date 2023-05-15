@@ -13,6 +13,9 @@ export interface AnnotationToolProps {
     handleClose: () => void;
 }
 
+/**
+ * The main component for Annotation Tool of Bug Reporting Tool.
+ */
 const AnnotationTool = ({ handleClose }: AnnotationToolProps) => {
     const { isOngoingAnnotation } = useContext(ToolContext);
 

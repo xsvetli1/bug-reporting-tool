@@ -5,6 +5,9 @@ import { getX, getY } from '../../helpers/CoordinatesHelper';
 import { ArrowProps } from './Arrow';
 import { AnnotationContext } from '../../../../contexts/AnnotationContext';
 
+/**
+ * Hook for create mouse event handlers for Arrow annotation type.
+ */
 export const useArrow = () => {
     const { currentAnnotationId, annotate, creating, setCreating } = useContext(AnnotationContext);
 

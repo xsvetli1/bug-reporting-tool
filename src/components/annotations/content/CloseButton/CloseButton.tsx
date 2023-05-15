@@ -7,6 +7,9 @@ export interface CloseButtonProps {
     onClick: () => void;
 }
 
+/**
+ * Annotation Tool close button.
+ */
 const CloseButton = ({ onClick }: CloseButtonProps) => {
     return (
         <Fab size="small" aria-label="close" onClick={onClick} className="annotation-close-button">

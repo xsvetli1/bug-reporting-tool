@@ -7,6 +7,9 @@ export interface FreeHandProps extends AnnotationProps<'FREE_HAND'> {
     path: [number, number][];
 }
 
+/**
+ * Component returning the FreeHand annotation type.
+ */
 const FreeHand = ({ isHover, shift, path, moveHandlers, deleteCallback }: FreeHandProps) => {
     const points = path.map(([x, y]) => `${x},${y}`).join(' ');
     return (

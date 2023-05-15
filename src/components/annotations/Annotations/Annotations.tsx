@@ -12,6 +12,10 @@ export interface AnnotationsProps {
     obtainAnnotationGrabHandlers: (id: string) => AnnotationMouseEventHandlers;
 }
 
+/**
+ * Copmponent rendering all annotations and assigning them their grab handlers,
+ * and delete callbacks.
+ */
 const Annotations = ({ obtainAnnotationGrabHandlers }: AnnotationsProps) => {
     const { annotations, setAnnotations } = useContext(ToolContext);
     const { setSelectedAreas, selectedCommentIds, setSelectedCommentIds } =

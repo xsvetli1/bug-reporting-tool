@@ -1455,6 +1455,9 @@
 
 	var UAParser = uaParser.exports;
 
+	/**
+	 * Class defining methods returning uniformly formatted environment information.
+	 */
 	class EnvironmentInfoHelper {
 	    static obtainDateTime() {
 	        const now = new Date();
@@ -1481,6 +1484,9 @@
 	    }
 	}
 
+	/**
+	 * Class defining methods for uniformly formatted issue titles and descriptions.
+	 */
 	class IssueFormatter {
 	    static issueTitle(issueInfo) {
 	        return `[BugReportingTool] ${issueInfo.title}`;
@@ -1508,6 +1514,9 @@
 	    }
 	}
 
+	/**
+	 * Implementation of IIssueController for Github.
+	 */
 	class GithubController {
 	    constructor(props) {
 	        this.props = props;
@@ -1632,6 +1641,9 @@
 	}
 	GithubController.releaseTag = 'bug-reporting-tool-screenshots';
 
+	/**
+	 * Implementation of IIssueController for Gitlab.
+	 */
 	class GitlabController {
 	    constructor(props) {
 	        this.props = props;
@@ -1704,6 +1716,10 @@
 	    }
 	}
 
+	/**
+	 * Factory returning correct IIssueController implementation based on the provided
+	 * platform and platformProps.
+	 */
 	class IssueControllerFactory {
 	    static get(platform, props) {
 	        if (platform == 'Github') {
@@ -26693,6 +26709,9 @@
 	  }));
 	});
 
+	/**
+	 * Class defining all possible issue types.
+	 */
 	class IssueType {
 	    constructor(title, label) {
 	        this.title = title;
@@ -26708,6 +26727,9 @@
 	IssueType.Bug = new IssueType('Report a bug', 'bug');
 	IssueType.Idea = new IssueType('Suggest a new idea', 'enhancement');
 
+	/**
+	 * React Context with global states and their setters.
+	 */
 	const ToolContext = react.exports.createContext({
 	    annotations: {},
 	    // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -26751,6 +26773,10 @@
 	var css_248z$2 = ".screenshot-chips {\n    display: flex;\n    flex-wrap: wrap;\n    gap: 6px;\n    margin-top: 10px;\n    justify-content: center;\n}\n\n.ongoing-annotation {\n    overflow: hidden;\n}\n";
 	styleInject(css_248z$2);
 
+	/**
+	 * Component wrapping content for MUI Dialog component. This content is specific
+	 * for the report form of the Bug Reporting Tool.
+	 */
 	const FormModalContent = (props) => {
 	    const { platform, setAnnotations, screenshots, setScreenshots, consoleOutput } = react.exports.useContext(ToolContext);
 	    const emailRef = react.exports.useRef(null);
@@ -26844,6 +26870,10 @@
 	            React$1.createElement(Button, { onClick: handleSend }, "Send"))));
 	};
 
+	/**
+	 * Component wrapping content for MUI Dialog component. This content is specific
+	 * for the issue type options modal of the Bug Reporting Tool.
+	 */
 	const OptionsModalContent = (props) => {
 	    const onReportBugClick = () => {
 	        props.setIsBugAnnotationOpen(true);
@@ -26860,6 +26890,13 @@
 	            React$1.createElement(Button, { onClick: props.handleClose }, "Cancel"))));
 	};
 
+	/**
+	 * Component controlling issue type options modal and report form modal.
+	 *
+	 * It contains MUI Dialog component and based on some properties changes the content
+	 * between OptionsModalContent and FormModalContent.
+	 * It also shows Snackbar with success or error message after the issue is submitted
+	 */
 	const ModalController = (props) => {
 	    const { isOngoingAnnotation, setIsOngoingAnnotation } = react.exports.useContext(ToolContext);
 	    const [formState, setFormState] = react.exports.useState({});
@@ -26898,6 +26935,9 @@
 	                : 'Error occured during feedback submission!'))));
 	};
 
+	/**
+	 * The floating FEEDBACK button, as the entry point to the Bug Reporting Tool.
+	 */
 	const ReportBugButton = ({ setIsToolOpen }) => {
 	    const handleClick = () => {
 	        setIsToolOpen(true);
@@ -26916,6 +26956,9 @@
 	var css_248z$1 = ":root {\n    --issue-type-based-light: #448aff;\n    --issue-type-based: #2979ff;\n    --issue-type-based-dark: #2962ff;\n}\n\n[data-theme='bug'] {\n    --issue-type-based-light: #ff5252;\n    --issue-type-based: #ff1744;\n    --issue-type-based-dark: #d50000;\n}\n";
 	styleInject(css_248z$1);
 
+	/**
+	 * React Context with annotations-related states and their setters.
+	 */
 	const AnnotationContext = react.exports.createContext({
 	    currentAnnotationId: -1,
 	    // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -26931,12 +26974,23 @@
 	    setCreating: () => { }
 	});
 
+	/**
+	 * Constants refering to CSS variables for different color luminance
+	 * for issue type based colors.
+	 *
+	 * If selected issue type is a bug, these variables refer to the red color
+	 * spectre, if it is an enhancement, they refer to the blue color spectre.
+	 */
 	const ISSUE_TYPE_BASED_LIGHT = 'var(--issue-type-based-light)';
 	const ISSUE_TYPE_BASED = 'var(--issue-type-based)';
 	const ISSUE_TYPE_BASED_DARK = 'var(--issue-type-based-dark)';
 
+	/** Hard-coded border width used also in CSS. */
 	const BORDER_WIDTH = 3;
 
+	/**
+	 * File defining helper functions for mouse cursor coordinates.
+	 */
 	const getX = (event) => {
 	    return event.clientX;
 	};
@@ -26950,6 +27004,12 @@
 	    return window.innerHeight;
 	};
 
+	/**
+	 * Wrapper for the main SVG element covering whole screen.
+	 *
+	 * It defines also a tip of arrow as a <marker>. It contains a function for
+	 * displaying a rectangle.
+	 */
 	const AnnotationArea = (props) => {
 	    const { selectedAreas } = react.exports.useContext(AnnotationContext);
 	    const pathDataFromSelectedAreas = () => Object.keys(selectedAreas).map((key) => {
@@ -26976,6 +27036,12 @@
 	var css_248z = ":root {\n    --border-width: 3px;\n}\n\n.annotation-tool {\n    position: fixed;\n    z-index: 2147483646;\n    left: 0;\n    top: 0;\n    right: 0;\n    bottom: 0;\n}\n\n.annotation-area {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    stroke-width: var(--border-width);\n    stroke: var(--issue-type-based);\n}\n\n.annotation-area-content {\n    position: absolute;\n}\n\n.annotation-area-border {\n    position: fixed;\n    background: var(--issue-type-based);\n}\n\n.sharp-corners,\n.annotation-tools-button,\n.annotation-close-button,\n.annotation-save-button,\n.comment-button,\n.delete-button {\n    border-radius: 0 !important;\n}\n\n.annotation-close-button {\n    position: fixed !important;\n    top: 0;\n    right: 0;\n    width: 25px !important;\n    height: 25px !important;\n    min-height: 25px !important;\n    background: var(--issue-type-based) !important;\n}\n\n.annotation-close-button:hover {\n    background: var(--issue-type-based-dark) !important;\n}\n\n.annotation-button-group {\n    display: flex;\n    flex-direction: column;\n}\n\n.annotation-tools-button {\n    background: var(--issue-type-based-light) !important;\n}\n\n.annotation-tools-button:hover {\n    background: var(--issue-type-based) !important;\n}\n\n.annotation-tools-button.Mui-selected {\n    background: var(--issue-type-based-dark) !important;\n}\n\n.comment-button,\n.delete-button {\n    min-width: 0 !important;\n    padding: 0 !important;\n    float: right;\n}\n\n.comment-button {\n    margin-left: 10px !important;\n}\n\n.annotation-area-content .MuiSvgIcon-root {\n    color: white;\n}\n\n.annotation-save-button {\n    padding: 11px 0 !important;\n    min-width: 0 !important;\n}\n\n.annotation:hover {\n    cursor: grab;\n    filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));\n}\n\n.arrow-line {\n    stroke: var(--issue-type-based);\n}\n\n.text-annotation-id {\n    stroke: none;\n    fill: white;\n    font-size: 17px;\n    font-weight: bold;\n    user-select: none;\n}\n\n.svg-foreign-object {\n    overflow: visible;\n    stroke: none;\n    fill: white;\n}\n";
 	styleInject(css_248z);
 
+	/**
+	 * Hook returning list containing:
+	 * - ID of annotation in hand (grabbed one),
+	 * - function for obtaining annotation grab handlers,
+	 * - annotation move handlers
+	 */
 	const useAnnotationRelocation = () => {
 	    const { annotations, setAnnotations } = react.exports.useContext(ToolContext);
 	    const { selectedAreas, setSelectedAreas, setSelectedCommentIds, creating } = react.exports.useContext(AnnotationContext);
@@ -28866,6 +28932,9 @@
 	}), 'Close');
 	default_1$8 = Close.default = _default$8;
 
+	/**
+	 * Annotation Tool close button.
+	 */
 	const CloseButton = ({ onClick }) => {
 	    return (React$1.createElement(Fab, { size: "small", "aria-label": "close", onClick: onClick, className: "annotation-close-button" },
 	        React$1.createElement(default_1$8, null)));
@@ -28955,6 +29024,9 @@
 	}), 'Done');
 	default_1$2 = Done.default = _default$2;
 
+	/**
+	 * Component rendering annotation tool borders.
+	 */
 	const AnnotationAreaBorder = () => (React$1.createElement(React$1.Fragment, null,
 	    React$1.createElement("div", { className: "annotation-area-border", style: { left: 0, top: 0, width: '100vw', height: 'var(--border-width)' } }),
 	    React$1.createElement("div", { className: "annotation-area-border", style: { left: 0, bottom: 0, width: '100vw', height: 'var(--border-width)' } }),
@@ -36792,6 +36864,12 @@
 	    return canvas.toDataURL('image/png');
 	});
 
+	/**
+	 * Component managing all content for control of annotation tool:
+	 * - annotation area border
+	 * - annotation tool close button
+	 * - toolbars
+	 */
 	const AnnotationAreaContent = ({ currentAnnotationType, setCurrentAnnotationType, annotationInHandId, handleClose }) => {
 	    var _a, _b;
 	    const { annotations, setAnnotations, setScreenshots, setIsOngoingAnnotation } = react.exports.useContext(ToolContext);
@@ -36857,6 +36935,9 @@
 	    TEXT: { icon: React$1.createElement(default_1$3, null), label: 'Text' }
 	};
 
+	/**
+	 * @returns relocation matrix.
+	 */
 	const getRelocationStyle = ({ shift }) => ({
 	    transform: `matrix(1, 0, 0, 1, ${shift.x}, ${shift.y})`
 	});
@@ -36875,16 +36956,25 @@
 	}), 'DeleteForeverSharp');
 	default_1$1 = DeleteForeverSharp.default = _default$1;
 
+	/**
+	 * Annotation delete button.
+	 */
 	const DeleteButton = ({ deleteCallback }) => {
 	    return (React$1.createElement(Button, { className: "delete-button", variant: "contained", color: "error", "aria-label": "delete", onClick: deleteCallback, "data-html2canvas-ignore": true },
 	        React$1.createElement(default_1$1, null)));
 	};
 
+	/**
+	 * Annotation delete button wrapped in <foreignObject>.
+	 */
 	const WrappedDeleteButton = ({ x, y, deleteCallback }) => {
 	    return (React$1.createElement("foreignObject", { x: x, y: y, width: 1, height: 1, className: "svg-foreign-object" },
 	        React$1.createElement(DeleteButton, { deleteCallback: deleteCallback })));
 	};
 
+	/**
+	 * Component returning the Arrow annotation type.
+	 */
 	const Arrow = ({ isHover, shift, x1, y1, x2, y2, moveHandlers, deleteCallback }) => {
 	    return (React$1.createElement("g", Object.assign({ className: "annotation", style: getRelocationStyle({ shift }) }, moveHandlers),
 	        React$1.createElement("line", { x1: x1, y1: y1, x2: x2, y2: y2, strokeWidth: 4, markerEnd: "url(#arrowhead)", className: "arrow-line" }),
@@ -36892,6 +36982,9 @@
 	        isHover && (React$1.createElement(WrappedDeleteButton, { x: x1 + 12, y: y1 - 12, deleteCallback: deleteCallback }))));
 	};
 
+	/**
+	 * Hook for create mouse event handlers for Arrow annotation type.
+	 */
 	const useArrow = () => {
 	    const { currentAnnotationId, annotate, creating, setCreating } = react.exports.useContext(AnnotationContext);
 	    const [startX, setStartX] = react.exports.useState(0);
@@ -36926,6 +37019,9 @@
 	    return mouseEventHandlers;
 	};
 
+	/**
+	 * Component returning the FreeHand annotation type.
+	 */
 	const FreeHand = ({ isHover, shift, path, moveHandlers, deleteCallback }) => {
 	    const points = path.map(([x, y]) => `${x},${y}`).join(' ');
 	    return (React$1.createElement("g", Object.assign({ className: "annotation", style: getRelocationStyle({ shift }) }, moveHandlers),
@@ -36934,6 +37030,9 @@
 	        isHover && (React$1.createElement(WrappedDeleteButton, { x: path[path.length - 1][0] + 12, y: path[path.length - 1][1] - 12, deleteCallback: deleteCallback }))));
 	};
 
+	/**
+	 * Hook for create mouse event handlers for FreeHand annotation type.
+	 */
 	const useFreeHand = () => {
 	    const { currentAnnotationId, annotate, creating, setCreating } = react.exports.useContext(AnnotationContext);
 	    const [path, setPath] = react.exports.useState([]);
@@ -36962,10 +37061,16 @@
 	    return mouseEventHandlers;
 	};
 
+	/**
+	 * Component returning the Obfuscation annotation type.
+	 */
 	const Obfuscation = ({ isHover, shift, x, y, width, height, moveHandlers, deleteCallback }) => (React$1.createElement("g", Object.assign({}, moveHandlers, { style: getRelocationStyle({ shift }) }),
 	    React$1.createElement("rect", { x: x, y: y, width: width, height: height, stroke: "none", className: "annotation" }),
 	    isHover && (React$1.createElement(WrappedDeleteButton, { x: x + width - 8, y: y - 8, deleteCallback: deleteCallback }))));
 
+	/**
+	 * Hook for create mouse event handlers for Obfuscation annotation type.
+	 */
 	const useObfuscation = () => {
 	    const { currentAnnotationId, annotate, creating, setCreating } = react.exports.useContext(AnnotationContext);
 	    const [startX, setStartX] = react.exports.useState(0);
@@ -37006,10 +37111,16 @@
 	    return mouseEventHandlers;
 	};
 
+	/**
+	 * Component returning the SelectArea annotation type.
+	 */
 	const SelectArea = ({ isHover, shift, x, y, width, height, moveHandlers, deleteCallback }) => (React$1.createElement("g", Object.assign({}, moveHandlers, { style: getRelocationStyle({ shift }) }),
 	    React$1.createElement("rect", { x: x, y: y, width: width, height: height, fillOpacity: "0", className: "annotation" }),
 	    isHover && (React$1.createElement(WrappedDeleteButton, { x: x + width - 8, y: y - 8, deleteCallback: deleteCallback }))));
 
+	/**
+	 * Hook for create mouse event handlers for SelectArea annotation type.
+	 */
 	const useSelectArea = () => {
 	    const { currentAnnotationId, annotate, selectedAreas, setSelectedAreas, creating, setCreating } = react.exports.useContext(AnnotationContext);
 	    const [startX, setStartX] = react.exports.useState(0);
@@ -37066,6 +37177,9 @@
 	}), 'Check');
 	default_1 = Check.default = _default;
 
+	/**
+	 * Component returning the Text annotation type.
+	 */
 	const Text = ({ shift, id, index, x, y, open, comment, moveHandlers, setSelectedCommentIds, deleteCallback }) => {
 	    const { setAnnotations } = react.exports.useContext(ToolContext);
 	    const cardRef = react.exports.createRef();
@@ -37120,6 +37234,9 @@
 	                    React$1.createElement(DeleteButton, { deleteCallback: deleteCallback })))))));
 	};
 
+	/**
+	 * Hook for create mouse event handlers for Text annotation type.
+	 */
 	const useText = () => {
 	    const { currentAnnotationId, annotate, creating, setCreating } = react.exports.useContext(AnnotationContext);
 	    const mouseEventHandlers = {
@@ -37159,6 +37276,9 @@
 	    return mouseEventHandlers;
 	};
 
+	/**
+	 * Hook returning creation handlers for all annotation types.
+	 */
 	const useAnnotationCreateHandlers = () => {
 	    return {
 	        SELECT_AREA: useSelectArea(),
@@ -37169,6 +37289,10 @@
 	    };
 	};
 
+	/**
+	 * Copmponent rendering all annotations and assigning them their grab handlers,
+	 * and delete callbacks.
+	 */
 	const Annotations = ({ obtainAnnotationGrabHandlers }) => {
 	    const { annotations, setAnnotations } = react.exports.useContext(ToolContext);
 	    const { setSelectedAreas, selectedCommentIds, setSelectedCommentIds } = react.exports.useContext(AnnotationContext);
@@ -37197,6 +37321,9 @@
 	    })));
 	};
 
+	/**
+	 * The main component for Annotation Tool of Bug Reporting Tool.
+	 */
 	const AnnotationTool = ({ handleClose }) => {
 	    const { isOngoingAnnotation } = react.exports.useContext(ToolContext);
 	    const allAnnotationCreateHandlers = useAnnotationCreateHandlers();
@@ -37211,6 +37338,9 @@
 	        React$1.createElement(AnnotationAreaContent, { currentAnnotationType: currentAnnotationType, setCurrentAnnotationType: setCurrentAnnotationType, annotationInHandId: annotationInHandId, handleClose: handleClose })))));
 	};
 
+	/**
+	 * Component wrapping AnnotationTool component with AnnotationContext.Provider.
+	 */
 	const AnnotationToolWrapper = (props) => {
 	    const { annotations, setAnnotations } = react.exports.useContext(ToolContext);
 	    const [annotationNextId, setAnnotationNextId] = react.exports.useState(0);
@@ -37238,6 +37368,10 @@
 	        React$1.createElement(AnnotationTool, Object.assign({}, props))));
 	};
 
+	/**
+	 * The main component of Bug Reporting Tool. It can be used as a wrapper
+	 * around the whole application.
+	 */
 	const BugReportingTool = ({ platform, platformProps, children, isEmailRequired }) => {
 	    const [isToolOpen, setIsToolOpen] = react.exports.useState(false);
 	    const [isBugAnnotationOpen, setIsBugAnnotationOpen] = react.exports.useState(false);

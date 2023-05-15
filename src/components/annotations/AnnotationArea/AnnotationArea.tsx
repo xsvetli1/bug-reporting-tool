@@ -10,6 +10,12 @@ export interface AnnotationAreaProps {
     children: ReactNode;
 }
 
+/**
+ * Wrapper for the main SVG element covering whole screen.
+ *
+ * It defines also a tip of arrow as a <marker>. It contains a function for
+ * displaying a rectangle.
+ */
 const AnnotationArea = (props: AnnotationAreaProps) => {
     const { selectedAreas } = useContext(AnnotationContext);
 

@@ -20,6 +20,13 @@ export interface ModalControllerProps {
     newIssue: (issueInfo: IssueInfo) => Promise<boolean>;
 }
 
+/**
+ * Component controlling issue type options modal and report form modal.
+ *
+ * It contains MUI Dialog component and based on some properties changes the content
+ * between OptionsModalContent and FormModalContent.
+ * It also shows Snackbar with success or error message after the issue is submitted
+ */
 const ModalController = (props: ModalControllerProps) => {
     const { isOngoingAnnotation, setIsOngoingAnnotation } = useContext(ToolContext);
     const [formState, setFormState] = useState<FormProps>({});

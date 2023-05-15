@@ -6,6 +6,9 @@ export interface ReportBugButtonProps {
     setIsToolOpen: UseStateSetter<boolean>;
 }
 
+/**
+ * The floating FEEDBACK button, as the entry point to the Bug Reporting Tool.
+ */
 const ReportBugButton = ({ setIsToolOpen }: ReportBugButtonProps) => {
     const handleClick = () => {
         setIsToolOpen(true);
@@ -19,7 +22,7 @@ const ReportBugButton = ({ setIsToolOpen }: ReportBugButtonProps) => {
             sx={{
                 position: 'fixed',
                 width: '100px',
-                top: 'calc(50% - 33px)', // TODO: deal with magic constants + check alignment
+                top: 'calc(50% - 33px)',
                 right: '-33px',
                 transform: 'rotate(-0.25turn)',
                 borderBottomLeftRadius: 0,

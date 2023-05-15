@@ -5,6 +5,9 @@ import { AnnotationMouseEventHandlers } from '../../types/AnnotationMouseEventHa
 import { getX, getY } from '../../helpers/CoordinatesHelper';
 import { AnnotationContext } from '../../../../contexts/AnnotationContext';
 
+/**
+ * Hook for create mouse event handlers for Text annotation type.
+ */
 export const useText = () => {
     const { currentAnnotationId, annotate, creating, setCreating } = useContext(AnnotationContext);
 

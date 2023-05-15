@@ -5,6 +5,9 @@ import { GithubProps } from './GithubProps';
 
 type ReleaseInfo = { id: number; htmlUrl: string };
 
+/**
+ * Implementation of IIssueController for Github.
+ */
 class GithubController implements IIssueController {
     static releaseTag = 'bug-reporting-tool-screenshots';
 

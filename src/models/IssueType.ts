@@ -1,3 +1,6 @@
+/**
+ * Class defining all possible issue types.
+ */
 class IssueType {
     static Bug = new IssueType('Report a bug', 'bug');
     static Idea = new IssueType('Suggest a new idea', 'enhancement');

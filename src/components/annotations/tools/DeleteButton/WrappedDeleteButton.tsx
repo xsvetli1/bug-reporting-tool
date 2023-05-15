@@ -7,6 +7,9 @@ export interface WrappedDeleteButtonProps {
     deleteCallback?: () => void;
 }
 
+/**
+ * Annotation delete button wrapped in <foreignObject>.
+ */
 export const WrappedDeleteButton = ({ x, y, deleteCallback }: WrappedDeleteButtonProps) => {
     return (
         <foreignObject x={x} y={y} width={1} height={1} className="svg-foreign-object">

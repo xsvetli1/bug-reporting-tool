@@ -22,6 +22,9 @@ interface ExtendedTextProps extends TextProps {
     setSelectedCommentIds: UseStateSetter<string[]>;
 }
 
+/**
+ * Component returning the Text annotation type.
+ */
 const Text = ({
     shift,
     id,
