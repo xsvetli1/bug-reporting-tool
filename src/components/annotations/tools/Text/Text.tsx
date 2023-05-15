@@ -8,6 +8,7 @@ import { AnnotationProps } from '../AnnotationProps';
 import { getRelocationStyle } from '../../helpers/RelocationHelper';
 import { DeleteButton } from '../DeleteButton';
 import { ToolContext } from '../../../../contexts/ToolContext';
+import { hoverEffect } from '../../helpers/AnnotationHoverHelper';
 
 export interface TextProps extends AnnotationProps<'TEXT'> {
     id: string;
@@ -26,6 +27,7 @@ interface ExtendedTextProps extends TextProps {
  * Component returning the Text annotation type.
  */
 const Text = ({
+    isHover,
     shift,
     id,
     index,
@@ -75,7 +77,7 @@ const Text = ({
 
     return (
         <g style={getRelocationStyle({ shift })}>
-            <g className="annotation" {...moveHandlers}>
+            <g className={hoverEffect(isHover)} {...moveHandlers}>
                 <circle
                     cx={x}
                     cy={y}

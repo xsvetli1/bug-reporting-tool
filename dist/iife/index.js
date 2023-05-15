@@ -27036,7 +27036,7 @@
 	    height: getSVGHeigth()
 	});
 
-	var css_248z = ":root {\n    --border-width: 3px;\n}\n\n.annotation-tool {\n    position: fixed;\n    z-index: 2147483646;\n    left: 0;\n    top: 0;\n    right: 0;\n    bottom: 0;\n}\n\n.annotation-area {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    stroke-width: var(--border-width);\n    stroke: var(--issue-type-based);\n}\n\n.annotation-area-content {\n    position: absolute;\n}\n\n.annotation-area-border {\n    position: fixed;\n    background: var(--issue-type-based);\n}\n\n.sharp-corners,\n.annotation-tools-button,\n.annotation-close-button,\n.annotation-save-button,\n.comment-button,\n.delete-button {\n    border-radius: 0 !important;\n}\n\n.annotation-close-button {\n    position: fixed !important;\n    top: 0;\n    right: 0;\n    width: 25px !important;\n    height: 25px !important;\n    min-height: 25px !important;\n    background: var(--issue-type-based) !important;\n}\n\n.annotation-close-button:hover {\n    background: var(--issue-type-based-dark) !important;\n}\n\n.annotation-button-group {\n    display: flex;\n    flex-direction: column;\n}\n\n.annotation-tools-button {\n    background: var(--issue-type-based-light) !important;\n}\n\n.annotation-tools-button:hover {\n    background: var(--issue-type-based) !important;\n}\n\n.annotation-tools-button.Mui-selected {\n    background: var(--issue-type-based-dark) !important;\n}\n\n.comment-button,\n.delete-button {\n    min-width: 0 !important;\n    padding: 0 !important;\n    float: right;\n}\n\n.comment-button {\n    margin-left: 10px !important;\n}\n\n.annotation-area-content .MuiSvgIcon-root {\n    color: white;\n}\n\n.annotation-save-button {\n    padding: 11px 0 !important;\n    min-width: 0 !important;\n}\n\n.annotation:hover,\n.annotation-js-hover {\n    cursor: grab;\n    filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));\n}\n\n.arrow-line {\n    stroke: var(--issue-type-based);\n}\n\n.text-annotation-id {\n    stroke: none;\n    fill: white;\n    font-size: 17px;\n    font-weight: bold;\n    user-select: none;\n}\n\n.svg-foreign-object {\n    overflow: visible;\n    stroke: none;\n    fill: white;\n}\n";
+	var css_248z = ":root {\n    --border-width: 3px;\n}\n\n.annotation-tool {\n    position: fixed;\n    z-index: 2147483646;\n    left: 0;\n    top: 0;\n    right: 0;\n    bottom: 0;\n}\n\n.annotation-area {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    stroke-width: var(--border-width);\n    stroke: var(--issue-type-based);\n}\n\n.annotation-area-content {\n    position: absolute;\n}\n\n.annotation-area-border {\n    position: fixed;\n    background: var(--issue-type-based);\n}\n\n.sharp-corners,\n.annotation-tools-button,\n.annotation-close-button,\n.annotation-save-button,\n.comment-button,\n.delete-button {\n    border-radius: 0 !important;\n}\n\n.annotation-close-button {\n    position: fixed !important;\n    top: 0;\n    right: 0;\n    width: 25px !important;\n    height: 25px !important;\n    min-height: 25px !important;\n    background: var(--issue-type-based) !important;\n}\n\n.annotation-close-button:hover {\n    background: var(--issue-type-based-dark) !important;\n}\n\n.annotation-button-group {\n    display: flex;\n    flex-direction: column;\n}\n\n.annotation-tools-button {\n    background: var(--issue-type-based-light) !important;\n}\n\n.annotation-tools-button:hover {\n    background: var(--issue-type-based) !important;\n}\n\n.annotation-tools-button.Mui-selected {\n    background: var(--issue-type-based-dark) !important;\n}\n\n.comment-button,\n.delete-button {\n    min-width: 0 !important;\n    padding: 0 !important;\n    float: right;\n}\n\n.comment-button {\n    margin-left: 10px !important;\n}\n\n.annotation-area-content .MuiSvgIcon-root {\n    color: white;\n}\n\n.annotation-save-button {\n    padding: 11px 0 !important;\n    min-width: 0 !important;\n}\n\n.annotation-js-hover {\n    filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));\n}\n\n.arrow-line {\n    stroke: var(--issue-type-based);\n}\n\n.text-annotation-id {\n    stroke: none;\n    fill: white;\n    font-size: 17px;\n    font-weight: bold;\n    user-select: none;\n}\n\n.svg-foreign-object {\n    overflow: visible;\n    stroke: none;\n    fill: white;\n}\n";
 	styleInject(css_248z);
 
 	/**
@@ -36975,11 +36975,16 @@
 	        React$1.createElement(DeleteButton, { deleteCallback: deleteCallback })));
 	};
 
+	const hoverEffect = (isHover) => {
+	    document.body.style.cursor = isHover ? 'grab' : 'auto';
+	    return isHover ? 'annotation-js-hover' : '';
+	};
+
 	/**
 	 * Component returning the Arrow annotation type.
 	 */
 	const Arrow = ({ isHover, shift, x1, y1, x2, y2, moveHandlers, deleteCallback }) => {
-	    return (React$1.createElement("g", Object.assign({ className: "annotation", style: getRelocationStyle({ shift }) }, moveHandlers),
+	    return (React$1.createElement("g", Object.assign({ className: hoverEffect(isHover), style: getRelocationStyle({ shift }) }, moveHandlers),
 	        React$1.createElement("line", { x1: x1, y1: y1, x2: x2, y2: y2, strokeWidth: 4, markerEnd: "url(#arrowhead)", className: "arrow-line" }),
 	        React$1.createElement("line", { x1: x1, y1: y1, x2: x2, y2: y2, strokeWidth: 20, strokeOpacity: 0 }),
 	        isHover && (React$1.createElement(WrappedDeleteButton, { x: x1 + 12, y: y1 - 12, deleteCallback: deleteCallback }))));
@@ -37027,7 +37032,7 @@
 	 */
 	const FreeHand = ({ isHover, shift, path, moveHandlers, deleteCallback }) => {
 	    const points = path.map(([x, y]) => `${x},${y}`).join(' ');
-	    return (React$1.createElement("g", Object.assign({ className: "annotation", style: getRelocationStyle({ shift }) }, moveHandlers),
+	    return (React$1.createElement("g", Object.assign({ className: hoverEffect(isHover), style: getRelocationStyle({ shift }) }, moveHandlers),
 	        React$1.createElement("polyline", { fill: "none", strokeWidth: "8", points: points }),
 	        React$1.createElement("polyline", { fill: "none", strokeWidth: "20", strokeOpacity: 0, points: points }),
 	        isHover && (React$1.createElement(WrappedDeleteButton, { x: path[path.length - 1][0] + 12, y: path[path.length - 1][1] - 12, deleteCallback: deleteCallback }))));
@@ -37068,7 +37073,7 @@
 	 * Component returning the Obfuscation annotation type.
 	 */
 	const Obfuscation = ({ isHover, shift, x, y, width, height, moveHandlers, deleteCallback }) => (React$1.createElement("g", Object.assign({}, moveHandlers, { style: getRelocationStyle({ shift }) }),
-	    React$1.createElement("rect", { x: x, y: y, width: width, height: height, stroke: "none", className: "annotation" }),
+	    React$1.createElement("rect", { x: x, y: y, width: width, height: height, stroke: "none", className: hoverEffect(isHover) }),
 	    isHover && (React$1.createElement(WrappedDeleteButton, { x: x + width - 8, y: y - 8, deleteCallback: deleteCallback }))));
 
 	/**
@@ -37113,8 +37118,6 @@
 	    };
 	    return mouseEventHandlers;
 	};
-
-	const hoverEffect = (isHover) => (isHover ? 'annotation-js-hover' : '');
 
 	/**
 	 * Component returning the SelectArea annotation type.
@@ -37189,7 +37192,7 @@
 	/**
 	 * Component returning the Text annotation type.
 	 */
-	const Text = ({ shift, id, index, x, y, open, comment, moveHandlers, setSelectedCommentIds, deleteCallback }) => {
+	const Text = ({ isHover, shift, id, index, x, y, open, comment, moveHandlers, setSelectedCommentIds, deleteCallback }) => {
 	    const { setAnnotations } = react.exports.useContext(ToolContext);
 	    const cardRef = react.exports.createRef();
 	    const [cardHeight, setCardHeight] = react.exports.useState(0);
@@ -37217,7 +37220,7 @@
 	    }, [open]);
 	    const inPx = (size) => `${size}px`;
 	    return (React$1.createElement("g", { style: getRelocationStyle({ shift }) },
-	        React$1.createElement("g", Object.assign({ className: "annotation" }, moveHandlers),
+	        React$1.createElement("g", Object.assign({ className: hoverEffect(isHover) }, moveHandlers),
 	            React$1.createElement("circle", { cx: x, cy: y, r: CIRCLE_RADIUS, stroke: ISSUE_TYPE_BASED_DARK, fill: ISSUE_TYPE_BASED_LIGHT }),
 	            React$1.createElement("text", { x: x, y: y + 1, dominantBaseline: "middle", textAnchor: "middle", className: "text-annotation-id" }, index)),
 	        open && (React$1.createElement("foreignObject", { x: CARD_X, y: CARD_Y, width: 1, height: 1, className: "svg-foreign-object", onMouseDown: (event) => event.stopPropagation(), "data-html2canvas-ignore": true },

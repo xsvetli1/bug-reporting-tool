@@ -2,6 +2,7 @@ import React from 'react';
 import { AnnotationProps } from '../AnnotationProps';
 import { getRelocationStyle } from '../../helpers/RelocationHelper';
 import { WrappedDeleteButton } from '../DeleteButton';
+import { hoverEffect } from '../../helpers/AnnotationHoverHelper';
 
 export interface ObfuscationProps extends AnnotationProps<'OBFUSCATION'> {
     x: number;
@@ -24,7 +25,14 @@ const Obfuscation = ({
     deleteCallback
 }: ObfuscationProps) => (
     <g {...moveHandlers} style={getRelocationStyle({ shift })}>
-        <rect x={x} y={y} width={width} height={height} stroke="none" className="annotation" />
+        <rect
+            x={x}
+            y={y}
+            width={width}
+            height={height}
+            stroke="none"
+            className={hoverEffect(isHover)}
+        />
         {isHover && (
             <WrappedDeleteButton x={x + width - 8} y={y - 8} deleteCallback={deleteCallback} />
         )}
