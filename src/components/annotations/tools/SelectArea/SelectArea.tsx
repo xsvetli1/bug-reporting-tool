@@ -2,6 +2,8 @@ import React from 'react';
 import { AnnotationProps } from '../AnnotationProps';
 import { getRelocationStyle } from '../../helpers/RelocationHelper';
 import { WrappedDeleteButton } from '../DeleteButton';
+import { rectToPathData } from '../../helpers/RectangleHelper';
+import { hoverEffect } from '../../helpers/AnnotationHoverHelper';
 
 export interface SelectAreaProps extends AnnotationProps<'SELECT_AREA'> {
     x: number;
@@ -13,21 +15,16 @@ export interface SelectAreaProps extends AnnotationProps<'SELECT_AREA'> {
 /**
  * Component returning the SelectArea annotation type.
  */
-const SelectArea = ({
-    isHover,
-    shift,
-    x,
-    y,
-    width,
-    height,
-    moveHandlers,
-    deleteCallback
-}: SelectAreaProps) => (
-    <g {...moveHandlers} style={getRelocationStyle({ shift })}>
-        <rect x={x} y={y} width={width} height={height} fillOpacity="0" className="annotation" />
-        {isHover && (
-            <WrappedDeleteButton x={x + width - 8} y={y - 8} deleteCallback={deleteCallback} />
-        )}
-    </g>
-);
+const SelectArea = (props: SelectAreaProps) => {
+    const { isHover, shift, x, y, width, moveHandlers, deleteCallback } = props;
+    return (
+        <g {...moveHandlers} style={getRelocationStyle({ shift })}>
+            <path className={hoverEffect(isHover)} d={rectToPathData(props, false)} fill="none" />
+            <path d={rectToPathData(props, false)} fill="none" strokeOpacity="0" strokeWidth={20} />
+            {isHover && (
+                <WrappedDeleteButton x={x + width - 8} y={y - 8} deleteCallback={deleteCallback} />
+            )}
+        </g>
+    );
+};
 export default SelectArea;

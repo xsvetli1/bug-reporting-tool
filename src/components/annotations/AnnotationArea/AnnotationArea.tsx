@@ -2,8 +2,8 @@ import React, { ReactNode, useContext } from 'react';
 import { ISSUE_TYPE_BASED } from '../../../models/Colors';
 import { AnnotationContext } from '../../../contexts/AnnotationContext';
 import { getSVGHeigth, getSVGWidth } from '../helpers/CoordinatesHelper';
-import { SelectAreaProps } from '../tools/SelectArea';
 import { AnnotationMouseEventHandlers } from '../types/AnnotationMouseEventHandlers';
+import { rectToPathData } from '../helpers/RectangleHelper';
 
 export interface AnnotationAreaProps {
     mouseEventHandlers: AnnotationMouseEventHandlers;
@@ -45,9 +45,6 @@ const AnnotationArea = (props: AnnotationAreaProps) => {
         </svg>
     );
 };
-
-const rectToPathData = ({ shift, x, y, width, height }: SelectAreaProps) =>
-    `M ${x + shift.x} ${y + shift.y} h ${width} v ${height} h ${-width} Z`;
 
 const background = rectToPathData({
     type: 'SELECT_AREA',

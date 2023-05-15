@@ -27004,6 +27004,10 @@
 	    return window.innerHeight;
 	};
 
+	const rectToPathData = ({ shift, x, y, width, height }, shouldShift = true) => shouldShift
+	    ? `M ${x + shift.x} ${y + shift.y} h ${width} v ${height} h ${-width} Z`
+	    : `M ${x} ${y} h ${width} v ${height} h ${-width} Z`;
+
 	/**
 	 * Wrapper for the main SVG element covering whole screen.
 	 *
@@ -27023,7 +27027,6 @@
 	        React$1.createElement("path", { fill: "#ffffff", stroke: "none", fillOpacity: "0.3", fillRule: "evenodd", d: d }),
 	        props.children));
 	};
-	const rectToPathData = ({ shift, x, y, width, height }) => `M ${x + shift.x} ${y + shift.y} h ${width} v ${height} h ${-width} Z`;
 	const background = rectToPathData({
 	    type: 'SELECT_AREA',
 	    shift: { x: 0, y: 0 },
@@ -27033,7 +27036,7 @@
 	    height: getSVGHeigth()
 	});
 
-	var css_248z = ":root {\n    --border-width: 3px;\n}\n\n.annotation-tool {\n    position: fixed;\n    z-index: 2147483646;\n    left: 0;\n    top: 0;\n    right: 0;\n    bottom: 0;\n}\n\n.annotation-area {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    stroke-width: var(--border-width);\n    stroke: var(--issue-type-based);\n}\n\n.annotation-area-content {\n    position: absolute;\n}\n\n.annotation-area-border {\n    position: fixed;\n    background: var(--issue-type-based);\n}\n\n.sharp-corners,\n.annotation-tools-button,\n.annotation-close-button,\n.annotation-save-button,\n.comment-button,\n.delete-button {\n    border-radius: 0 !important;\n}\n\n.annotation-close-button {\n    position: fixed !important;\n    top: 0;\n    right: 0;\n    width: 25px !important;\n    height: 25px !important;\n    min-height: 25px !important;\n    background: var(--issue-type-based) !important;\n}\n\n.annotation-close-button:hover {\n    background: var(--issue-type-based-dark) !important;\n}\n\n.annotation-button-group {\n    display: flex;\n    flex-direction: column;\n}\n\n.annotation-tools-button {\n    background: var(--issue-type-based-light) !important;\n}\n\n.annotation-tools-button:hover {\n    background: var(--issue-type-based) !important;\n}\n\n.annotation-tools-button.Mui-selected {\n    background: var(--issue-type-based-dark) !important;\n}\n\n.comment-button,\n.delete-button {\n    min-width: 0 !important;\n    padding: 0 !important;\n    float: right;\n}\n\n.comment-button {\n    margin-left: 10px !important;\n}\n\n.annotation-area-content .MuiSvgIcon-root {\n    color: white;\n}\n\n.annotation-save-button {\n    padding: 11px 0 !important;\n    min-width: 0 !important;\n}\n\n.annotation:hover {\n    cursor: grab;\n    filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));\n}\n\n.arrow-line {\n    stroke: var(--issue-type-based);\n}\n\n.text-annotation-id {\n    stroke: none;\n    fill: white;\n    font-size: 17px;\n    font-weight: bold;\n    user-select: none;\n}\n\n.svg-foreign-object {\n    overflow: visible;\n    stroke: none;\n    fill: white;\n}\n";
+	var css_248z = ":root {\n    --border-width: 3px;\n}\n\n.annotation-tool {\n    position: fixed;\n    z-index: 2147483646;\n    left: 0;\n    top: 0;\n    right: 0;\n    bottom: 0;\n}\n\n.annotation-area {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    stroke-width: var(--border-width);\n    stroke: var(--issue-type-based);\n}\n\n.annotation-area-content {\n    position: absolute;\n}\n\n.annotation-area-border {\n    position: fixed;\n    background: var(--issue-type-based);\n}\n\n.sharp-corners,\n.annotation-tools-button,\n.annotation-close-button,\n.annotation-save-button,\n.comment-button,\n.delete-button {\n    border-radius: 0 !important;\n}\n\n.annotation-close-button {\n    position: fixed !important;\n    top: 0;\n    right: 0;\n    width: 25px !important;\n    height: 25px !important;\n    min-height: 25px !important;\n    background: var(--issue-type-based) !important;\n}\n\n.annotation-close-button:hover {\n    background: var(--issue-type-based-dark) !important;\n}\n\n.annotation-button-group {\n    display: flex;\n    flex-direction: column;\n}\n\n.annotation-tools-button {\n    background: var(--issue-type-based-light) !important;\n}\n\n.annotation-tools-button:hover {\n    background: var(--issue-type-based) !important;\n}\n\n.annotation-tools-button.Mui-selected {\n    background: var(--issue-type-based-dark) !important;\n}\n\n.comment-button,\n.delete-button {\n    min-width: 0 !important;\n    padding: 0 !important;\n    float: right;\n}\n\n.comment-button {\n    margin-left: 10px !important;\n}\n\n.annotation-area-content .MuiSvgIcon-root {\n    color: white;\n}\n\n.annotation-save-button {\n    padding: 11px 0 !important;\n    min-width: 0 !important;\n}\n\n.annotation:hover,\n.annotation-js-hover {\n    cursor: grab;\n    filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));\n}\n\n.arrow-line {\n    stroke: var(--issue-type-based);\n}\n\n.text-annotation-id {\n    stroke: none;\n    fill: white;\n    font-size: 17px;\n    font-weight: bold;\n    user-select: none;\n}\n\n.svg-foreign-object {\n    overflow: visible;\n    stroke: none;\n    fill: white;\n}\n";
 	styleInject(css_248z);
 
 	/**
@@ -37111,12 +37114,18 @@
 	    return mouseEventHandlers;
 	};
 
+	const hoverEffect = (isHover) => (isHover ? 'annotation-js-hover' : '');
+
 	/**
 	 * Component returning the SelectArea annotation type.
 	 */
-	const SelectArea = ({ isHover, shift, x, y, width, height, moveHandlers, deleteCallback }) => (React$1.createElement("g", Object.assign({}, moveHandlers, { style: getRelocationStyle({ shift }) }),
-	    React$1.createElement("rect", { x: x, y: y, width: width, height: height, fillOpacity: "0", className: "annotation" }),
-	    isHover && (React$1.createElement(WrappedDeleteButton, { x: x + width - 8, y: y - 8, deleteCallback: deleteCallback }))));
+	const SelectArea = (props) => {
+	    const { isHover, shift, x, y, width, moveHandlers, deleteCallback } = props;
+	    return (React$1.createElement("g", Object.assign({}, moveHandlers, { style: getRelocationStyle({ shift }) }),
+	        React$1.createElement("path", { className: hoverEffect(isHover), d: rectToPathData(props, false), fill: "none" }),
+	        React$1.createElement("path", { d: rectToPathData(props, false), fill: "none", strokeOpacity: "0", strokeWidth: 20 }),
+	        isHover && (React$1.createElement(WrappedDeleteButton, { x: x + width - 8, y: y - 8, deleteCallback: deleteCallback }))));
+	};
 
 	/**
 	 * Hook for create mouse event handlers for SelectArea annotation type.
