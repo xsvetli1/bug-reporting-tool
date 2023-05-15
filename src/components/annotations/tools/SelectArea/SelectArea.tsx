@@ -3,7 +3,7 @@ import { AnnotationProps } from '../AnnotationProps';
 import { getRelocationStyle } from '../../helpers/RelocationHelper';
 import { WrappedDeleteButton } from '../DeleteButton';
 import { rectToPathData } from '../../helpers/RectangleHelper';
-import { hoverEffect } from '../../helpers/AnnotationHoverHelper';
+import { hoverAnnotationClass, useHoverEffect } from '../../helpers/AnnotationHoverHelper';
 
 export interface SelectAreaProps extends AnnotationProps<'SELECT_AREA'> {
     x: number;
@@ -17,9 +17,15 @@ export interface SelectAreaProps extends AnnotationProps<'SELECT_AREA'> {
  */
 const SelectArea = (props: SelectAreaProps) => {
     const { isHover, shift, x, y, width, moveHandlers, deleteCallback } = props;
+    useHoverEffect(isHover);
+
     return (
         <g {...moveHandlers} style={getRelocationStyle({ shift })}>
-            <path className={hoverEffect(isHover)} d={rectToPathData(props, false)} fill="none" />
+            <path
+                className={hoverAnnotationClass(isHover)}
+                d={rectToPathData(props, false)}
+                fill="none"
+            />
             <path d={rectToPathData(props, false)} fill="none" strokeOpacity="0" strokeWidth={20} />
             {isHover && (
                 <WrappedDeleteButton x={x + width - 8} y={y - 8} deleteCallback={deleteCallback} />

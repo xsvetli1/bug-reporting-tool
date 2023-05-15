@@ -36975,16 +36975,19 @@
 	        React$1.createElement(DeleteButton, { deleteCallback: deleteCallback })));
 	};
 
-	const hoverEffect = (isHover) => {
-	    document.body.style.cursor = isHover ? 'grab' : 'auto';
+	const hoverAnnotationClass = (isHover) => {
 	    return isHover ? 'annotation-js-hover' : '';
 	};
+	const useHoverEffect = (isHover) => react.exports.useEffect(() => {
+	    document.body.style.cursor = isHover ? 'grab' : 'auto';
+	}, [isHover]);
 
 	/**
 	 * Component returning the Arrow annotation type.
 	 */
 	const Arrow = ({ isHover, shift, x1, y1, x2, y2, moveHandlers, deleteCallback }) => {
-	    return (React$1.createElement("g", Object.assign({ className: hoverEffect(isHover), style: getRelocationStyle({ shift }) }, moveHandlers),
+	    useHoverEffect(isHover);
+	    return (React$1.createElement("g", Object.assign({ className: hoverAnnotationClass(isHover), style: getRelocationStyle({ shift }) }, moveHandlers),
 	        React$1.createElement("line", { x1: x1, y1: y1, x2: x2, y2: y2, strokeWidth: 4, markerEnd: "url(#arrowhead)", className: "arrow-line" }),
 	        React$1.createElement("line", { x1: x1, y1: y1, x2: x2, y2: y2, strokeWidth: 20, strokeOpacity: 0 }),
 	        isHover && (React$1.createElement(WrappedDeleteButton, { x: x1 + 12, y: y1 - 12, deleteCallback: deleteCallback }))));
@@ -37032,7 +37035,8 @@
 	 */
 	const FreeHand = ({ isHover, shift, path, moveHandlers, deleteCallback }) => {
 	    const points = path.map(([x, y]) => `${x},${y}`).join(' ');
-	    return (React$1.createElement("g", Object.assign({ className: hoverEffect(isHover), style: getRelocationStyle({ shift }) }, moveHandlers),
+	    useHoverEffect(isHover);
+	    return (React$1.createElement("g", Object.assign({ className: hoverAnnotationClass(isHover), style: getRelocationStyle({ shift }) }, moveHandlers),
 	        React$1.createElement("polyline", { fill: "none", strokeWidth: "8", points: points }),
 	        React$1.createElement("polyline", { fill: "none", strokeWidth: "20", strokeOpacity: 0, points: points }),
 	        isHover && (React$1.createElement(WrappedDeleteButton, { x: path[path.length - 1][0] + 12, y: path[path.length - 1][1] - 12, deleteCallback: deleteCallback }))));
@@ -37072,9 +37076,12 @@
 	/**
 	 * Component returning the Obfuscation annotation type.
 	 */
-	const Obfuscation = ({ isHover, shift, x, y, width, height, moveHandlers, deleteCallback }) => (React$1.createElement("g", Object.assign({}, moveHandlers, { style: getRelocationStyle({ shift }) }),
-	    React$1.createElement("rect", { x: x, y: y, width: width, height: height, stroke: "none", className: hoverEffect(isHover) }),
-	    isHover && (React$1.createElement(WrappedDeleteButton, { x: x + width - 8, y: y - 8, deleteCallback: deleteCallback }))));
+	const Obfuscation = ({ isHover, shift, x, y, width, height, moveHandlers, deleteCallback }) => {
+	    useHoverEffect(isHover);
+	    return (React$1.createElement("g", Object.assign({}, moveHandlers, { style: getRelocationStyle({ shift }) }),
+	        React$1.createElement("rect", { x: x, y: y, width: width, height: height, stroke: "none", className: hoverAnnotationClass(isHover) }),
+	        isHover && (React$1.createElement(WrappedDeleteButton, { x: x + width - 8, y: y - 8, deleteCallback: deleteCallback }))));
+	};
 
 	/**
 	 * Hook for create mouse event handlers for Obfuscation annotation type.
@@ -37124,8 +37131,9 @@
 	 */
 	const SelectArea = (props) => {
 	    const { isHover, shift, x, y, width, moveHandlers, deleteCallback } = props;
+	    useHoverEffect(isHover);
 	    return (React$1.createElement("g", Object.assign({}, moveHandlers, { style: getRelocationStyle({ shift }) }),
-	        React$1.createElement("path", { className: hoverEffect(isHover), d: rectToPathData(props, false), fill: "none" }),
+	        React$1.createElement("path", { className: hoverAnnotationClass(isHover), d: rectToPathData(props, false), fill: "none" }),
 	        React$1.createElement("path", { d: rectToPathData(props, false), fill: "none", strokeOpacity: "0", strokeWidth: 20 }),
 	        isHover && (React$1.createElement(WrappedDeleteButton, { x: x + width - 8, y: y - 8, deleteCallback: deleteCallback }))));
 	};
@@ -37218,9 +37226,10 @@
 	            setCardHeight(cardRef.current.clientHeight);
 	        }
 	    }, [open]);
+	    useHoverEffect(isHover);
 	    const inPx = (size) => `${size}px`;
 	    return (React$1.createElement("g", { style: getRelocationStyle({ shift }) },
-	        React$1.createElement("g", Object.assign({ className: hoverEffect(isHover) }, moveHandlers),
+	        React$1.createElement("g", Object.assign({ className: hoverAnnotationClass(isHover) }, moveHandlers),
 	            React$1.createElement("circle", { cx: x, cy: y, r: CIRCLE_RADIUS, stroke: ISSUE_TYPE_BASED_DARK, fill: ISSUE_TYPE_BASED_LIGHT }),
 	            React$1.createElement("text", { x: x, y: y + 1, dominantBaseline: "middle", textAnchor: "middle", className: "text-annotation-id" }, index)),
 	        open && (React$1.createElement("foreignObject", { x: CARD_X, y: CARD_Y, width: 1, height: 1, className: "svg-foreign-object", onMouseDown: (event) => event.stopPropagation(), "data-html2canvas-ignore": true },

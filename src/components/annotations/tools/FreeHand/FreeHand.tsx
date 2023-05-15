@@ -2,7 +2,7 @@ import React from 'react';
 import { AnnotationProps } from '../AnnotationProps';
 import { getRelocationStyle } from '../../helpers/RelocationHelper';
 import { WrappedDeleteButton } from '../DeleteButton';
-import { hoverEffect } from '../../helpers/AnnotationHoverHelper';
+import { hoverAnnotationClass, useHoverEffect } from '../../helpers/AnnotationHoverHelper';
 
 export interface FreeHandProps extends AnnotationProps<'FREE_HAND'> {
     path: [number, number][];
@@ -13,8 +13,14 @@ export interface FreeHandProps extends AnnotationProps<'FREE_HAND'> {
  */
 const FreeHand = ({ isHover, shift, path, moveHandlers, deleteCallback }: FreeHandProps) => {
     const points = path.map(([x, y]) => `${x},${y}`).join(' ');
+    useHoverEffect(isHover);
+
     return (
-        <g className={hoverEffect(isHover)} style={getRelocationStyle({ shift })} {...moveHandlers}>
+        <g
+            className={hoverAnnotationClass(isHover)}
+            style={getRelocationStyle({ shift })}
+            {...moveHandlers}
+        >
             <polyline fill="none" strokeWidth="8" points={points} />
             <polyline fill="none" strokeWidth="20" strokeOpacity={0} points={points} />
             {isHover && (

@@ -2,7 +2,7 @@ import React from 'react';
 import { AnnotationProps } from '../AnnotationProps';
 import { getRelocationStyle } from '../../helpers/RelocationHelper';
 import { WrappedDeleteButton } from '../DeleteButton';
-import { hoverEffect } from '../../helpers/AnnotationHoverHelper';
+import { hoverAnnotationClass, useHoverEffect } from '../../helpers/AnnotationHoverHelper';
 
 export interface ArrowProps extends AnnotationProps<'ARROW'> {
     x1: number;
@@ -15,8 +15,14 @@ export interface ArrowProps extends AnnotationProps<'ARROW'> {
  * Component returning the Arrow annotation type.
  */
 const Arrow = ({ isHover, shift, x1, y1, x2, y2, moveHandlers, deleteCallback }: ArrowProps) => {
+    useHoverEffect(isHover);
+
     return (
-        <g className={hoverEffect(isHover)} style={getRelocationStyle({ shift })} {...moveHandlers}>
+        <g
+            className={hoverAnnotationClass(isHover)}
+            style={getRelocationStyle({ shift })}
+            {...moveHandlers}
+        >
             <line
                 x1={x1}
                 y1={y1}
