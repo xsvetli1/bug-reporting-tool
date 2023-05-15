@@ -1,4 +1,4 @@
-# bug-reporting-tool
+# Bug Reporting Tool
 _Not only to report bugs..._
 
 [![GitHub package.json version](https://img.shields.io/github/package-json/v/xsvetli1/bug-reporting-tool?color=blue)](https://github.com/xsvetli1/bug-reporting-tool/pkgs/npm/bug-reporting-tool)
@@ -28,7 +28,7 @@ Github _(functionality is limited - annotation tool is unavailable)_
 - [x] Select area
 - [x] Draw arrow
 - [x] Draw using free hand
-- [x] Obfuscate
+- [x] Obfuscate area
 - [x] Comment
 
 ### Annotation tool in action
