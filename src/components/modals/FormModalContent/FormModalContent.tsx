@@ -26,6 +26,7 @@ export interface FormModalContentProps {
     setTheme: UseStateSetter<string>;
     handleAnnotate: () => void;
     handleClose: () => void;
+    screenshotUrlsRef: React.MutableRefObject<string[]>;
 }
 
 /**
@@ -142,7 +143,14 @@ const FormModalContent = (props: FormModalContentProps) => {
                         <Chip
                             key={i}
                             label={`Screenshot ${i + 1}`}
-                            onClick={() => window.open(screenshot.dataUrl, '_blank', 'noreferrer')}
+                            onClick={async () => {
+                                const blob = await fetch(screenshot.dataUrl).then((res) =>
+                                    res.blob()
+                                );
+                                const url = URL.createObjectURL(blob);
+                                props.screenshotUrlsRef.current.push(url);
+                                window.open(url, '_blank', 'noreferrer');
+                            }}
                             onDelete={() => {
                                 setScreenshots([
                                     ...screenshots.filter((_, current_i) => current_i != i)

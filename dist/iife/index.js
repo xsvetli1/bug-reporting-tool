@@ -26860,7 +26860,12 @@
 	            React$1.createElement(TextField, Object.assign({}, textFieldProps('email', 'Email Address', 'email', emailRef))),
 	            React$1.createElement(TextField, Object.assign({}, textFieldProps('title', 'Title', 'text', titleRef))),
 	            React$1.createElement(TextField, Object.assign({}, textFieldProps('description', 'Description', 'text', descriptionRef, true))),
-	            React$1.createElement("div", { className: "screenshot-chips" }, screenshots.map((screenshot, i) => (React$1.createElement(Chip, { key: i, label: `Screenshot ${i + 1}`, onClick: () => window.open(screenshot.dataUrl, '_blank', 'noreferrer'), onDelete: () => {
+	            React$1.createElement("div", { className: "screenshot-chips" }, screenshots.map((screenshot, i) => (React$1.createElement(Chip, { key: i, label: `Screenshot ${i + 1}`, onClick: () => __awaiter$1(void 0, void 0, void 0, function* () {
+	                    const blob = yield fetch(screenshot.dataUrl).then((res) => res.blob());
+	                    const url = URL.createObjectURL(blob);
+	                    props.screenshotUrlsRef.current.push(url);
+	                    window.open(url, '_blank', 'noreferrer');
+	                }), onDelete: () => {
 	                    setScreenshots([
 	                        ...screenshots.filter((_, current_i) => current_i != i)
 	                    ]);
@@ -26902,6 +26907,11 @@
 	    const [formState, setFormState] = react.exports.useState({});
 	    const [snackbarShown, setSnackbarShown] = react.exports.useState(false);
 	    const [snackbarSuccess, setSnackbarSuccess] = react.exports.useState(false);
+	    const screenshotUrlsRef = react.exports.useRef([]);
+	    const revokeScreenshotUrls = () => {
+	        screenshotUrlsRef.current.forEach((url) => URL.revokeObjectURL(url));
+	        screenshotUrlsRef.current = [];
+	    };
 	    const handleClose = () => {
 	        props.setIsToolOpen(false);
 	        props.setIsBugAnnotationOpen(false);
@@ -26924,11 +26934,15 @@
 	        };
 	    };
 	    const anchor = { vertical: 'bottom', horizontal: 'right' };
+	    react.exports.useEffect(() => {
+	        if (!props.isToolOpen)
+	            revokeScreenshotUrls();
+	    }, [props.isToolOpen]);
 	    return (React$1.createElement("div", null,
 	        React$1.createElement(Dialog, { open: props.isToolOpen && !isOngoingAnnotation, onClose: handleClose },
 	            props.isToolOpen && !props.isBugAnnotationOpen && !props.isIdeaAnnotationOpen && (React$1.createElement(OptionsModalContent, { setIsBugAnnotationOpen: props.setIsBugAnnotationOpen, setIsIdeaAnnotationOpen: props.setIsIdeaAnnotationOpen, handleClose: handleClose })),
-	            props.isToolOpen && props.isBugAnnotationOpen && (React$1.createElement(FormModalContent, Object.assign({}, formModalProps(IssueType.Bug)))),
-	            props.isToolOpen && props.isIdeaAnnotationOpen && (React$1.createElement(FormModalContent, Object.assign({}, formModalProps(IssueType.Idea))))),
+	            props.isToolOpen && props.isBugAnnotationOpen && (React$1.createElement(FormModalContent, Object.assign({ screenshotUrlsRef: screenshotUrlsRef }, formModalProps(IssueType.Bug)))),
+	            props.isToolOpen && props.isIdeaAnnotationOpen && (React$1.createElement(FormModalContent, Object.assign({ screenshotUrlsRef: screenshotUrlsRef }, formModalProps(IssueType.Idea))))),
 	        React$1.createElement(Snackbar, { anchorOrigin: anchor, open: snackbarShown, autoHideDuration: 5000, onClose: handleSnackbarClose },
 	            React$1.createElement(Alert, { onClose: handleSnackbarClose, severity: snackbarSuccess ? 'success' : 'error', sx: { width: '100%' } }, snackbarSuccess
 	                ? 'Your feedback has been succesfully submitted!'

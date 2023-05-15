@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Alert, Dialog, Snackbar, SnackbarOrigin } from '@mui/material';
 import IssueType from '../../../models/IssueType';
 import { IssueInfo } from '../../../integration/models/IssueInfo';
@@ -33,6 +33,12 @@ const ModalController = (props: ModalControllerProps) => {
     const [snackbarShown, setSnackbarShown] = useState(false);
     const [snackbarSuccess, setSnackbarSuccess] = useState(false);
 
+    const screenshotUrlsRef = useRef<string[]>([]);
+    const revokeScreenshotUrls = () => {
+        screenshotUrlsRef.current.forEach((url) => URL.revokeObjectURL(url));
+        screenshotUrlsRef.current = [];
+    };
+
     const handleClose = () => {
         props.setIsToolOpen(false);
         props.setIsBugAnnotationOpen(false);
@@ -59,6 +65,10 @@ const ModalController = (props: ModalControllerProps) => {
 
     const anchor: SnackbarOrigin = { vertical: 'bottom', horizontal: 'right' };
 
+    useEffect(() => {
+        if (!props.isToolOpen) revokeScreenshotUrls();
+    }, [props.isToolOpen]);
+
     return (
         <div>
             <Dialog open={props.isToolOpen && !isOngoingAnnotation} onClose={handleClose}>
@@ -70,10 +80,16 @@ const ModalController = (props: ModalControllerProps) => {
                     />
                 )}
                 {props.isToolOpen && props.isBugAnnotationOpen && (
-                    <FormModalContent {...formModalProps(IssueType.Bug)} />
+                    <FormModalContent
+                        screenshotUrlsRef={screenshotUrlsRef}
+                        {...formModalProps(IssueType.Bug)}
+                    />
                 )}
                 {props.isToolOpen && props.isIdeaAnnotationOpen && (
-                    <FormModalContent {...formModalProps(IssueType.Idea)} />
+                    <FormModalContent
+                        screenshotUrlsRef={screenshotUrlsRef}
+                        {...formModalProps(IssueType.Idea)}
+                    />
                 )}
             </Dialog>
             <Snackbar
