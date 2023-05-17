@@ -1,5 +1,14 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Alert, Dialog, Snackbar, SnackbarOrigin } from '@mui/material';
+import {
+    Alert,
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    Snackbar,
+    SnackbarOrigin
+} from '@mui/material';
 import IssueType from '../../../models/IssueType';
 import { IssueInfo } from '../../../integration/models/IssueInfo';
 import FormModalContent from '../FormModalContent';
@@ -32,6 +41,7 @@ const ModalController = (props: ModalControllerProps) => {
     const [formState, setFormState] = useState<FormProps>({});
     const [snackbarShown, setSnackbarShown] = useState(false);
     const [snackbarSuccess, setSnackbarSuccess] = useState(false);
+    const [isCloseToolDialogShown, setIsCloseToolDialogShown] = useState(false);
 
     const screenshotUrlsRef = useRef<string[]>([]);
     const revokeScreenshotUrls = () => {
@@ -47,6 +57,8 @@ const ModalController = (props: ModalControllerProps) => {
         setScreenshots([]);
     };
 
+    const handleSafeClose = () => setIsCloseToolDialogShown(true);
+
     const handleSnackbarClose = () => setSnackbarShown(false);
 
     const formModalProps = (type: IssueType) => {
@@ -60,7 +72,8 @@ const ModalController = (props: ModalControllerProps) => {
             setSnackbarSuccess: setSnackbarSuccess,
             setTheme: props.setTheme,
             handleAnnotate: () => setIsOngoingAnnotation(true),
-            handleClose: handleClose
+            handleClose: handleClose,
+            handleSafeClose: handleSafeClose
         };
     };
 
@@ -72,7 +85,16 @@ const ModalController = (props: ModalControllerProps) => {
 
     return (
         <div>
-            <Dialog open={props.isToolOpen && !isOngoingAnnotation} onClose={handleClose}>
+            <Dialog
+                open={props.isToolOpen && !isOngoingAnnotation}
+                onClose={() => {
+                    if (props.isBugAnnotationOpen || props.isIdeaAnnotationOpen) {
+                        handleSafeClose();
+                    } else {
+                        handleClose();
+                    }
+                }}
+            >
                 {props.isToolOpen && !props.isBugAnnotationOpen && !props.isIdeaAnnotationOpen && (
                     <OptionsModalContent
                         setIsBugAnnotationOpen={props.setIsBugAnnotationOpen}
@@ -92,6 +114,29 @@ const ModalController = (props: ModalControllerProps) => {
                         {...formModalProps(IssueType.Idea)}
                     />
                 )}
+            </Dialog>
+            <Dialog open={isCloseToolDialogShown} sx={{ zIndex: 2147483647 }}>
+                <DialogTitle>Close Bug Reporting Tool</DialogTitle>
+                <DialogContent>
+                    Are you sure want to close Bug Reporting Tool?
+                    <br />
+                    <br />
+                    Please note that closing the tool will result in the loss of all your progress
+                    and annotations.
+                </DialogContent>
+                <DialogActions>
+                    <Button autoFocus onClick={() => setIsCloseToolDialogShown(false)}>
+                        No
+                    </Button>
+                    <Button
+                        onClick={() => {
+                            setIsCloseToolDialogShown(false);
+                            handleClose();
+                        }}
+                    >
+                        Yes
+                    </Button>
+                </DialogActions>
             </Dialog>
             <Snackbar
                 anchorOrigin={anchor}

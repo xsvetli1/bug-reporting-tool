@@ -14,6 +14,7 @@ import { FormFields, FormProps } from '../../../models/FormProps';
 import { UseStateSetter } from '../../../models/UseStateSetter';
 import { ToolContext } from '../../../contexts/ToolContext';
 import '../../../styles/modals.css';
+import CloseModalButton from '../CloseModalButton/CloseModalButton';
 
 export interface FormModalContentProps {
     isEmailRequired: boolean;
@@ -26,6 +27,7 @@ export interface FormModalContentProps {
     setTheme: UseStateSetter<string>;
     handleAnnotate: () => void;
     handleClose: () => void;
+    handleSafeClose: () => void;
     screenshotUrlsRef: React.MutableRefObject<string[]>;
 }
 
@@ -130,7 +132,10 @@ const FormModalContent = (props: FormModalContentProps) => {
 
     return (
         <div>
-            <DialogTitle>{props.type.getTitle()}</DialogTitle>
+            <DialogTitle>
+                {props.type.getTitle()}
+                <CloseModalButton handleSafeClose={props.handleSafeClose} />
+            </DialogTitle>
             <DialogContent>
                 <TextField {...textFieldProps('email', 'Email Address', 'email', emailRef)} />
                 <TextField {...textFieldProps('title', 'Title', 'text', titleRef)} />

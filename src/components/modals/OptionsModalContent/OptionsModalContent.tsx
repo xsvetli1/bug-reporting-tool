@@ -1,6 +1,7 @@
 import { Button, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import React from 'react';
 import { UseStateSetter } from '../../../models/UseStateSetter';
+import CloseModalButton from '../CloseModalButton/CloseModalButton';
 
 export interface OptionsModalContentProps {
     setIsBugAnnotationOpen: UseStateSetter<boolean>;
@@ -23,7 +24,10 @@ const OptionsModalContent = (props: OptionsModalContentProps) => {
 
     return (
         <div>
-            <DialogTitle>Bug Reporting Tool</DialogTitle>
+            <DialogTitle>
+                Bug Reporting Tool
+                <CloseModalButton handleSafeClose={props.handleClose} />
+            </DialogTitle>
             <DialogContent>
                 <Button onClick={onReportBugClick} variant="text" fullWidth>
                     Report a bug

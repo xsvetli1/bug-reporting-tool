@@ -26773,6 +26773,67 @@
 	var css_248z$2 = ".screenshot-chips {\n    display: flex;\n    flex-wrap: wrap;\n    gap: 6px;\n    margin-top: 10px;\n    justify-content: center;\n}\n\n.ongoing-annotation {\n    overflow: hidden;\n}\n";
 	styleInject(css_248z$2);
 
+	var Close = {};
+
+	var interopRequireDefault = {exports: {}};
+
+	(function (module) {
+		function _interopRequireDefault(obj) {
+		  return obj && obj.__esModule ? obj : {
+		    "default": obj
+		  };
+		}
+		module.exports = _interopRequireDefault, module.exports.__esModule = true, module.exports["default"] = module.exports;
+	} (interopRequireDefault));
+
+	var createSvgIcon = {};
+
+	var require$$0 = /*@__PURE__*/getAugmentedNamespace(utils);
+
+	var hasRequiredCreateSvgIcon;
+
+	function requireCreateSvgIcon () {
+		if (hasRequiredCreateSvgIcon) return createSvgIcon;
+		hasRequiredCreateSvgIcon = 1;
+		(function (exports) {
+
+			Object.defineProperty(exports, "__esModule", {
+			  value: true
+			});
+			Object.defineProperty(exports, "default", {
+			  enumerable: true,
+			  get: function () {
+			    return _utils.createSvgIcon;
+			  }
+			});
+			var _utils = require$$0;
+	} (createSvgIcon));
+		return createSvgIcon;
+	}
+
+	var _interopRequireDefault$9 = interopRequireDefault.exports;
+	Object.defineProperty(Close, "__esModule", {
+	  value: true
+	});
+	var default_1$8 = Close.default = void 0;
+	var _createSvgIcon$8 = _interopRequireDefault$9(requireCreateSvgIcon());
+	var _jsxRuntime$8 = requireJsxRuntime();
+	var _default$9 = (0, _createSvgIcon$8.default)( /*#__PURE__*/(0, _jsxRuntime$8.jsx)("path", {
+	  d: "M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+	}), 'Close');
+	default_1$8 = Close.default = _default$9;
+
+	/**
+	 * Close button for modal windows
+	 */
+	const CloseModalButton = ({ handleSafeClose }) => (React$1.createElement(IconButton, { "aria-label": "close", onClick: handleSafeClose, sx: {
+	        position: 'absolute',
+	        right: 8,
+	        top: 8,
+	        color: (theme) => theme.palette.grey[500]
+	    } },
+	    React$1.createElement(default_1$8, null)));
+
 	/**
 	 * Component wrapping content for MUI Dialog component. This content is specific
 	 * for the report form of the Bug Reporting Tool.
@@ -26854,7 +26915,9 @@
 	        });
 	    }, []);
 	    return (React$1.createElement("div", null,
-	        React$1.createElement(DialogTitle, null, props.type.getTitle()),
+	        React$1.createElement(DialogTitle, null,
+	            props.type.getTitle(),
+	            React$1.createElement(CloseModalButton, { handleSafeClose: props.handleSafeClose })),
 	        React$1.createElement(DialogContent, null,
 	            React$1.createElement(TextField, Object.assign({}, textFieldProps('email', 'Email Address', 'email', emailRef))),
 	            React$1.createElement(TextField, Object.assign({}, textFieldProps('title', 'Title', 'text', titleRef))),
@@ -26886,7 +26949,9 @@
 	        props.setIsIdeaAnnotationOpen(true);
 	    };
 	    return (React$1.createElement("div", null,
-	        React$1.createElement(DialogTitle, null, "Bug Reporting Tool"),
+	        React$1.createElement(DialogTitle, null,
+	            "Bug Reporting Tool",
+	            React$1.createElement(CloseModalButton, { handleSafeClose: props.handleClose })),
 	        React$1.createElement(DialogContent, null,
 	            React$1.createElement(Button, { onClick: onReportBugClick, variant: "text", fullWidth: true }, "Report a bug"),
 	            React$1.createElement(Button, { onClick: onSuggestIdeaClick, variant: "text", fullWidth: true }, "Suggest new idea")),
@@ -26906,6 +26971,7 @@
 	    const [formState, setFormState] = react.exports.useState({});
 	    const [snackbarShown, setSnackbarShown] = react.exports.useState(false);
 	    const [snackbarSuccess, setSnackbarSuccess] = react.exports.useState(false);
+	    const [isCloseToolDialogShown, setIsCloseToolDialogShown] = react.exports.useState(false);
 	    const screenshotUrlsRef = react.exports.useRef([]);
 	    const revokeScreenshotUrls = () => {
 	        screenshotUrlsRef.current.forEach((url) => URL.revokeObjectURL(url));
@@ -26918,6 +26984,7 @@
 	        setFormState({});
 	        setScreenshots([]);
 	    };
+	    const handleSafeClose = () => setIsCloseToolDialogShown(true);
 	    const handleSnackbarClose = () => setSnackbarShown(false);
 	    const formModalProps = (type) => {
 	        return {
@@ -26930,7 +26997,8 @@
 	            setSnackbarSuccess: setSnackbarSuccess,
 	            setTheme: props.setTheme,
 	            handleAnnotate: () => setIsOngoingAnnotation(true),
-	            handleClose: handleClose
+	            handleClose: handleClose,
+	            handleSafeClose: handleSafeClose
 	        };
 	    };
 	    const anchor = { vertical: 'bottom', horizontal: 'right' };
@@ -26939,10 +27007,30 @@
 	            revokeScreenshotUrls();
 	    }, [props.isToolOpen]);
 	    return (React$1.createElement("div", null,
-	        React$1.createElement(Dialog, { open: props.isToolOpen && !isOngoingAnnotation, onClose: handleClose },
+	        React$1.createElement(Dialog, { open: props.isToolOpen && !isOngoingAnnotation, onClose: () => {
+	                if (props.isBugAnnotationOpen || props.isIdeaAnnotationOpen) {
+	                    handleSafeClose();
+	                }
+	                else {
+	                    handleClose();
+	                }
+	            } },
 	            props.isToolOpen && !props.isBugAnnotationOpen && !props.isIdeaAnnotationOpen && (React$1.createElement(OptionsModalContent, { setIsBugAnnotationOpen: props.setIsBugAnnotationOpen, setIsIdeaAnnotationOpen: props.setIsIdeaAnnotationOpen, handleClose: handleClose })),
 	            props.isToolOpen && props.isBugAnnotationOpen && (React$1.createElement(FormModalContent, Object.assign({ screenshotUrlsRef: screenshotUrlsRef }, formModalProps(IssueType.Bug)))),
 	            props.isToolOpen && props.isIdeaAnnotationOpen && (React$1.createElement(FormModalContent, Object.assign({ screenshotUrlsRef: screenshotUrlsRef }, formModalProps(IssueType.Idea))))),
+	        React$1.createElement(Dialog, { open: isCloseToolDialogShown, sx: { zIndex: 2147483647 } },
+	            React$1.createElement(DialogTitle, null, "Close Bug Reporting Tool"),
+	            React$1.createElement(DialogContent, null,
+	                "Are you sure want to close Bug Reporting Tool?",
+	                React$1.createElement("br", null),
+	                React$1.createElement("br", null),
+	                "Please note that closing the tool will result in the loss of all your progress and annotations."),
+	            React$1.createElement(DialogActions, null,
+	                React$1.createElement(Button, { autoFocus: true, onClick: () => setIsCloseToolDialogShown(false) }, "No"),
+	                React$1.createElement(Button, { onClick: () => {
+	                        setIsCloseToolDialogShown(false);
+	                        handleClose();
+	                    } }, "Yes"))),
 	        React$1.createElement(Snackbar, { anchorOrigin: anchor, open: snackbarShown, autoHideDuration: 5000, onClose: handleSnackbarClose },
 	            React$1.createElement(Alert, { onClose: handleSnackbarClose, severity: snackbarSuccess ? 'success' : 'error', sx: { width: '100%' } }, snackbarSuccess
 	                ? 'Your feedback has been succesfully submitted!'
@@ -27279,11 +27367,11 @@
 	// can handle unprefixed `transform`, but not unprefixed `user-select`
 
 
-	var _default$9 = (getPrefix()
+	var _default$8 = (getPrefix()
 	/*: string*/
 	);
 
-	getPrefix$1.default = _default$9;
+	getPrefix$1.default = _default$8;
 
 	function _typeof$1(obj) { "@babel/helpers - typeof"; return _typeof$1 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof$1(obj); }
 
@@ -27870,9 +27958,9 @@
 
 	var React = _interopRequireWildcard(react.exports);
 
-	var _propTypes = _interopRequireDefault$9(propTypes.exports);
+	var _propTypes = _interopRequireDefault$8(propTypes.exports);
 
-	var _reactDom = _interopRequireDefault$9(reactDom.exports);
+	var _reactDom = _interopRequireDefault$8(reactDom.exports);
 
 	var _domFns = domFns;
 
@@ -27880,9 +27968,9 @@
 
 	var _shims = shims;
 
-	var _log = _interopRequireDefault$9(log$1);
+	var _log = _interopRequireDefault$8(log$1);
 
-	function _interopRequireDefault$9(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault$8(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -28898,56 +28986,6 @@
 	cjs.exports = Draggable;
 	cjs.exports.default = Draggable;
 	cjs.exports.DraggableCore = DraggableCore;
-
-	var Close = {};
-
-	var interopRequireDefault = {exports: {}};
-
-	(function (module) {
-		function _interopRequireDefault(obj) {
-		  return obj && obj.__esModule ? obj : {
-		    "default": obj
-		  };
-		}
-		module.exports = _interopRequireDefault, module.exports.__esModule = true, module.exports["default"] = module.exports;
-	} (interopRequireDefault));
-
-	var createSvgIcon = {};
-
-	var require$$0 = /*@__PURE__*/getAugmentedNamespace(utils);
-
-	var hasRequiredCreateSvgIcon;
-
-	function requireCreateSvgIcon () {
-		if (hasRequiredCreateSvgIcon) return createSvgIcon;
-		hasRequiredCreateSvgIcon = 1;
-		(function (exports) {
-
-			Object.defineProperty(exports, "__esModule", {
-			  value: true
-			});
-			Object.defineProperty(exports, "default", {
-			  enumerable: true,
-			  get: function () {
-			    return _utils.createSvgIcon;
-			  }
-			});
-			var _utils = require$$0;
-	} (createSvgIcon));
-		return createSvgIcon;
-	}
-
-	var _interopRequireDefault$8 = interopRequireDefault.exports;
-	Object.defineProperty(Close, "__esModule", {
-	  value: true
-	});
-	var default_1$8 = Close.default = void 0;
-	var _createSvgIcon$8 = _interopRequireDefault$8(requireCreateSvgIcon());
-	var _jsxRuntime$8 = requireJsxRuntime();
-	var _default$8 = (0, _createSvgIcon$8.default)( /*#__PURE__*/(0, _jsxRuntime$8.jsx)("path", {
-	  d: "M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-	}), 'Close');
-	default_1$8 = Close.default = _default$8;
 
 	/**
 	 * Annotation Tool close button.
