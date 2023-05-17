@@ -26814,7 +26814,6 @@
 	        props.setSnackbarSuccess(success);
 	        props.setSnackbarShown(true);
 	        setAnnotations({});
-	        setScreenshots([]);
 	    });
 	    const textFieldProps = (id, label, type, ref, multiline = false) => {
 	        var _a, _b, _c, _d;
@@ -26903,7 +26902,7 @@
 	 * It also shows Snackbar with success or error message after the issue is submitted
 	 */
 	const ModalController = (props) => {
-	    const { isOngoingAnnotation, setIsOngoingAnnotation } = react.exports.useContext(ToolContext);
+	    const { isOngoingAnnotation, setIsOngoingAnnotation, setScreenshots } = react.exports.useContext(ToolContext);
 	    const [formState, setFormState] = react.exports.useState({});
 	    const [snackbarShown, setSnackbarShown] = react.exports.useState(false);
 	    const [snackbarSuccess, setSnackbarSuccess] = react.exports.useState(false);
@@ -26917,6 +26916,7 @@
 	        props.setIsBugAnnotationOpen(false);
 	        props.setIsIdeaAnnotationOpen(false);
 	        setFormState({});
+	        setScreenshots([]);
 	    };
 	    const handleSnackbarClose = () => setSnackbarShown(false);
 	    const formModalProps = (type) => {

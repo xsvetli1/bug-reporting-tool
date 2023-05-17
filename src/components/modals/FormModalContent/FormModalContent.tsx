@@ -76,7 +76,6 @@ const FormModalContent = (props: FormModalContentProps) => {
         props.setSnackbarSuccess(success);
         props.setSnackbarShown(true);
         setAnnotations({});
-        setScreenshots([]);
     };
 
     const textFieldProps = (

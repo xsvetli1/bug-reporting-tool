@@ -28,7 +28,7 @@ export interface ModalControllerProps {
  * It also shows Snackbar with success or error message after the issue is submitted
  */
 const ModalController = (props: ModalControllerProps) => {
-    const { isOngoingAnnotation, setIsOngoingAnnotation } = useContext(ToolContext);
+    const { isOngoingAnnotation, setIsOngoingAnnotation, setScreenshots } = useContext(ToolContext);
     const [formState, setFormState] = useState<FormProps>({});
     const [snackbarShown, setSnackbarShown] = useState(false);
     const [snackbarSuccess, setSnackbarSuccess] = useState(false);
@@ -44,6 +44,7 @@ const ModalController = (props: ModalControllerProps) => {
         props.setIsBugAnnotationOpen(false);
         props.setIsIdeaAnnotationOpen(false);
         setFormState({});
+        setScreenshots([]);
     };
 
     const handleSnackbarClose = () => setSnackbarShown(false);
