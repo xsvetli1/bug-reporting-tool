@@ -27,7 +27,7 @@ const AnnotationArea = (props: AnnotationAreaProps) => {
     const d = [background, ...pathDataFromSelectedAreas()].join('\n');
 
     return (
-        <svg className="annotation-area" {...props.mouseEventHandlers}>
+        <svg id="annotation-area" {...props.mouseEventHandlers}>
             <defs>
                 <marker
                     id="arrowhead"

@@ -1,5 +1,6 @@
 :root {
     --border-width: 3px;
+    --cursor: 'crosshair';
 }
 
 .annotation-tool {
@@ -11,7 +12,7 @@
     bottom: 0;
 }
 
-.annotation-area {
+#annotation-area {
     position: absolute;
     top: 0;
     left: 0;
@@ -19,6 +20,7 @@
     height: 100%;
     stroke-width: var(--border-width);
     stroke: var(--issue-type-based);
+    cursor: var(--cursor);
 }
 
 .annotation-area-content {
@@ -110,4 +112,5 @@
     overflow: visible;
     stroke: none;
     fill: white;
+    cursor: auto;
 }

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import AnnotationArea from '../AnnotationArea';
 import '../styles/annotations.css';
 import { useAnnotationRelocation } from './handlers/useAnnotationRelocation';
@@ -29,6 +29,16 @@ const AnnotationTool = ({ handleClose }: AnnotationToolProps) => {
     const mouseEventHandlers = annotationInHandId
         ? annotationMoveHandlers
         : allAnnotationCreateHandlers[currentAnnotationType];
+
+    useEffect(() => {
+        if (currentAnnotationType) {
+            let cursor = 'crosshair';
+            if (currentAnnotationType === 'TEXT') {
+                cursor = 'text';
+            }
+            document.documentElement.style.setProperty('--cursor', cursor);
+        }
+    }, [currentAnnotationType]);
 
     return (
         <>

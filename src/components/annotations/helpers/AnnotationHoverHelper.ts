@@ -6,5 +6,7 @@ export const hoverAnnotationClass = (isHover?: boolean) => {
 
 export const useHoverEffect = (isHover?: boolean) =>
     useEffect(() => {
-        document.body.style.cursor = isHover ? 'grab' : 'auto';
+        document
+            .getElementById('annotation-area')
+            ?.style.setProperty('cursor', isHover ? 'grab' : 'var(--cursor)');
     }, [isHover]);

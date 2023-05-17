@@ -27122,7 +27122,7 @@
 	        return rectToPathData(selectedAreas[key]);
 	    });
 	    const d = [background, ...pathDataFromSelectedAreas()].join('\n');
-	    return (React$1.createElement("svg", Object.assign({ className: "annotation-area" }, props.mouseEventHandlers),
+	    return (React$1.createElement("svg", Object.assign({ id: "annotation-area" }, props.mouseEventHandlers),
 	        React$1.createElement("defs", null,
 	            React$1.createElement("marker", { id: "arrowhead", markerWidth: "11", markerHeight: "11", refX: "9", refY: "5.5", orient: "auto" },
 	                React$1.createElement("polygon", { points: "2 2, 9 5.5, 2 9", strokeWidth: 1, fill: ISSUE_TYPE_BASED }))),
@@ -27138,7 +27138,7 @@
 	    height: getSVGHeigth()
 	});
 
-	var css_248z = ":root {\n    --border-width: 3px;\n}\n\n.annotation-tool {\n    position: fixed;\n    z-index: 2147483646;\n    left: 0;\n    top: 0;\n    right: 0;\n    bottom: 0;\n}\n\n.annotation-area {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    stroke-width: var(--border-width);\n    stroke: var(--issue-type-based);\n}\n\n.annotation-area-content {\n    position: absolute;\n}\n\n.annotation-area-border {\n    position: fixed;\n    background: var(--issue-type-based);\n}\n\n.sharp-corners,\n.annotation-tools-button,\n.annotation-close-button,\n.annotation-save-button,\n.comment-button,\n.delete-button {\n    border-radius: 0 !important;\n}\n\n.annotation-close-button {\n    position: fixed !important;\n    top: 0;\n    right: 0;\n    width: 25px !important;\n    height: 25px !important;\n    min-height: 25px !important;\n    background: var(--issue-type-based) !important;\n}\n\n.annotation-close-button:hover {\n    background: var(--issue-type-based-dark) !important;\n}\n\n.annotation-button-group {\n    display: flex;\n    flex-direction: column;\n}\n\n.annotation-tools-button {\n    background: var(--issue-type-based-light) !important;\n}\n\n.annotation-tools-button:hover {\n    background: var(--issue-type-based) !important;\n}\n\n.annotation-tools-button.Mui-selected {\n    background: var(--issue-type-based-dark) !important;\n}\n\n.comment-button,\n.delete-button {\n    min-width: 0 !important;\n    padding: 0 !important;\n    float: right;\n}\n\n.comment-button {\n    margin-left: 10px !important;\n}\n\n.annotation-area-content .MuiSvgIcon-root {\n    color: white;\n}\n\n.annotation-save-button {\n    padding: 11px 0 !important;\n    min-width: 0 !important;\n}\n\n.annotation-js-hover {\n    filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));\n}\n\n.arrow-line {\n    stroke: var(--issue-type-based);\n}\n\n.text-annotation-id {\n    stroke: none;\n    fill: white;\n    font-size: 17px;\n    font-weight: bold;\n    user-select: none;\n}\n\n.svg-foreign-object {\n    overflow: visible;\n    stroke: none;\n    fill: white;\n}\n";
+	var css_248z = ":root {\n    --border-width: 3px;\n    --cursor: 'crosshair';\n}\n\n.annotation-tool {\n    position: fixed;\n    z-index: 2147483646;\n    left: 0;\n    top: 0;\n    right: 0;\n    bottom: 0;\n}\n\n#annotation-area {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    stroke-width: var(--border-width);\n    stroke: var(--issue-type-based);\n    cursor: var(--cursor);\n}\n\n.annotation-area-content {\n    position: absolute;\n}\n\n.annotation-area-border {\n    position: fixed;\n    background: var(--issue-type-based);\n}\n\n.sharp-corners,\n.annotation-tools-button,\n.annotation-close-button,\n.annotation-save-button,\n.comment-button,\n.delete-button {\n    border-radius: 0 !important;\n}\n\n.annotation-close-button {\n    position: fixed !important;\n    top: 0;\n    right: 0;\n    width: 25px !important;\n    height: 25px !important;\n    min-height: 25px !important;\n    background: var(--issue-type-based) !important;\n}\n\n.annotation-close-button:hover {\n    background: var(--issue-type-based-dark) !important;\n}\n\n.annotation-button-group {\n    display: flex;\n    flex-direction: column;\n}\n\n.annotation-tools-button {\n    background: var(--issue-type-based-light) !important;\n}\n\n.annotation-tools-button:hover {\n    background: var(--issue-type-based) !important;\n}\n\n.annotation-tools-button.Mui-selected {\n    background: var(--issue-type-based-dark) !important;\n}\n\n.comment-button,\n.delete-button {\n    min-width: 0 !important;\n    padding: 0 !important;\n    float: right;\n}\n\n.comment-button {\n    margin-left: 10px !important;\n}\n\n.annotation-area-content .MuiSvgIcon-root {\n    color: white;\n}\n\n.annotation-save-button {\n    padding: 11px 0 !important;\n    min-width: 0 !important;\n}\n\n.annotation-js-hover {\n    filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));\n}\n\n.arrow-line {\n    stroke: var(--issue-type-based);\n}\n\n.text-annotation-id {\n    stroke: none;\n    fill: white;\n    font-size: 17px;\n    font-weight: bold;\n    user-select: none;\n}\n\n.svg-foreign-object {\n    overflow: visible;\n    stroke: none;\n    fill: white;\n    cursor: auto;\n}\n";
 	styleInject(css_248z);
 
 	/**
@@ -37031,7 +37031,9 @@
 	    return isHover ? 'annotation-js-hover' : '';
 	};
 	const useHoverEffect = (isHover) => react.exports.useEffect(() => {
-	    document.body.style.cursor = isHover ? 'grab' : 'auto';
+	    var _a;
+	    (_a = document
+	        .getElementById('annotation-area')) === null || _a === void 0 ? void 0 : _a.style.setProperty('cursor', isHover ? 'grab' : 'var(--cursor)');
 	}, [isHover]);
 
 	/**
@@ -37405,6 +37407,15 @@
 	    const mouseEventHandlers = annotationInHandId
 	        ? annotationMoveHandlers
 	        : allAnnotationCreateHandlers[currentAnnotationType];
+	    react.exports.useEffect(() => {
+	        if (currentAnnotationType) {
+	            let cursor = 'crosshair';
+	            if (currentAnnotationType === 'TEXT') {
+	                cursor = 'text';
+	            }
+	            document.documentElement.style.setProperty('--cursor', cursor);
+	        }
+	    }, [currentAnnotationType]);
 	    return (React$1.createElement(React$1.Fragment, null, isOngoingAnnotation && (React$1.createElement("div", { className: "annotation-tool" },
 	        React$1.createElement(AnnotationArea, { mouseEventHandlers: mouseEventHandlers },
 	            React$1.createElement(Annotations, { obtainAnnotationGrabHandlers: obtainAnnotationGrabHandlers })),
