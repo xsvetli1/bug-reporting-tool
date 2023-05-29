@@ -62,6 +62,7 @@
 
 .annotation-tools-button {
     background: var(--issue-type-based-light) !important;
+    padding: 0 !important;
 }
 
 .annotation-tools-button:hover {

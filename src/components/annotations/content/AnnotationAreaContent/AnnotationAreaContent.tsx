@@ -106,18 +106,16 @@ const AnnotationAreaContent = ({
                                     className="annotation-tools-button"
                                     value={annotationType}
                                 >
-                                    <Tooltip title={label} placement="right" followCursor={true}>
-                                        {icon}
+                                    <Tooltip title={label} placement="right">
+                                        <div style={{ padding: 11, lineHeight: 0, height: 24 }}>
+                                            {icon}
+                                        </div>
                                     </Tooltip>
                                 </ToggleButton>
                             );
                         })}
                     </ToggleButtonGroup>
-                    <Tooltip
-                        title="Submit annotated screenshot"
-                        placement="right"
-                        followCursor={true}
-                    >
+                    <Tooltip title="Submit annotated screenshot" placement="right">
                         <Button
                             className="annotation-save-button"
                             variant="contained"
