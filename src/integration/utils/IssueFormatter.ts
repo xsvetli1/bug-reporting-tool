@@ -41,6 +41,18 @@ class IssueFormatter {
                 .join('\n---\n')}\n`
         );
     }
+
+    static backendIssueDescription(issueInfo: IssueInfo) {
+        return {
+            description: issueInfo.description,
+            dateTime: EnvironmentInfoHelper.obtainDateTime(),
+            browser: EnvironmentInfoHelper.obtainBrowser(),
+            os: EnvironmentInfoHelper.obtainOperatingSystem(),
+            screenSize: EnvironmentInfoHelper.obtainScreenSize(),
+            viewPortSize: EnvironmentInfoHelper.obtainViewportSize(),
+            comments: issueInfo.screenshots.map((s) => s.comments)
+        };
+    }
 }
 
 export default IssueFormatter;

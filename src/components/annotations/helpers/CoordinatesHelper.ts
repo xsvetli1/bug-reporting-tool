@@ -14,9 +14,9 @@ export const getY = (event: ReactMouseEvent) => {
 };
 
 export const getSVGWidth = () => {
-    return window.innerWidth;
+    return typeof window !== 'undefined' ? window.innerWidth : 0;
 };
 
 export const getSVGHeigth = () => {
-    return window.innerHeight;
+    return typeof window !== 'undefined' ? window.innerHeight : 0;
 };

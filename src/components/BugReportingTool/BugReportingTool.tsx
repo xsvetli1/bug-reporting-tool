@@ -16,6 +16,7 @@ import { ConsoleOutput } from '../../models/ConsoleOutput';
 export interface BugReportingToolProps {
     platform: Platform;
     platformProps: PlatformProps;
+    isEmailIncluded?: boolean;
     isEmailRequired?: boolean;
     children?: ReactNode;
 }
@@ -28,6 +29,7 @@ const BugReportingTool = ({
     platform,
     platformProps,
     children,
+    isEmailIncluded,
     isEmailRequired
 }: BugReportingToolProps) => {
     const [isToolOpen, setIsToolOpen] = useState(false);
@@ -91,6 +93,7 @@ const BugReportingTool = ({
             <div data-theme={theme}>
                 {!isToolOpen && <ReportBugButton setIsToolOpen={setIsToolOpen} />}
                 <ModalController
+                    isEmailIncluded={isEmailIncluded ?? true}
                     isEmailRequired={isEmailRequired ?? false}
                     isToolOpen={isToolOpen}
                     setIsToolOpen={setIsToolOpen}
