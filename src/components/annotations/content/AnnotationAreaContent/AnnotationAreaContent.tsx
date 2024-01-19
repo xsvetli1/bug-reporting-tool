@@ -107,9 +107,7 @@ const AnnotationAreaContent = ({
                                     value={annotationType}
                                 >
                                     <Tooltip title={label} placement="right">
-                                        <div style={{ padding: 11, lineHeight: 0, height: 24 }}>
-                                            {icon}
-                                        </div>
+                                        <div style={{ padding: 11, lineHeight: 0 }}>{icon}</div>
                                     </Tooltip>
                                 </ToggleButton>
                             );

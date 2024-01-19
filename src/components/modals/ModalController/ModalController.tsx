@@ -18,6 +18,7 @@ import { UseStateSetter } from '../../../models/UseStateSetter';
 import { ToolContext } from '../../../contexts/ToolContext';
 
 export interface ModalControllerProps {
+    isEmailIncluded: boolean;
     isEmailRequired: boolean;
     isToolOpen: boolean;
     setIsToolOpen: UseStateSetter<boolean>;
@@ -63,6 +64,7 @@ const ModalController = (props: ModalControllerProps) => {
 
     const formModalProps = (type: IssueType) => {
         return {
+            isEmailIncluded: props.isEmailIncluded,
             isEmailRequired: props.isEmailRequired,
             formState: formState,
             setFormState: setFormState,

@@ -17,6 +17,7 @@ import '../../../styles/modals.css';
 import CloseModalButton from '../CloseModalButton/CloseModalButton';
 
 export interface FormModalContentProps {
+    isEmailIncluded: boolean;
     isEmailRequired: boolean;
     formState: FormProps;
     setFormState: React.Dispatch<React.SetStateAction<FormProps>>;
@@ -137,7 +138,9 @@ const FormModalContent = (props: FormModalContentProps) => {
                 <CloseModalButton handleSafeClose={props.handleSafeClose} />
             </DialogTitle>
             <DialogContent>
-                <TextField {...textFieldProps('email', 'Email Address', 'email', emailRef)} />
+                {props.isEmailIncluded && (
+                    <TextField {...textFieldProps('email', 'Email Address', 'email', emailRef)} />
+                )}
                 <TextField {...textFieldProps('title', 'Title', 'text', titleRef)} />
                 <TextField
                     {...textFieldProps('description', 'Description', 'text', descriptionRef, true)}
